@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 # user story
-**As a **
+**As a**
 
 
 **I want to**
@@ -18,4 +18,5 @@ assignees: ''
 
 # Acceptance criteria
 - [ ] 
+- [ ]
 - [ ]
