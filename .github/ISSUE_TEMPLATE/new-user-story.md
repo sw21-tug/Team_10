@@ -21,5 +21,4 @@ Lehrer
 
 # Acceptance criteria
 - [ ] 
-- [ ]
-- [ ]
+- [ ] 
