@@ -1,7 +1,7 @@
 ---
 name: New user story
 about: create a user story
-title: ''
+title: 'T-x '
 labels: user story
 assignees: ''
 
