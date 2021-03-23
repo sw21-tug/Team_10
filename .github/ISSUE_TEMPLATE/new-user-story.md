@@ -1,6 +1,6 @@
 ---
-name: New user story
-about: create a user story
+name: Neue user story
+about: Eine neue user story für ein kommendes feature
 title: 'T-x '
 labels: user story
 assignees: ''
@@ -8,14 +8,14 @@ assignees: ''
 ---
 
 # user story
-**As a**
-teacher
+**Als ein**
+Lehrer
 
 
-**I want to**
+**will ich**
 
 
-**so that**
+**, sodass**
 
 
 
