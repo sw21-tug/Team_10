@@ -5,8 +5,8 @@
 Die **TEACHomatic 3000** ist eine native Android App der Mobile Applications GmBH.
 
 Mit dieser App können alle notwendigen täglichen Aufzeichnungen im Klassenzimmer digital,
-sicher und Datenschutzkonform durchgeführt werden. Durch die gut struktuerierten Daten können
-alle erfassten Inhalte einfach Ausgewertet werden.
+sicher und datenschutzkonform durchgeführt werden. Durch die gut strukturierten Daten können
+alle erfassten Inhalte einfach ausgewertet werden.
 
 
 ## Team roles
