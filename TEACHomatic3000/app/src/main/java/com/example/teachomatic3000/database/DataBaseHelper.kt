@@ -1,8 +1,11 @@
 package com.example.teachomatic3000.database
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.teachomatic3000.MainActivity
+import com.example.teachomatic3000.models.StudentModel
 
 class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 1) {
 
@@ -19,5 +22,20 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         TODO("Not yet implemented")
+    }
+
+    fun addStudent(student: StudentModel): Boolean {
+        val db = this.writableDatabase
+        var content = ContentValues()
+
+        content.put(STUDENT_FIRSTNAME, student.firstName)
+        content.put(STUDENT_LASTNAME, student.lastName)
+
+        val sucess = db.insert(STUDENT_TABLE, null, content)
+
+        if(sucess.equals(-1)) {
+            return false
+        }
+        return true
     }
 }
