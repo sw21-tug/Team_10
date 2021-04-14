@@ -28,5 +28,5 @@ alle erfassten Inhalte einfach ausgewertet werden.
 ## all currently implemented features
 | Issue #| Feature name 
 | :---   | :---:  
-| T-xxx  | Feature
+| T-004  | App starten
 
