@@ -1,4 +1,4 @@
-package com.example.teachomatic3000.ui.slideshow
+package com.example.teachomatic3000.ui.Datum
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.teachomatic3000.R
 
-class SlideshowFragment : Fragment() {
+class DatumFragment : Fragment() {
 
-    private lateinit var slideshowViewModel: SlideshowViewModel
+    private lateinit var datumViewModel: DatumViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        slideshowViewModel =
-                ViewModelProvider(this).get(SlideshowViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
-        val textView: TextView = root.findViewById(R.id.text_slideshow)
-        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
+        datumViewModel =
+                ViewModelProvider(this).get(DatumViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_datum, container, false)
+        val textView: TextView = root.findViewById(R.id.text_datum)
+        datumViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
