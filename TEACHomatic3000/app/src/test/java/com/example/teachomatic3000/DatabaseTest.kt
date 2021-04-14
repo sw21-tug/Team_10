@@ -5,7 +5,7 @@ import com.example.teachomatic3000.database.DataBaseHelper
 import org.junit.Test
 import org.junit.Assert.*
 
-class StudentDatabaseTest {
+class DatabaseTest {
 
     @Test
     fun testDatabaseExisting() {
