@@ -1,13 +1,15 @@
 package com.example.teachomatic3000
 
-import org.junit.Test
+import com.example.teachomatic3000.database.DataBaseHelper
 
+import org.junit.Test
 import org.junit.Assert.*
 
 class StudentDatabaseTest {
+
     @Test
-    fun DatabaseExisting() {
-        val db = DatabaseHelper()
-        assertEquals(db.getClass(),DatabaseHelper.class)
+    fun testDatabaseExisting() {
+        val db = DataBaseHelper(null)
+        assertEquals(db::class, DataBaseHelper::class)
     }
 }
