@@ -1,5 +1,6 @@
 package com.example.teachomatic3000
 
+import com.example.teachomatic3000.models.StudentModel
 import org.junit.Test
 import org.junit.Assert.*
 
@@ -13,7 +14,7 @@ class StudentModelTest {
         val first_name = "Max"
         val last_name = "Mustermann"
         val student = StudentModel(first_name, last_name)
-        assertEquals(student::class, StudenModel::class)
+        assertEquals(student::class, StudentModel::class)
     }
 
     @Test
