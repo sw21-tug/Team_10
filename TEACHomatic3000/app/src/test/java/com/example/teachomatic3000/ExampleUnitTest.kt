@@ -31,5 +31,6 @@ class ExampleUnitTest {
     // In der "ui" ein Fragment... oder einen view, für das Datum
     // im mainactivity.kt einen eventlistener für calendar
 
+    //Navigation Drawer zeigt "Datum"
 
 }
