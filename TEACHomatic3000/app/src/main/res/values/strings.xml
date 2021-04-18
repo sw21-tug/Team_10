@@ -9,4 +9,5 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_datum">Datum</string>
+    <string name="date_regulator_string">Datum manuell einstellen</string>
 </resources>
