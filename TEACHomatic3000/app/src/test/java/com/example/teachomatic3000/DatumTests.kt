@@ -1,19 +1,24 @@
 package com.example.teachomatic3000
 
+import androidx.navigation.NavController
 import org.junit.Test
 
 import org.junit.Assert.*
+import org.junit.Before
+
+import org.junit.runner.RunWith
 
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
+class DatumTests {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
 
     /*
     @Test
@@ -31,5 +36,6 @@ class ExampleUnitTest {
     // In der "ui" ein Fragment... oder einen view, für das Datum
     // im mainactivity.kt einen eventlistener für calendar
 
+    //Navigation Drawer zeigt "Datum"
 
 }
