@@ -65,5 +65,13 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
         return retList
     }
+    fun deleteAllStudents(): Boolean{
+        var db = this.writableDatabase
+        val success = db.execSQL("delete from " + STUDENT_TABLE)
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
 }
 
