@@ -11,9 +11,10 @@ class StudentModelTest {
      * Tests if StudentModelClass is created
      */
     fun testStudenModelExisting() {
+        val studentID = 0
         val first_name = "Max"
         val last_name = "Mustermann"
-        val student = StudentModel(first_name, last_name)
+        val student = StudentModel(studentID, first_name, last_name)
         assertEquals(student::class, StudentModel::class)
     }
 
@@ -22,10 +23,12 @@ class StudentModelTest {
      * Tests if StudentModel members are set correctly
      */
     fun testStudenModelMembers() {
+        val studentID = 0
         val first_name = "Max"
         val last_name = "Mustermann"
-        val student = StudentModel(first_name, last_name)
+        val student = StudentModel(studentID, first_name, last_name)
 
+        assertEquals(studentID, student.studentID)
         assertEquals(first_name, student.firstName)
         assertEquals(last_name, student.lastName)
     }

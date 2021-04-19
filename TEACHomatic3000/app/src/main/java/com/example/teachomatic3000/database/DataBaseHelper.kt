@@ -38,4 +38,32 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         }
         return true
     }
+
+    fun getStudents() : ArrayList<String> {
+        var retList = ArrayList<String>()
+
+        var query = "SELECT * FROM $STUDENT_TABLE"
+
+        val db = this.readableDatabase
+
+        var curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                var student_id = curser.getString(0)
+                var first_name = curser.getString(1)
+                var last_name = curser.getString(2)
+
+                val studentInfo = "$student_id $first_name $last_name"
+                retList.add(studentInfo)
+
+            }while (curser.moveToNext())
+        }
+
+        curser.close()
+        db.close()
+
+        return retList
+    }
 }
+

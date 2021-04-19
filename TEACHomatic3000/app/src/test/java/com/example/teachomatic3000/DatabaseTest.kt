@@ -14,14 +14,5 @@ class DatabaseTest {
         assertEquals(db::class, DataBaseHelper::class)
     }
 
-    @Test
-    fun testAddStudent() {
-        var db = DataBaseHelper (null)
-        val first_name = "Max"
-        val last_name = "Mustermann"
-        val student = StudentModel(first_name, last_name)
-        var success = db.addStudent(student)
-        assertEquals(0, success)
-    }
 
 }
