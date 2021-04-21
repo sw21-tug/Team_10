@@ -13,12 +13,14 @@
             android:icon="@android:drawable/ic_menu_view"
             android:title="@string/menu_classes" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+
+            android:id="@+id/nav_datum"
+            android:icon="@drawable/ic_menu_datum"
+            android:title="@string/menu_datum" />
         <item
             android:id="@+id/nav_students"
             android:icon="@android:drawable/btn_star"
             android:title="@string/menu_students" />
+
     </group>
 </menu>
