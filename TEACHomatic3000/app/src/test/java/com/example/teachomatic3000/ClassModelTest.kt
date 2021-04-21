@@ -8,14 +8,13 @@ import org.junit.Assert.*
 class ClassModelTest {
 
     @Test
-    fun classModelexists() {
+    fun testClassModelexists() {
         val testClass = ClassModel()
-
         assertEquals(testClass::class, ClassModel::class)
     }
 
     @Test
-    fun checkClassParameters() {
+    fun testCheckClassParameters() {
         val class_name = "thistestclass"
         val class_id = 0
         val testClass = ClassModel(class_id, class_name)
