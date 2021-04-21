@@ -22,4 +22,6 @@
     <string name="add_class_button">Hinzufügen</string>
     <string name="add_class_available">Verfügbare Klassen:</string>
 
+    <string name="menu_lehrstoff">Lehrstoff</string>
+
 </resources>
