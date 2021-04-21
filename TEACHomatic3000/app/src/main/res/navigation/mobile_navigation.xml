@@ -16,14 +16,21 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.teachomatic3000.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_classes"
+        android:name="com.example.teachomatic3000.ui.classes.ClassesFragment"
+        android:label="@string/menu_classes"
+        tools:layout="@layout/fragment_classes" />
 
     <fragment
+
         android:id="@+id/nav_datum"
         android:name="com.example.teachomatic3000.ui.Datum.DatumFragment"
         android:label="@string/menu_datum"
         tools:layout="@layout/fragment_datum" />
+    <fragment
+        android:id="@+id/nav_students"
+        android:name="com.example.teachomatic3000.ui.students.StudentFragment"
+        android:label="@string/menu_students"
+        tools:layout="@layout/fragment_students" />
+
 </navigation>
