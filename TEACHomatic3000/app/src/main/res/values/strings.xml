@@ -9,8 +9,13 @@
     <string name="menu_home">Home</string>
     <string name="menu_classes">Klassen</string>
     <string name="menu_slideshow">Slideshow</string>
+
+    <string name="menu_students">Students</string>
+    <string name="save">Speichern</string>
+
     <string name="add_class_text">Neue Klasse hinzufügen:</string>
     <string name="add_class_hint">Name der Klasse</string>
     <string name="add_class_button">Hinzufügen</string>
     <string name="add_class_available">Verfügbare Klassen:</string>
+
 </resources>
