@@ -8,13 +8,17 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
+import com.example.teachomatic3000.database.DataBaseHelper
+import com.example.teachomatic3000.models.StudentModel
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,6 +30,22 @@ class StudentViewExists {
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
+
+    //T017
+    //-----------
+    @Test fun readStringFromContext_LocalizedString() {
+        // Given a Context object retrieved from Robolectric...
+        val myObjectUnderTest = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val Student = StudentModel(0, "MUstermann", "Max")
+        val result =myObjectUnderTest.addStudent(Student)
+        Assert.assertEquals(result, true)
+        // ...when the string is returned from the object under test...
+        //val result: String = myObjectUnderTest.getHelloWorldString()
+
+
+        // ...then the result should be the expected one.
+        // assertThat(result).isEqualTo(FAKE_STRING)
+    }
 
     @Test
     fun studentViewTest() {
