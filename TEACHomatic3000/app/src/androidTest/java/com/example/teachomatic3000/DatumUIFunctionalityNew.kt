@@ -21,14 +21,14 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class DatumUIFunctionality {
+class DatumUIFunctionalityNew {
 
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
-    fun datumUIFunctionality() {
+    fun datumUIFunctionalityNew() {
         val appCompatImageButton = onView(
             allOf(
                 withContentDescription("Open navigation drawer"),
@@ -94,6 +94,35 @@ class DatumUIFunctionality {
         )
         materialButton.perform(scrollTo(), click())
 
+        val switch_2 = onView(
+            allOf(
+                withId(R.id.date_regulator), withText("Datum manuell einstellen"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_host_fragment),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        switch_2.perform(click())
+
+        val switch_3 = onView(
+            allOf(
+                withId(R.id.date_regulator), withText("Datum manuell einstellen"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_host_fragment),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        switch_3.perform(click())
 
         val materialButton2 = onView(
             allOf(
@@ -108,57 +137,6 @@ class DatumUIFunctionality {
             )
         )
         materialButton2.perform(scrollTo(), click())
-
-
-        val appCompatImageButton2 = onView(
-            allOf(
-                withClassName(`is`("androidx.appcompat.widget.AppCompatImageButton")),
-                withContentDescription("Next month"),
-                childAtPosition(
-                    allOf(
-                        withClassName(`is`("android.widget.DayPickerView")),
-                        childAtPosition(
-                            withClassName(`is`("com.android.internal.widget.DialogViewAnimator")),
-                            0
-                        )
-                    ),
-                    2
-                )
-            )
-        )
-        appCompatImageButton2.perform(scrollTo(), click())
-
-        val appCompatImageButton3 = onView(
-            allOf(
-                withClassName(`is`("androidx.appcompat.widget.AppCompatImageButton")),
-                withContentDescription("Previous month"),
-                childAtPosition(
-                    allOf(
-                        withClassName(`is`("android.widget.DayPickerView")),
-                        childAtPosition(
-                            withClassName(`is`("com.android.internal.widget.DialogViewAnimator")),
-                            0
-                        )
-                    ),
-                    1
-                )
-            )
-        )
-        appCompatImageButton3.perform(scrollTo(), click())
-
-        val materialButton3 = onView(
-            allOf(
-                withId(android.R.id.button1), withText("OK"),
-                childAtPosition(
-                    childAtPosition(
-                        withClassName(`is`("android.widget.ScrollView")),
-                        0
-                    ),
-                    3
-                )
-            )
-        )
-        materialButton3.perform(scrollTo(), click())
     }
 
     private fun childAtPosition(
