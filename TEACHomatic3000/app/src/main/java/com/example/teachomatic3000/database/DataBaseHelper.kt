@@ -22,6 +22,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         TODO("Not yet implemented")
+        //for (int vers_ctr = 0; vers_ctr)
+        // loop versions
     }
 
     fun addStudent(student: StudentModel): Boolean {
