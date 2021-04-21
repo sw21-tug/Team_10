@@ -7,17 +7,32 @@ import android.database.sqlite.SQLiteOpenHelper
 import com.example.teachomatic3000.MainActivity
 import com.example.teachomatic3000.models.StudentModel
 
-class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 1) {
+class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 3) {
 
     val STUDENT_TABLE = "STUDENT_TABLE"
     val STUDENT_FIRSTNAME = "STUDENT_FIRSTNAME"
     val STUDENT_LASTNAME = "STUDENT_LASTNAME"
     val STUDENT_ID = "STUDENT_ID"
 
+    //T017
+    val DATUM_TABLE = "DATUM_TABLE"
+    val DATUM_DATUM = "DATUM_DATUM"
+    val DATUM_ID = "DATUM_ID"
+
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableStatement = "CREATE TABLE $STUDENT_TABLE($STUDENT_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_FIRSTNAME TEXT, $STUDENT_LASTNAME TEXT)"
 
         db!!.execSQL(createTableStatement)
+
+        //T017
+        val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
+
+        db!!.execSQL(createTableStatementDatum)
+
+        val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
+
+        db!!.execSQL(insertTableStatementDatum)
+
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -65,9 +80,40 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
         return retList
     }
+
+    fun getDatum() : String {
+        var retString = ""
+
+        var query = "SELECT $DATUM_DATUM FROM $DATUM_TABLE"
+
+        val db = this.readableDatabase
+
+        var curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                retString = curser.getString(0)
+
+
+            }while (curser.moveToNext())
+        }
+
+        curser.close()
+        db.close()
+
+        return retString
+    }
     fun deleteAllStudents(): Boolean{
         var db = this.writableDatabase
         val success = db.execSQL("delete from " + STUDENT_TABLE)
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
+    fun updateDatum(newDatum: String): Boolean{
+        var db = this.writableDatabase
+        val success = db.execSQL("update $DATUM_TABLE SET DATUM_DATUM = " + newDatum)
         if (success.equals(-1)){
             return false
         }
