@@ -31,7 +31,7 @@ class StudentViewExists {
     fun studentViewTest() {
         val appCompatImageButton = onView(
             allOf(
-                withContentDescription("Navigationsleiste öffnen"),
+                withContentDescription("Open navigation drawer"),
                 childAtPosition(
                     allOf(
                         withId(R.id.toolbar),
