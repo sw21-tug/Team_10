@@ -3,52 +3,34 @@ package com.example.teachomatic3000
 
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.Root
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
-import com.example.teachomatic3000.database.DataBaseHelper
-import com.example.teachomatic3000.models.StudentModel
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class StudentViewExists {
+class ClassAddEntryUITest {
 
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
-    //T017
-    //-----------
-    @Test fun readStringFromContext_LocalizedString() {
-        // Given a Context object retrieved from Robolectric...
-        val myObjectUnderTest = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
-        val Student = StudentModel(0, "MUstermann", "Max")
-        val result =myObjectUnderTest.addStudent(Student)
-        Assert.assertEquals(result, true)
-        // ...when the string is returned from the object under test...
-        //val result: String = myObjectUnderTest.getHelloWorldString()
-
-
-        // ...then the result should be the expected one.
-        // assertThat(result).isEqualTo(FAKE_STRING)
-    }
-
     @Test
-    fun studentViewTest() {
+    fun classAddEntryUITest() {
         val appCompatImageButton = onView(
             allOf(
                 withContentDescription("Open navigation drawer"),
@@ -69,7 +51,7 @@ class StudentViewExists {
 
         val navigationMenuItemView = onView(
             allOf(
-                withId(R.id.nav_students),
+                withId(R.id.nav_classes),
                 childAtPosition(
                     allOf(
                         withId(R.id.design_navigation_view),
@@ -78,39 +60,60 @@ class StudentViewExists {
                             0
                         )
                     ),
-                    4
+                    2
                 ),
                 isDisplayed()
             )
         )
         navigationMenuItemView.perform(click())
 
-        val button = onView(
+        val materialButton = onView(
             allOf(
-                withId(R.id.btnSaveStudent), withText("SPEICHERN"),
-                withParent(withParent(withId(R.id.nav_host_fragment))),
+                withId(R.id.button_add_class), withText("Hinzufügen"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_host_fragment),
+                        0
+                    ),
+                    2
+                ),
                 isDisplayed()
             )
         )
-        button.check(matches(isDisplayed()))
+        materialButton.perform(click())
+        StudentViewToasts.ToastMatcher.onToast("Name muss zwischen 1 und 255 Zeichen haben.")
+            .check(ViewAssertions.matches(isDisplayed()))
 
-        val eTFirstName = onView(
-            allOf(
-                withId(R.id.eTStudentFirstName),
-                withParent(withParent(withId(R.id.nav_host_fragment))),
-                isDisplayed()
-            )
-        )
-        eTFirstName.check(matches(isDisplayed()))
 
-        val eTLastName = onView(
+        val appCompatEditText = onView(
             allOf(
-                withId(R.id.eTStudentLastName),
-                withParent(withParent(withId(R.id.nav_host_fragment))),
+                withId(R.id.text_class_name),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_host_fragment),
+                        0
+                    ),
+                    1
+                ),
                 isDisplayed()
             )
         )
-        eTLastName.check(matches(isDisplayed()))
+        appCompatEditText.perform(replaceText("asdf"), closeSoftKeyboard())
+
+        val materialButton2 = onView(
+            allOf(
+                withId(R.id.button_add_class), withText("Hinzufügen"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_host_fragment),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        materialButton2.perform(click())
     }
 
     private fun childAtPosition(
@@ -130,4 +133,6 @@ class StudentViewExists {
             }
         }
     }
+
+
 }
