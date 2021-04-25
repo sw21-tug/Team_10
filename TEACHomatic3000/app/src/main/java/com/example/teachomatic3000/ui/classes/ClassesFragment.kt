@@ -44,7 +44,7 @@ class ClassesFragment : Fragment() {
         buttonAddClass.setOnClickListener {
             if(textClassName.text.isEmpty() || textClassName.text.length > 255)
             {
-                Toast.makeText(root.context,"Der Klassenname darf nicht leer sein.",Toast.LENGTH_LONG).show()
+                Toast.makeText(root.context,"Name muss zwischen 1 und 255 Zeichen haben.",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             else

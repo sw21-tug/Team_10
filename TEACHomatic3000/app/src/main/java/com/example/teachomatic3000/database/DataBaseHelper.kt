@@ -97,9 +97,9 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
         content.put(CLASS_NAME, classModel.class_name)
 
-        val sucess = db.insert(CLASS_TABLE, null, content)
+        val success = db.insert(CLASS_TABLE, null, content)
 
-        if(sucess.equals(-1)) {
+        if(success.equals(-1)) {
             return false
         }
         return true
