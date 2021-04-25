@@ -5,25 +5,39 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.teachomatic3000.MainActivity
+import com.example.teachomatic3000.models.ClassModel
 import com.example.teachomatic3000.models.StudentModel
+import java.util.stream.IntStream.range
 
-class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 1) {
+class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 2) {
 
     val STUDENT_TABLE = "STUDENT_TABLE"
     val STUDENT_FIRSTNAME = "STUDENT_FIRSTNAME"
     val STUDENT_LASTNAME = "STUDENT_LASTNAME"
     val STUDENT_ID = "STUDENT_ID"
 
-    override fun onCreate(db: SQLiteDatabase?) {
-        val createTableStatement = "CREATE TABLE $STUDENT_TABLE($STUDENT_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_FIRSTNAME TEXT, $STUDENT_LASTNAME TEXT)"
+    val CLASS_TABLE = "CLASS_TABLE"
+    val CLASS_ID = "CLASS_ID"
+    val CLASS_NAME = "CLASS_NAME"
 
-        db!!.execSQL(createTableStatement)
+    override fun onCreate(db: SQLiteDatabase?) {
+        val createTableStatementStudent = "CREATE TABLE $STUDENT_TABLE($STUDENT_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_FIRSTNAME TEXT, $STUDENT_LASTNAME TEXT)"
+        val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
+
+        db!!.execSQL(createTableStatementStudent)
+        db.execSQL(createTableStatementClasses)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        TODO("Not yet implemented")
-        //for (int vers_ctr = 0; vers_ctr)
-        // loop versions
+        when (oldVersion) {
+            1 -> {
+                val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
+                db!!.execSQL(createTableStatementClasses)
+            }
+            2 -> {
+                //TODO include next version
+            }
+        }
     }
 
     fun addStudent(student: StudentModel): Boolean {
@@ -67,6 +81,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
         return retList
     }
+
     fun deleteAllStudents(): Boolean{
         var db = this.writableDatabase
         val success = db.execSQL("delete from " + STUDENT_TABLE)
@@ -74,6 +89,46 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
             return false
         }
         return true
+    }
+
+    fun addClass(classModel: ClassModel): Boolean {
+        val db = this.writableDatabase
+        var content = ContentValues()
+
+        content.put(CLASS_NAME, classModel.class_name)
+
+        val sucess = db.insert(CLASS_TABLE, null, content)
+
+        if(sucess.equals(-1)) {
+            return false
+        }
+        return true
+    }
+
+    fun getClasses() : ArrayList<String> {
+        var retList = ArrayList<String>()
+
+        var query = "SELECT * FROM $CLASS_TABLE"
+
+        val db = this.readableDatabase
+
+        var curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                var class_id = curser.getString(0)
+                var class_name = curser.getString(1)
+
+                val classInfo = "$class_id $class_name"
+                retList.add(classInfo)
+
+            }while (curser.moveToNext())
+        }
+
+        curser.close()
+        db.close()
+
+        return retList
     }
 }
 

@@ -18,6 +18,8 @@ class ClassesFragment : Fragment() {
     private lateinit var classesViewModel: ClassesViewModel
     private lateinit var classList: ListView
     private lateinit var classDatabase: DataBaseHelper
+    private lateinit var classListAdapter: ArrayAdapter<String>
+    private lateinit var textClassName: EditText
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -27,38 +29,41 @@ class ClassesFragment : Fragment() {
         classesViewModel = ViewModelProvider(this).get(ClassesViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_classes, container, false)
         val buttonAddClass: Button = root.findViewById(R.id.button_add_class)
-        val textClassName: TextView = root.findViewById(R.id.text_class_name)
+        textClassName = root.findViewById(R.id.text_class_name)
         classList = root.findViewById(R.id.class_list)
         classDatabase = DataBaseHelper(root.context) //context vom layout wird hier erstellt, damit wirs unten verwenden können
-        val classID: Integer; // Hier später die ID aus der Datenbank auslesen.
 
         fun updateClassList(){
-            //Todo: update list view
+            classListAdapter = ArrayAdapter<String>(root.context, android.R.layout.simple_list_item_1, classDatabase.getClasses())
+            classList.adapter = classListAdapter
+            textClassName.text.clear()
         }
 
+        updateClassList()
+
         buttonAddClass.setOnClickListener {
-            if(textClassName.text.isEmpty())
+            if(textClassName.text.isEmpty() || textClassName.text.length > 255)
             {
                 Toast.makeText(root.context,"Der Klassenname darf nicht leer sein.",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-
-            // ToDo Klasse zur Datenbank hinzufügen
-            if(textClassName.text.isNotEmpty()) //TODO: andere conditions ev.
+            else
             {
-                val className = textClassName.text.toString()
-                var classModel = ClassModel(0,className)
                 // database helper (mit try catch)
                 try {
-                    classDatabase.addClass(classModel) //implement in dbHelper
+                    val className = String(textClassName.text.toString().toByteArray(), charset("UTF-8"))
+                    val classModel = ClassModel(0, className)
+                    val success = classDatabase.addClass(classModel) //implement in dbHelper
 
-                    //TODO: ähnlich wie in studentFragment
+                    if(!success) {
+                        Toast.makeText(root.context,"Klasse konnte nicht hinzugefügt werden",Toast.LENGTH_LONG).show()
+                    }
                 }
                 catch (exception: Exception) {
                     Toast.makeText(root.context,"Klasse konnte nicht hinzugefügt werden",Toast.LENGTH_LONG).show()
                 }
             }
-
+            updateClassList()
         }
 
         return root
