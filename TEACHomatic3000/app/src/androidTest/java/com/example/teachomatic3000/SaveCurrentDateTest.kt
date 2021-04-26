@@ -131,6 +131,22 @@ class SaveCurrentDateTest {
                         withParent(withParent(withId(R.id.nav_host_fragment))),
                         isDisplayed()))
         textView.check(matches(withText("13.04.2021")))*/
+
+        val switch_3 = onView(
+            allOf(
+                withId(R.id.date_regulator), withText("Datum manuell einstellen"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_host_fragment),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        switch_3.perform(click())
+
     }
 
     private fun childAtPosition(
