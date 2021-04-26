@@ -29,4 +29,7 @@ alle erfassten Inhalte einfach ausgewertet werden.
 | Issue #| Feature name 
 | :---   | :---:  
 | T-004  | App starten
-
+| T-012  | Datum Einstellungen
+| T-018  | SuS DB und Model [BE]
+| T-005  | SuS erfasse [FE]
+| T-006  | Klassen erfasse [FE]

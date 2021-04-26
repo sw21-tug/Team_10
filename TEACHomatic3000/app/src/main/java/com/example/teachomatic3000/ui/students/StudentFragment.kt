@@ -50,7 +50,7 @@ class StudentFragment : Fragment() {
 
         btnSaveStudent.setOnClickListener {
             var student: StudentModel
-
+            //eingabe valid
             if ((eTStudentFirstName.text.isNotEmpty() && eTStudentFirstName.text.length < 256) &&
                     (eTStudentLastName.text.isNotEmpty() && eTStudentLastName.text.length < 256)){
 

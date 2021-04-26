@@ -8,11 +8,18 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.teachomatic3000.R
+import com.example.teachomatic3000.database.DataBaseHelper
+import com.example.teachomatic3000.models.ClassModel
 import com.google.android.material.snackbar.Snackbar
+import java.lang.Exception
 
 class ClassesFragment : Fragment() {
 
     private lateinit var classesViewModel: ClassesViewModel
+    private lateinit var classList: ListView
+    private lateinit var classDatabase: DataBaseHelper
+    private lateinit var classListAdapter: ArrayAdapter<String>
+    private lateinit var textClassName: EditText
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -22,17 +29,41 @@ class ClassesFragment : Fragment() {
         classesViewModel = ViewModelProvider(this).get(ClassesViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_classes, container, false)
         val buttonAddClass: Button = root.findViewById(R.id.button_add_class)
-        val textClassName: TextView = root.findViewById(R.id.text_class_name)
-        val classID: Integer; // Hier später die ID aus der Datenbank auslesen.
+        textClassName = root.findViewById(R.id.text_class_name)
+        classList = root.findViewById(R.id.class_list)
+        classDatabase = DataBaseHelper(root.context) //context vom layout wird hier erstellt, damit wirs unten verwenden können
+
+        fun updateClassList(){
+            classListAdapter = ArrayAdapter<String>(root.context, android.R.layout.simple_list_item_1, classDatabase.getClasses())
+            classList.adapter = classListAdapter
+            textClassName.text.clear()
+        }
+
+        updateClassList()
 
         buttonAddClass.setOnClickListener {
-            if(textClassName.text.isEmpty())
+            if(textClassName.text.isEmpty() || textClassName.text.length > 255)
             {
-                Toast.makeText(this.requireContext(),"Der Klassenname darf nicht leer sein.",Toast.LENGTH_LONG).show()
+                Toast.makeText(root.context,"Name muss zwischen 1 und 255 Zeichen haben.",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            // ToDo Klasse zur Datenbank hinzufügen
+            else
+            {
+                // database helper (mit try catch)
+                try {
+                    val className = String(textClassName.text.toString().toByteArray(), charset("UTF-8"))
+                    val classModel = ClassModel(0, className)
+                    val success = classDatabase.addClass(classModel) //implement in dbHelper
 
+                    if(!success) {
+                        Toast.makeText(root.context,"Klasse konnte nicht hinzugefügt werden",Toast.LENGTH_LONG).show()
+                    }
+                }
+                catch (exception: Exception) {
+                    Toast.makeText(root.context,"Klasse konnte nicht hinzugefügt werden",Toast.LENGTH_LONG).show()
+                }
+            }
+            updateClassList()
         }
 
         return root

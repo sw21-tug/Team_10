@@ -11,6 +11,7 @@ import com.example.teachomatic3000.models.DatumModel
 import com.example.teachomatic3000.models.StudentModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import com.example.teachomatic3000.models.ClassModel
 
 class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 3) {
 
@@ -19,29 +20,42 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     val STUDENT_LASTNAME = "STUDENT_LASTNAME"
     val STUDENT_ID = "STUDENT_ID"
 
-    //T017
     val DATUM_TABLE = "DATUM_TABLE"
     val DATUM_DATUM = "DATUM_DATUM"
     val DATUM_ID = "DATUM_ID"
 
+    val CLASS_TABLE = "CLASS_TABLE"
+    val CLASS_ID = "CLASS_ID"
+    val CLASS_NAME = "CLASS_NAME"
+
     override fun onCreate(db: SQLiteDatabase?) {
-        val createTableStatement = "CREATE TABLE $STUDENT_TABLE($STUDENT_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_FIRSTNAME TEXT, $STUDENT_LASTNAME TEXT)"
+        val createTableStatementStudent = "CREATE TABLE $STUDENT_TABLE($STUDENT_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_FIRSTNAME TEXT, $STUDENT_LASTNAME TEXT)"
+        val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
 
-        db!!.execSQL(createTableStatement)
-
-        //T017
         val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
 
         db!!.execSQL(createTableStatementDatum)
 
         val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
 
-        db!!.execSQL(insertTableStatementDatum)
-
+        db.execSQL(insertTableStatementDatum)
+        db.execSQL(createTableStatementStudent)
+        db.execSQL(createTableStatementClasses)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        TODO("Not yet implemented")
+        when (oldVersion) {
+            1 -> {
+                val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
+                db!!.execSQL(createTableStatementClasses)
+            }
+            2 -> {
+                val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
+                db!!.execSQL(createTableStatementDatum)
+                val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
+                db.execSQL(insertTableStatementDatum)
+            }
+        }
     }
 
     fun addStudent(student: StudentModel): Boolean {
@@ -160,6 +174,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         }
         return true
     }
+
     fun updateDatum(newDatum: String): Boolean{
         var db = this.writableDatabase
         val success = db.execSQL("update $DATUM_TABLE SET $DATUM_DATUM = '" + newDatum + "'")
@@ -167,6 +182,46 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
             return false
         }
         return true
+    }
+
+    fun addClass(classModel: ClassModel): Boolean {
+        val db = this.writableDatabase
+        var content = ContentValues()
+
+        content.put(CLASS_NAME, classModel.class_name)
+
+        val success = db.insert(CLASS_TABLE, null, content)
+
+        if(success.equals(-1)) {
+            return false
+        }
+        return true
+    }
+
+    fun getClasses() : ArrayList<String> {
+        var retList = ArrayList<String>()
+
+        var query = "SELECT * FROM $CLASS_TABLE"
+
+        val db = this.readableDatabase
+
+        var curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                var class_id = curser.getString(0)
+                var class_name = curser.getString(1)
+
+                val classInfo = "$class_id $class_name"
+                retList.add(classInfo)
+
+            }while (curser.moveToNext())
+        }
+
+        curser.close()
+        db.close()
+
+        return retList
     }
 }
 
