@@ -47,6 +47,19 @@ class StudentViewExists {
         // assertThat(result).isEqualTo(FAKE_STRING)
     }
 
+    // Funktion schaltet Toggle ein, deshalb failen die Tests im 2. Durchlauf.
+    /*@Test fun DatumUpdateTest() {
+        // Given a Context object retrieved from Robolectric...
+        val myObjectUnderTest = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val datum = "1"
+        val safe = myObjectUnderTest.updateDatum(datum)
+        Assert.assertEquals(safe, true)
+        val inhalt = myObjectUnderTest.getDatum()
+        Assert.assertEquals(datum, inhalt)
+
+
+    }*/
+
     @Test
     fun studentViewTest() {
         val appCompatImageButton = onView(

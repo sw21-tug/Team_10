@@ -6,13 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Switch
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.teachomatic3000.R
+import com.example.teachomatic3000.database.DataBaseHelper
+import com.example.teachomatic3000.models.DatumModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -20,6 +21,8 @@ import java.util.*
 class DatumFragment : Fragment() {
 
     private lateinit var datumViewModel: DatumViewModel
+    private lateinit var datumDatabase: DataBaseHelper
+    //private lateinit var datumListAdapter: ArrayAdapter<String>
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -33,7 +36,11 @@ class DatumFragment : Fragment() {
         //val textView: TextView = root.findViewById(R.id.text_datum)
         datumViewModel.text.observe(viewLifecycleOwner, Observer {
           //  textView.text = it
-        })
+                    })
+
+        datumDatabase = DataBaseHelper(root.context)
+
+
 
 
         // -------------------------------------
@@ -43,10 +50,21 @@ class DatumFragment : Fragment() {
         // define text view to show current date
         val helper: TextView = root.findViewById(R.id.helper)
         val automaticDate = LocalDateTime.now()
-        helper.text  = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
 
+        //if - wenn in der Datenbank - Datenbankabfrage
+        //if(wenn datenbank value 1 )
+        // dann helper.text = Wert aus datenbank
+        //else
+
+
+        helper.text  = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
+        helper.text = datumDatabase.getDatumHuman()
         // import switch
         val dateRegulator: Switch = root.findViewById(R.id.date_regulator)
+        if(datumDatabase.getDatum()!="-1"){
+            dateRegulator.toggle()
+        }
+
         dateRegulator.setOnCheckedChangeListener(){_,isChecked->
 
             // variable for storing the current data as a string
@@ -55,9 +73,12 @@ class DatumFragment : Fragment() {
             // if switch is turned off, use automatic date from phone
             if (!isChecked)
             {
-                val automaticDate = LocalDateTime.now()
-                currentDate = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
-                helper.text = currentDate
+                //val automaticDate = LocalDateTime.now()
+                //currentDate = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
+
+                //helper.text = currentDate
+                datumDatabase.updateDatum("-1")
+                helper.text = datumDatabase.getDatumHuman()
             }
 
             // if switch is turned on, user can choose date manually
@@ -92,7 +113,12 @@ class DatumFragment : Fragment() {
                         stringBuilder.append(manualMonth+1).append(".")
                     }
                     stringBuilder.append(manualYear)
-                    helper.text = stringBuilder.toString()
+
+                    //helper.text = stringBuilder.toString()
+                    datumDatabase.updateDatum(stringBuilder.toString())
+                    helper.text = datumDatabase.getDatumHuman()
+
+
 
                 }, year, month, day)
 
@@ -101,12 +127,22 @@ class DatumFragment : Fragment() {
 
                     dateRegulator.toggle()
 
-                    val automaticDate = LocalDateTime.now()
-                    helper.text = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
+                    //val automaticDate = LocalDateTime.now()
+                    //helper.text = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
+                    datumDatabase.updateDatum("-1")
+                    helper.text = datumDatabase.getDatumHuman()
+
                 }
                 datePicker.show()
 
+
+
                 currentDate = helper.text.toString()
+
+              //  val datum: DatumModel = DatumModel(0, currentDate)
+                //datumDatabase.addDatum(datum)
+
+
             }
         }
 

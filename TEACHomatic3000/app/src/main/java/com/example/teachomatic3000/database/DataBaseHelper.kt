@@ -4,17 +4,25 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.teachomatic3000.MainActivity
-import com.example.teachomatic3000.models.ClassModel
+import com.example.teachomatic3000.models.DatumModel
 import com.example.teachomatic3000.models.StudentModel
-import java.util.stream.IntStream.range
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import com.example.teachomatic3000.models.ClassModel
 
-class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 2) {
+class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 3) {
 
     val STUDENT_TABLE = "STUDENT_TABLE"
     val STUDENT_FIRSTNAME = "STUDENT_FIRSTNAME"
     val STUDENT_LASTNAME = "STUDENT_LASTNAME"
     val STUDENT_ID = "STUDENT_ID"
+
+    val DATUM_TABLE = "DATUM_TABLE"
+    val DATUM_DATUM = "DATUM_DATUM"
+    val DATUM_ID = "DATUM_ID"
 
     val CLASS_TABLE = "CLASS_TABLE"
     val CLASS_ID = "CLASS_ID"
@@ -24,7 +32,14 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         val createTableStatementStudent = "CREATE TABLE $STUDENT_TABLE($STUDENT_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_FIRSTNAME TEXT, $STUDENT_LASTNAME TEXT)"
         val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
 
-        db!!.execSQL(createTableStatementStudent)
+        val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
+
+        db!!.execSQL(createTableStatementDatum)
+
+        val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
+
+        db.execSQL(insertTableStatementDatum)
+        db.execSQL(createTableStatementStudent)
         db.execSQL(createTableStatementClasses)
     }
 
@@ -35,7 +50,10 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
                 db!!.execSQL(createTableStatementClasses)
             }
             2 -> {
-                //TODO include next version
+                val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
+                db!!.execSQL(createTableStatementDatum)
+                val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
+                db.execSQL(insertTableStatementDatum)
             }
         }
     }
@@ -82,9 +100,84 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return retList
     }
 
+    fun addDatum(datum: DatumModel): Boolean {
+        val db = this.writableDatabase
+        var content = ContentValues()
+
+        content.put(DATUM_DATUM, datum.Datum)
+
+
+        val sucess = db.insert(DATUM_TABLE, null, content)
+
+        if(sucess.equals(-1)) {
+            return false
+        }
+        return true
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getDatum() : String {
+        var retString = ""
+
+        var query = "SELECT $DATUM_DATUM FROM $DATUM_TABLE"
+
+        val db = this.readableDatabase
+
+        var curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                retString = curser.getString(0)
+
+
+            }while (curser.moveToNext())
+        }
+
+        curser.close()
+        db.close()
+
+        return retString
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getDatumHuman() : String {
+        var retString = ""
+
+        var query = "SELECT $DATUM_DATUM FROM $DATUM_TABLE"
+
+        val db = this.readableDatabase
+
+        var curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                retString = curser.getString(0)
+
+
+            }while (curser.moveToNext())
+        }
+        if(retString == "-1"){
+            val automaticDate = LocalDateTime.now()
+            retString = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
+        }
+        curser.close()
+        db.close()
+
+        return retString
+    }
+
     fun deleteAllStudents(): Boolean{
         var db = this.writableDatabase
         val success = db.execSQL("delete from " + STUDENT_TABLE)
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
+
+    fun updateDatum(newDatum: String): Boolean{
+        var db = this.writableDatabase
+        val success = db.execSQL("update $DATUM_TABLE SET $DATUM_DATUM = '" + newDatum + "'")
         if (success.equals(-1)){
             return false
         }

@@ -32,4 +32,5 @@ class StudentModelTest {
         assertEquals(first_name, student.firstName)
         assertEquals(last_name, student.lastName)
     }
+
 }
