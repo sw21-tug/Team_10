@@ -11,9 +11,9 @@
 
 | Syntax      | Dev 1       | Dev 2       | Dev 3       | Dev 4       | Dev 5       | Dev 6      | 
 | :---        |    :----:   |    :----:   |    :----:   |    :----:   |    :----:   |    :----:  | 
-| Dev 1       | X           | HH:MM       | HH:MM       | 11:20       | 08:30       | HH:MM      | 
+| Dev 1       | X           | HH:MM       | 01:00       | 11:20       | 08:30       | HH:MM      | 
 | Dev 2       | HH:MM       | X           | HH:MM       | 04:30       | HH:MM       | 03:30      |
-| Dev 3       | HH:MM       | HH:MM       | X           | HH:MM       | 06:00       | 04:00      | 
+| Dev 3       | 01:00       | HH:MM       | X           | HH:MM       | 06:00       | 04:00      | 
 | Dev 4       | 11:20       | 04:30       | HH:MM       | X           | HH:MM       | HH:MM      | 
 | Dev 5       | 08:30       | HH:MM       | 06:00       | HH:MM       | X           | HH:MM      | 
 | Dev 6       | HH:MM       | 03:30       | 04:00       | HH:MM       | HH:MM       | X          | 
