@@ -212,8 +212,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
                 var class_id = curser.getString(0)
                 var class_name = curser.getString(1)
 
-                val classInfo = "$class_id $class_name"
-                retList.add(classInfo)
+                val classInfo = ClassModel(class_id.toInt(), class_name)
+                retList.add(classInfo.toString())
 
             }while (curser.moveToNext())
         }

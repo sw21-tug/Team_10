@@ -22,7 +22,7 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class ClassViewDetails {
+class ClassViewDetailsExists {
 
     @Rule
     @JvmField

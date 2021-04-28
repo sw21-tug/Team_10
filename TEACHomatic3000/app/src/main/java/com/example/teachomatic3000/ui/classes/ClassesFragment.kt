@@ -1,5 +1,6 @@
 package com.example.teachomatic3000.ui.classes
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.example.teachomatic3000.database.DataBaseHelper
 import com.example.teachomatic3000.models.ClassModel
 import com.google.android.material.snackbar.Snackbar
 import java.lang.Exception
+import java.util.*
 
 class ClassesFragment : Fragment() {
 
@@ -64,6 +66,17 @@ class ClassesFragment : Fragment() {
                 }
             }
             updateClassList()
+        }
+
+        classList.setOnItemClickListener { parent, view, position, id ->
+            val class_info = parent.getItemAtPosition(position)
+            val class_parts = class_info.toString().split(" ").toTypedArray()
+            val class_id = class_parts[0]
+
+            val intent = Intent(root.context, ClassDetails::class.java).apply {
+                putExtra("class_id", class_id)
+            }
+            startActivity(intent)
         }
 
         return root
