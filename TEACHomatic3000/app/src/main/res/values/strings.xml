@@ -22,4 +22,11 @@
     <string name="add_class_button">Hinzufügen</string>
     <string name="add_class_available">Verfügbare Klassen:</string>
 
+    <string name="menu_lehrstoff">Lehrstoff</string>
+    <string name="lehrstoff_class">Neuen Lehrstoff hinzufügen:</string>
+    <string name="lehrstoff_class_title">Lehrstofftitel</string>
+    <string name="lehrstoff_class_description">Beschreibung des Lehrstoffs</string>
+    <string name="lehrstoff_class_date_button">Lehrstoffdatum</string>
+    <string name="lehrstoff_class_save_button">Speichern</string>
+
 </resources>
