@@ -198,6 +198,30 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return true
     }
 
+    fun getClass(id: Int): ClassModel? {
+        var classInfo: ClassModel? = null
+        var query = "SELECT * FROM $CLASS_TABLE WHERE $CLASS_ID = "+id.toString()
+
+        val db = this.readableDatabase
+
+        var curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                var class_id = curser.getString(0)
+                var class_name = curser.getString(1)
+
+                classInfo = ClassModel(class_id.toInt(), class_name)
+
+            }while (curser.moveToNext())
+        }
+
+        curser.close()
+        db.close()
+
+        return classInfo
+    }
+
     fun getClasses() : ArrayList<String> {
         var retList = ArrayList<String>()
 

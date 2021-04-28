@@ -96,7 +96,12 @@ class ClassViewDetailsText {
                 isDisplayed()
             )
         )
-        materialButton.perform(click())
+
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val classes = db.getClasses()
+        if (classes.isEmpty()) {
+            materialButton.perform(click())
+        }
 
         val materialTextView = onData(anything())
             .inAdapterView(
@@ -111,7 +116,6 @@ class ClassViewDetailsText {
             .atPosition(0)
         materialTextView.perform(click())
 
-        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
         onView(withId(R.id.class_info)).check(matches(withText(db.getClasses().get(0))));
     }
 
