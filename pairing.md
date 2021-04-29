@@ -14,7 +14,7 @@
 | Dev 1       | X           | HH:MM       | 01:00       | 11:20       | 11:00       | HH:MM      | 
 | Dev 2       | HH:MM       | X           | HH:MM       | 04:30       | HH:MM       | 03:30      |
 | Dev 3       | 01:00       | HH:MM       | X           | HH:MM       | 06:00       | 04:00      | 
-| Dev 4       | 11:20       | 04:30       | HH:MM       | X           | HH:MM       | HH:MM      | 
+| Dev 4       | 11:20       | 04:30       | HH:MM       | X           | HH:MM       | 03:00      | 
 | Dev 5       | 11:00       | HH:MM       | 06:00       | HH:MM       | X           | HH:MM      | 
-| Dev 6       | HH:MM       | 03:30       | 04:00       | HH:MM       | HH:MM       | X          | 
+| Dev 6       | HH:MM       | 03:30       | 04:00       | 03:00       | HH:MM       | X          | 
 
