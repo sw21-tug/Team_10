@@ -28,6 +28,11 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     val CLASS_ID = "CLASS_ID"
     val CLASS_NAME = "CLASS_NAME"
 
+    val LEHRSTOFF_TABLE = "LEHRSTOFF_TABLE"
+    //...
+
+
+
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableStatementStudent = "CREATE TABLE $STUDENT_TABLE($STUDENT_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_FIRSTNAME TEXT, $STUDENT_LASTNAME TEXT)"
         val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
@@ -37,6 +42,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         db!!.execSQL(createTableStatementDatum)
 
         val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
+
+        //val createTableStatementLehrstoff = ""
 
         db.execSQL(insertTableStatementDatum)
         db.execSQL(createTableStatementStudent)
@@ -54,6 +61,9 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
                 db!!.execSQL(createTableStatementDatum)
                 val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
                 db.execSQL(insertTableStatementDatum)
+            }
+            4 -> {
+                //val createTableStatementLehrstoff = ""
             }
         }
     }
@@ -223,5 +233,11 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
         return retList
     }
+
+    //T-029 --Á
+
+
+
+
 }
 
