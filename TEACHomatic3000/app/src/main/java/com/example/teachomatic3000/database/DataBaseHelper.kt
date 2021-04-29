@@ -12,6 +12,7 @@ import com.example.teachomatic3000.models.StudentModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import com.example.teachomatic3000.models.ClassModel
+import com.example.teachomatic3000.models.LehrstoffModel
 
 class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 3) {
 
@@ -29,8 +30,12 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     val CLASS_NAME = "CLASS_NAME"
 
     val LEHRSTOFF_TABLE = "LEHRSTOFF_TABLE"
-    //...
-
+    val LEHRSTOFF_TITEL = "LEHRSTOFF_TITEL"
+    val LEHRSTOFF_ID = "LEHRSTOFF_ID"
+    val LEHRSTOFF_LANGTEXT = "LEHRSTOFF_LANGTEXT"
+    val LEHRSTOFF_DATUM = "LEHRSTOFF_DATUM"
+    val LEHRSTOFF_ERSTELLDATUM = "LEHRSTOFF_ERSTELLDATUM"
+    val LEHRSTOFF_BEARBEITUNGSDATUM = "LEHRSTOFF_BEARBEITUNGSDATUM"
 
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -43,11 +48,14 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
         val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
 
-        //val createTableStatementLehrstoff = ""
+        val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
+                "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
+
 
         db.execSQL(insertTableStatementDatum)
         db.execSQL(createTableStatementStudent)
         db.execSQL(createTableStatementClasses)
+        db.execSQL(createTableStatementLehrstoff)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -63,7 +71,9 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
                 db.execSQL(insertTableStatementDatum)
             }
             4 -> {
-                //val createTableStatementLehrstoff = ""
+                val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
+                        "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
+                db!!.execSQL(createTableStatementLehrstoff)
             }
         }
     }
@@ -234,7 +244,10 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return retList
     }
 
-    //T-029 --Á
+    //T-029
+    fun addLehrstoff(lehrstoffModel: LehrstoffModel) : Boolean {
+        return false;
+    }
 
 
 
