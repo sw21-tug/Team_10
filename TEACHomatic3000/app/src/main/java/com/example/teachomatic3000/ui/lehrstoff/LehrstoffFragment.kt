@@ -86,6 +86,7 @@ class LehrstoffFragment : Fragment() {
                 return@setOnClickListener
             }
             // ToDo - in Datenbank speichern
+            // constructor
         }
 
         return root
