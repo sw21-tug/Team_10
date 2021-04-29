@@ -7,6 +7,26 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
+
+    <string name="menu_datum">Datum</string>
+    <string name="date_regulator_string">Datum manuell einstellen</string>
+
+    <string name="menu_classes">Klassen</string>
     <string name="menu_slideshow">Slideshow</string>
+
+    <string name="menu_students">Students</string>
+    <string name="save">Speichern</string>
+
+    <string name="add_class_text">Neue Klasse hinzufügen:</string>
+    <string name="add_class_hint">Name der Klasse</string>
+    <string name="add_class_button">Hinzufügen</string>
+    <string name="add_class_available">Verfügbare Klassen:</string>
+
+    <string name="menu_lehrstoff">Lehrstoff</string>
+    <string name="lehrstoff_class">Neuen Lehrstoff hinzufügen:</string>
+    <string name="lehrstoff_class_title">Lehrstofftitel</string>
+    <string name="lehrstoff_class_description">Beschreibung des Lehrstoffs</string>
+    <string name="lehrstoff_class_date_button">Lehrstoffdatum</string>
+    <string name="lehrstoff_class_save_button">Speichern</string>
+
 </resources>
