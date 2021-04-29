@@ -3,6 +3,7 @@ package com.example.teachomatic3000
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.teachomatic3000.database.DataBaseHelper
 import com.example.teachomatic3000.models.ClassModel
+import com.example.teachomatic3000.models.LehrstoffModel
 import com.example.teachomatic3000.models.StudentModel
 
 import org.junit.Test
@@ -56,6 +57,19 @@ class DatabaseTests {
         val classes_plus_one = db.getClasses()
         assertEquals(current_classes+1, classes_plus_one.size)
     }
+
+    @Test
+    fun testAddLehrstoffElements() {
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val Lehrstoff = LehrstoffModel(0,"Programmieren", "Small Basic Grundlagen werden erarbeitet",
+            "2021-04-28", "2021-04-28", "2021-04-29")
+        val success = db.addLehrstoff(Lehrstoff)
+        assertEquals(true, success) }
+
+
+
+
+
 
     @Test
     fun testAnonymization() {
