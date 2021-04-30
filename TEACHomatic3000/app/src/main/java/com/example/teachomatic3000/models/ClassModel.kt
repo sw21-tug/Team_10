@@ -14,7 +14,11 @@ class ClassModel {
         this.class_name = class_name
     }
 
-    override fun toString(): String {
+    fun toDebugString(): String {
         return "ClassModel(class_id=$class_id, class_name='$class_name')"
+    }
+
+    override fun toString(): String {
+        return "$class_id $class_name"
     }
 }
