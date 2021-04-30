@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter
 import com.example.teachomatic3000.models.ClassModel
 import com.example.teachomatic3000.models.LehrstoffModel
 
-class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 3) {
+class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 4) {
 
     val STUDENT_TABLE = "STUDENT_TABLE"
     val STUDENT_FIRSTNAME = "STUDENT_FIRSTNAME"
@@ -48,9 +48,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
         val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
 
-        val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
+       val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
                 "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
-
 
         db.execSQL(insertTableStatementDatum)
         db.execSQL(createTableStatementStudent)
@@ -70,10 +69,12 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
                 val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
                 db.execSQL(insertTableStatementDatum)
             }
-            4 -> {
+            3 -> {
+
                 val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
                         "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
-                db!!.execSQL(createTableStatementLehrstoff)
+
+                 db!!.execSQL(createTableStatementLehrstoff)
             }
         }
     }
@@ -245,12 +246,40 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     }
 
     //T-029
-    fun addLehrstoff(lehrstoffModel: LehrstoffModel) : Boolean {
-        return false;
+    fun addLehrstoff(lehrstoff: LehrstoffModel) : Boolean {
+
+
+        val db = this.writableDatabase
+
+        var content = ContentValues()
+
+        content.put(LEHRSTOFF_TITEL, lehrstoff.LehrstoffTitel)
+        content.put(LEHRSTOFF_LANGTEXT, lehrstoff.LehrstoffLangtext)
+        content.put(LEHRSTOFF_DATUM,lehrstoff.LehrstoffDatum)
+        content.put(LEHRSTOFF_ERSTELLDATUM, lehrstoff.ErstellDatum)
+        content.put(LEHRSTOFF_BEARBEITUNGSDATUM, lehrstoff.Bearbeitungsdatum)
+
+        val sucess = db.insert(LEHRSTOFF_TABLE, null, content)
+
+        if(sucess.equals(-1)) {
+            return false
+        }
+        return true;
     }
 
+/*
+    fun updateLehrstoff(newLehrstoff: String): Boolean{
+        var db = this.writableDatabase
+        //val success = db.execSQL("update $DATUM_TABLE SET $DATUM_DATUM = '" + newDatum + "'")
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
+*/
 
 
 
 }
+
 

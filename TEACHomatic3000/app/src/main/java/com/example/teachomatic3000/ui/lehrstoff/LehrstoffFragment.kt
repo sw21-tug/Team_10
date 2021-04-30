@@ -1,6 +1,7 @@
 package com.example.teachomatic3000.ui.lehrstoff
 
 import android.app.DatePickerDialog
+import android.os.Build
 //import android.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,17 +10,26 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 //import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.teachomatic3000.R
+import com.example.teachomatic3000.database.DataBaseHelper
+import com.example.teachomatic3000.models.LehrstoffModel
+import com.example.teachomatic3000.models.StudentModel
+import com.example.teachomatic3000.ui.Datum.DatumViewModel
 import com.example.teachomatic3000.ui.home.HomeViewModel
+import java.lang.Exception
 import java.util.*
 
 class LehrstoffFragment : androidx.fragment.app.Fragment() {
 
     private lateinit var lehrstoffViewModel: LehrstoffViewModel
+    private lateinit var Database: DataBaseHelper
 
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -35,6 +45,15 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
         val lehrstoff_date_choice: TextView = root.findViewById(R.id.lehrstoff_date_choice)
         val lehrstoff_date_button: Button = root.findViewById(R.id.lehrstoff_date_button)
         val lehrstoff_save_button: Button = root.findViewById(R.id.lehrstoff_save_button)
+        Database = DataBaseHelper(root.context)
+
+       lehrstoff_date_creation.text = Database.getDatumHuman()
+       lehrstoff_date_edit.text = Database.getDatumHuman() //im Moment noch aktuelles Systemdatum
+
+
+
+
+
 
         lehrstoff_date_button.setOnClickListener {
             // Show DatePicker
@@ -82,12 +101,35 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
         }
 
         lehrstoff_save_button.setOnClickListener {
-            if(lehrstoff_title.text.isEmpty() || lehrstoff_description.text.isEmpty() || lehrstoff_date_choice.text.isEmpty()){
+            if(lehrstoff_title.text.isEmpty() || lehrstoff_description.text.isEmpty() || lehrstoff_date_choice.text.isEmpty() ){
                 Toast.makeText(this.requireContext(),"Eingabe unvollständig.\nBitte sowohl Titel als auch Beschreibung und Datum eingeben.", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            // ToDo - in Datenbank speichern
-            // constructor
+
+            // T-029
+
+            var lehrstoff: LehrstoffModel
+
+            if ((lehrstoff_title.text.length < 256) &&
+                    (lehrstoff_description.text.length < 5001)){
+
+                try {
+                    val titel = String(lehrstoff_title.text.toString().toByteArray(), charset("UTF-8"))
+                    val long = String(lehrstoff_description.text.toString().toByteArray(), charset("UTF-8"))
+
+                   lehrstoff = LehrstoffModel(0, titel, long, lehrstoff_date_choice.text.toString(), lehrstoff_date_creation.text.toString(), lehrstoff_date_edit.text.toString())
+
+                    var success = Database.addLehrstoff(lehrstoff)
+
+
+                } catch (exception: Exception){
+                    Toast.makeText(root.context,"Lehrstoff kann nicht hinzugefügt werden.", Toast.LENGTH_SHORT).show()
+                }
+
+                } else (
+                    Toast.makeText(root.context,"Eingabe zu lang.", Toast.LENGTH_SHORT).show()
+                    )
+
         }
 
         return root
