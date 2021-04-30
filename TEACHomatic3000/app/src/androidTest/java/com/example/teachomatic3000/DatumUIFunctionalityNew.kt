@@ -49,7 +49,7 @@ class DatumUIFunctionalityNew {
 
         val navigationMenuItemView = onView(
             allOf(
-                withId(R.id.nav_datum),
+                withId(R.id.nav_einstellungen),
                 childAtPosition(
                     allOf(
                         withId(R.id.design_navigation_view),

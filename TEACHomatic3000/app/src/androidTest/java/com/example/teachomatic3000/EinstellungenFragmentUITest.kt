@@ -22,7 +22,7 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class DatumFragmentUITest {
+class EinstellungenFragmentUITest {
 
     //This class tests the DatumFragment.kt UI
 
@@ -52,7 +52,7 @@ class DatumFragmentUITest {
 
         val navigationMenuItemView = onView(
             allOf(
-                withId(R.id.nav_datum),
+                withId(R.id.nav_einstellungen),
                 childAtPosition(
                     allOf(
                         withId(R.id.design_navigation_view),
@@ -70,7 +70,7 @@ class DatumFragmentUITest {
 
         val textView = onView(
             allOf(
-                withText("Datum"),
+                withText("Einstellungen"),
                 withParent(
                     allOf(
                         withId(R.id.toolbar),
@@ -80,7 +80,7 @@ class DatumFragmentUITest {
                 isDisplayed()
             )
         )
-        textView.check(matches(withText("Datum")))
+        textView.check(matches(withText("Einstellungen")))
     }
 
     private fun childAtPosition(

@@ -14,8 +14,8 @@
             android:title="@string/menu_classes" />
         <item
 
-            android:id="@+id/nav_datum"
-            android:icon="@drawable/ic_menu_datum"
+            android:id="@+id/nav_einstellungen"
+            android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_datum" />
         <item
             android:id="@+id/nav_students"
