@@ -101,13 +101,13 @@ class LehrstoffGespeichertTestUI {
         materialButton3.perform(click())
 
         val editText = onView(
-                allOf(withId(R.id.lehrstoff_title), withText("Grammatik"),
+                allOf(withId(R.id.lehrstoff_title), withText(""),
                         withParent(withParent(withId(R.id.lehrstoff))),
                         isDisplayed()))
         editText.check(matches(withText("")))
 
         val editText2 = onView(
-                allOf(withId(R.id.lehrstoff_description), withText("ss und s Schreibung"),
+                allOf(withId(R.id.lehrstoff_description), withText(""),
                         withParent(withParent(withId(R.id.lehrstoff))),
                         isDisplayed()))
         editText2.check(matches(withText("")))

@@ -8,18 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 //import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.teachomatic3000.R
 import com.example.teachomatic3000.database.DataBaseHelper
 import com.example.teachomatic3000.models.LehrstoffModel
-import com.example.teachomatic3000.models.StudentModel
-import com.example.teachomatic3000.ui.Datum.DatumViewModel
-import com.example.teachomatic3000.ui.home.HomeViewModel
 import java.lang.Exception
 import java.util.*
 
@@ -38,8 +35,8 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
         lehrstoffViewModel =
                 ViewModelProvider(this).get(LehrstoffViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_lehrstoff, container, false)
-        val lehrstoff_title: TextView = root.findViewById(R.id.lehrstoff_title)
-        val lehrstoff_description: TextView = root.findViewById(R.id.lehrstoff_description)
+        val lehrstoff_title: EditText = root.findViewById(R.id.lehrstoff_title)
+        val lehrstoff_description: EditText = root.findViewById(R.id.lehrstoff_description)
         val lehrstoff_date_creation: TextView = root.findViewById(R.id.lehrstoff_date_creation)
         val lehrstoff_date_edit: TextView = root.findViewById(R.id.lehrstoff_date_edit)
         val lehrstoff_date_choice: TextView = root.findViewById(R.id.lehrstoff_date_choice)
@@ -49,10 +46,6 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
 
        lehrstoff_date_creation.text = Database.getDatumHuman()
        lehrstoff_date_edit.text = Database.getDatumHuman() //im Moment noch aktuelles Systemdatum
-
-
-
-
 
 
         lehrstoff_date_button.setOnClickListener {
@@ -130,7 +123,10 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
                     Toast.makeText(root.context,"Eingabe zu lang.", Toast.LENGTH_SHORT).show()
                     )
 
+            lehrstoff_title.text.clear()
+            lehrstoff_description.text.clear()
         }
+
 
         return root
     }

@@ -245,9 +245,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return retList
     }
 
-    //T-029
     fun addLehrstoff(lehrstoff: LehrstoffModel) : Boolean {
-
 
         val db = this.writableDatabase
 
@@ -267,19 +265,37 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return true;
     }
 
-/*
-    fun updateLehrstoff(newLehrstoff: String): Boolean{
-        var db = this.writableDatabase
-        //val success = db.execSQL("update $DATUM_TABLE SET $DATUM_DATUM = '" + newDatum + "'")
-        if (success.equals(-1)){
-            return false
+    fun getLehrstoffe() : ArrayList<String> {
+        var retList = ArrayList<String>()
+
+        var query = "SELECT * FROM $LEHRSTOFF_TABLE"
+
+        val db = this.readableDatabase
+
+        var curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                var lehrstoff_id = curser.getString(0)
+                var lehrstoff_title = curser.getString(1)
+                var lehrstoff_description = curser.getString(2)
+                var lehrstoff_datum = curser.getString(3)
+                var lehrstoff_date_create = curser.getString(4)
+                var lehrstoff_date_edit = curser.getString(5)
+
+                val lehrstoffInfo = " Lehrstoff-ID: $lehrstoff_id \n Lehrstofftitel: $lehrstoff_title \n " +
+                        "Lehrstoffbeschreibung: $lehrstoff_description \n Lehrstoffdatum: $lehrstoff_datum \n " +
+                        "Erstelldatum: $lehrstoff_date_create \n Bearbeitungsdatum: $lehrstoff_date_edit"
+                retList.add(lehrstoffInfo)
+
+            }while (curser.moveToNext())
         }
-        return true
+
+        curser.close()
+        db.close()
+
+        return retList
     }
-*/
-
-
-
 }
 
 
