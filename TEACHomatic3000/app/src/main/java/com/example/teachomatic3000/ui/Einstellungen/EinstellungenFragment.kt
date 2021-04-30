@@ -1,4 +1,4 @@
-package com.example.teachomatic3000.ui.Datum
+package com.example.teachomatic3000.ui.Einstellungen
 
 import android.app.DatePickerDialog
 import android.os.Build
@@ -13,15 +13,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.teachomatic3000.R
 import com.example.teachomatic3000.database.DataBaseHelper
-import com.example.teachomatic3000.models.DatumModel
+import com.example.teachomatic3000.models.StudentModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class DatumFragment : Fragment() {
+class EinstellungenFragment : Fragment() {
 
-    private lateinit var datumViewModel: DatumViewModel
-    private lateinit var datumDatabase: DataBaseHelper
+    private lateinit var einstellungenViewModel: EinstellungenViewModel
+    private lateinit var einstellungenDatabase: DataBaseHelper
     //private lateinit var datumListAdapter: ArrayAdapter<String>
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -30,15 +30,15 @@ class DatumFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        datumViewModel =
-                ViewModelProvider(this).get(DatumViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_datum, container, false)
+        einstellungenViewModel =
+                ViewModelProvider(this).get(EinstellungenViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_einstellungen, container, false)
         //val textView: TextView = root.findViewById(R.id.text_datum)
-        datumViewModel.text.observe(viewLifecycleOwner, Observer {
+        einstellungenViewModel.text.observe(viewLifecycleOwner, Observer {
           //  textView.text = it
                     })
 
-        datumDatabase = DataBaseHelper(root.context)
+        einstellungenDatabase = DataBaseHelper(root.context)
 
 
 
@@ -50,6 +50,7 @@ class DatumFragment : Fragment() {
         // define text view to show current date
         val helper: TextView = root.findViewById(R.id.helper)
         val automaticDate = LocalDateTime.now()
+        val anonymizer: Button = root.findViewById(R.id.anonymizer)
 
         //if - wenn in der Datenbank - Datenbankabfrage
         //if(wenn datenbank value 1 )
@@ -58,10 +59,10 @@ class DatumFragment : Fragment() {
 
 
         helper.text  = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
-        helper.text = datumDatabase.getDatumHuman()
+        helper.text = einstellungenDatabase.getDatumHuman()
         // import switch
         val dateRegulator: Switch = root.findViewById(R.id.date_regulator)
-        if(datumDatabase.getDatum()!="-1"){
+        if(einstellungenDatabase.getDatum()!="-1"){
             dateRegulator.toggle()
         }
 
@@ -77,8 +78,8 @@ class DatumFragment : Fragment() {
                 //currentDate = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
 
                 //helper.text = currentDate
-                datumDatabase.updateDatum("-1")
-                helper.text = datumDatabase.getDatumHuman()
+                einstellungenDatabase.updateDatum("-1")
+                helper.text = einstellungenDatabase.getDatumHuman()
             }
 
             // if switch is turned on, user can choose date manually
@@ -115,8 +116,8 @@ class DatumFragment : Fragment() {
                     stringBuilder.append(manualYear)
 
                     //helper.text = stringBuilder.toString()
-                    datumDatabase.updateDatum(stringBuilder.toString())
-                    helper.text = datumDatabase.getDatumHuman()
+                    einstellungenDatabase.updateDatum(stringBuilder.toString())
+                    helper.text = einstellungenDatabase.getDatumHuman()
 
 
 
@@ -129,8 +130,8 @@ class DatumFragment : Fragment() {
 
                     //val automaticDate = LocalDateTime.now()
                     //helper.text = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
-                    datumDatabase.updateDatum("-1")
-                    helper.text = datumDatabase.getDatumHuman()
+                    einstellungenDatabase.updateDatum("-1")
+                    helper.text = einstellungenDatabase.getDatumHuman()
 
                 }
                 datePicker.show()
@@ -144,6 +145,13 @@ class DatumFragment : Fragment() {
 
 
             }
+        }
+
+        anonymizer.setOnClickListener(){
+           // var student: StudentModel
+           // student = StudentModel()
+            einstellungenDatabase.anonymizeCurrentStudents()
+            Toast.makeText(root.context, "Schülernamen wurden anonymisiert!",Toast.LENGTH_LONG).show()
         }
 
         // -----------------------------------

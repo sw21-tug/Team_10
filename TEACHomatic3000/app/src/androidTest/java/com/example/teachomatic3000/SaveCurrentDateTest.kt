@@ -21,8 +21,6 @@ import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
@@ -46,7 +44,7 @@ class SaveCurrentDateTest {
         appCompatImageButton.perform(click())
 
         val navigationMenuItemView = onView(
-            allOf(withId(R.id.nav_datum),
+            allOf(withId(R.id.nav_einstellungen),
                 childAtPosition(
                     allOf(withId(R.id.design_navigation_view),
                         childAtPosition(
@@ -111,7 +109,7 @@ class SaveCurrentDateTest {
         appCompatImageButton3.perform(click())
 
         val navigationMenuItemView3 = onView(
-            allOf(withId(R.id.nav_datum),
+            allOf(withId(R.id.nav_einstellungen),
                 childAtPosition(
                     allOf(withId(R.id.design_navigation_view),
                         childAtPosition(

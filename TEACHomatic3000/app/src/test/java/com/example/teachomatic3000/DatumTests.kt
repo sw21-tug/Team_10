@@ -1,13 +1,8 @@
 package com.example.teachomatic3000
 
-import androidx.navigation.NavController
-import com.example.teachomatic3000.ui.Datum.DatumFragment
 import org.junit.Test
 
 import org.junit.Assert.*
-import org.junit.Before
-
-import org.junit.runner.RunWith
 
 /**
  * Example local unit test, which will execute on the development machine (host).

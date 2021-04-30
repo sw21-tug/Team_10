@@ -5,11 +5,11 @@
     <string name="nav_header_title">TEACHomatic 3000</string>
     <string name="nav_header_subtitle">Die App für Lehrer</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
     <string name="menu_home">Home</string>
 
-    <string name="menu_datum">Datum</string>
+    <string name="menu_datum">Einstellungen</string>
     <string name="date_regulator_string">Datum manuell einstellen</string>
+    <string name="anonymize">Anonymisieren</string>
 
     <string name="menu_classes">Klassen</string>
     <string name="menu_slideshow">Slideshow</string>

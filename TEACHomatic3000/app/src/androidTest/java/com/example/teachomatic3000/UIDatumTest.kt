@@ -3,9 +3,6 @@ package com.example.teachomatic3000
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.navigation.NavController
-import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -13,18 +10,14 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
-import com.example.teachomatic3000.ui.Datum.DatumFragment
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
@@ -49,8 +42,8 @@ class UIDatumTest {
         appCompatImageButton.perform(click())
 
         val checkedTextView = onView(
-                allOf(withId(R.id.design_menu_item_text), withText("Datum"),
-                        withParent(allOf(withId(R.id.nav_datum),
+                allOf(withId(R.id.design_menu_item_text), withText("Einstellungen"),
+                        withParent(allOf(withId(R.id.nav_einstellungen),
                                 withParent(withId(R.id.design_navigation_view)))),
                         isDisplayed()))
         checkedTextView.check(matches(isDisplayed()))

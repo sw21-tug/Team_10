@@ -175,6 +175,17 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return true
     }
 
+    fun anonymizeCurrentStudents(): Boolean{
+        var db = this.writableDatabase
+        val success = db.execSQL("update $STUDENT_TABLE SET " +
+                "$STUDENT_FIRSTNAME = 'Anonymisiert', $STUDENT_LASTNAME = ''")
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
+
+
     fun updateDatum(newDatum: String): Boolean{
         var db = this.writableDatabase
         val success = db.execSQL("update $DATUM_TABLE SET $DATUM_DATUM = '" + newDatum + "'")

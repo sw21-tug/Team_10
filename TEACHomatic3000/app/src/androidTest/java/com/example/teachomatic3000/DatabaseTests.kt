@@ -57,4 +57,18 @@ class DatabaseTests {
         assertEquals(current_classes+1, classes_plus_one.size)
     }
 
+    @Test
+    fun testAnonymization() {
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val student = StudentModel(0,"Markus","Müller")
+        db.addStudent(student)
+        val student_before = db.getStudents()[db.getStudents().size-1]
+
+        assertEquals("" + db.getStudents().size + " Markus Müller", student_before)
+        db.anonymizeCurrentStudents()
+        val normalstudent = db.getStudents()[0]
+        val anonymized = db.getStudents()[0]
+        assertEquals(normalstudent, anonymized)
+    }
+
 }

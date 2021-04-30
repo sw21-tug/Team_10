@@ -4,8 +4,8 @@ package com.example.teachomatic3000
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.scrollTo
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
@@ -21,14 +21,14 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class DatumUIFunctionalityNew {
+class UITestAnonymisieren {
 
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
-    fun datumUIFunctionalityNew() {
+    fun uITestAnonymisieren() {
         val appCompatImageButton = onView(
             allOf(
                 withContentDescription("Open navigation drawer"),
@@ -49,6 +49,87 @@ class DatumUIFunctionalityNew {
 
         val navigationMenuItemView = onView(
             allOf(
+                withId(R.id.nav_students),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.design_navigation_view),
+                        childAtPosition(
+                            withId(R.id.nav_view),
+                            0
+                        )
+                    ),
+                    4
+                ),
+                isDisplayed()
+            )
+        )
+        navigationMenuItemView.perform(click())
+
+        val appCompatEditText = onView(
+            allOf(
+                withId(R.id.eTStudentFirstName),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_host_fragment),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        appCompatEditText.perform(replaceText("Fritz"), closeSoftKeyboard())
+
+        val appCompatEditText2 = onView(
+            allOf(
+                withId(R.id.eTStudentLastName),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_host_fragment),
+                        0
+                    ),
+                    1
+                ),
+                isDisplayed()
+            )
+        )
+        appCompatEditText2.perform(replaceText("Maier"), closeSoftKeyboard())
+
+        val materialButton = onView(
+            allOf(
+                withId(R.id.btnSaveStudent), withText("Speichern"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_host_fragment),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        materialButton.perform(click())
+
+        val appCompatImageButton2 = onView(
+            allOf(
+                withContentDescription("Open navigation drawer"),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.toolbar),
+                        childAtPosition(
+                            withClassName(`is`("com.google.android.material.appbar.AppBarLayout")),
+                            0
+                        )
+                    ),
+                    1
+                ),
+                isDisplayed()
+            )
+        )
+        appCompatImageButton2.perform(click())
+
+        val navigationMenuItemView2 = onView(
+            allOf(
                 withId(R.id.nav_einstellungen),
                 childAtPosition(
                     allOf(
@@ -63,80 +144,60 @@ class DatumUIFunctionalityNew {
                 isDisplayed()
             )
         )
-        navigationMenuItemView.perform(click())
-
-        val switch_ = onView(
-            allOf(
-                withId(R.id.date_regulator), withText("Datum manuell einstellen"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.nav_host_fragment),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        switch_.perform(click())
-
-        val materialButton = onView(
-            allOf(
-                withId(android.R.id.button1), withText("OK"),
-                childAtPosition(
-                    childAtPosition(
-                        withClassName(`is`("android.widget.ScrollView")),
-                        0
-                    ),
-                    3
-                )
-            )
-        )
-        materialButton.perform(scrollTo(), click())
-
-        val switch_2 = onView(
-            allOf(
-                withId(R.id.date_regulator), withText("Datum manuell einstellen"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.nav_host_fragment),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        switch_2.perform(click())
-
-        val switch_3 = onView(
-            allOf(
-                withId(R.id.date_regulator), withText("Datum manuell einstellen"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.nav_host_fragment),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        switch_3.perform(click())
+        navigationMenuItemView2.perform(click())
 
         val materialButton2 = onView(
             allOf(
-                withId(android.R.id.button2), withText("Cancel"),
+                withId(R.id.anonymizer), withText("Anonymisieren"),
                 childAtPosition(
                     childAtPosition(
-                        withClassName(`is`("android.widget.ScrollView")),
+                        withId(R.id.nav_host_fragment),
                         0
                     ),
                     2
-                )
+                ),
+                isDisplayed()
             )
         )
-        materialButton2.perform(scrollTo(), click())
+        materialButton2.perform(click())
+        StudentViewToasts.ToastMatcher.onToast("Schülernamen wurden anonymisiert!")
+            .check(ViewAssertions.matches(isDisplayed()))
+
+        val appCompatImageButton3 = onView(
+            allOf(
+                withContentDescription("Open navigation drawer"),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.toolbar),
+                        childAtPosition(
+                            withClassName(`is`("com.google.android.material.appbar.AppBarLayout")),
+                            0
+                        )
+                    ),
+                    1
+                ),
+                isDisplayed()
+            )
+        )
+        appCompatImageButton3.perform(click())
+
+        val navigationMenuItemView3 = onView(
+            allOf(
+                withId(R.id.nav_students),
+                childAtPosition(
+                    allOf(
+                        withId(R.id.design_navigation_view),
+                        childAtPosition(
+                            withId(R.id.nav_view),
+                            0
+                        )
+                    ),
+                    4
+                ),
+                isDisplayed()
+            )
+        )
+        navigationMenuItemView3.perform(click())
     }
 
     private fun childAtPosition(
