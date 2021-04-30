@@ -39,4 +39,10 @@
         android:label="@string/menu_lehrstoff"
         tools:layout="@layout/fragment_lehrstoff" />
 
+    <fragment
+        android:id="@+id/nav_lehrstoff_list"
+        android:name="com.example.teachomatic3000.ui.lehrstoffuebersicht.LehrstoffUebersichtFragment"
+        android:label="@string/lehrstoff_list"
+        tools:layout="@layout/fragment_lehrstoffuebersicht" />
+
 </navigation>
