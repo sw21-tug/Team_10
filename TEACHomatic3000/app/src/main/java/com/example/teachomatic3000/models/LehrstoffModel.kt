@@ -11,7 +11,7 @@ class LehrstoffModel {
     var Bearbeitungsdatum: String
 
 
-    constructor(LehrstoffID: Int, LehrstoffTitel: String, LehrstoffLangtext: String, LehrstoffDatum: String,
+       constructor(LehrstoffID: Int, LehrstoffTitel: String, LehrstoffLangtext: String, LehrstoffDatum: String,
                 ErstellDatum: String, Bearbeitungsdatum: String ) {
 
         this.LehrstoffID = LehrstoffID
@@ -25,6 +25,7 @@ class LehrstoffModel {
     }
 
     override fun toString(): String {
+
         return "LehrstoffModel(LehrstoffID='$LehrstoffID', LehrstoffTitel='$LehrstoffTitel', " +
                 "LehrstoffLangtext='$LehrstoffLangtext', LehrstoffDatum='$LehrstoffDatum', " +
                 "ErstellDatum='$ErstellDatum', Bearbeitungsdatum='$Bearbeitungsdatum')"
