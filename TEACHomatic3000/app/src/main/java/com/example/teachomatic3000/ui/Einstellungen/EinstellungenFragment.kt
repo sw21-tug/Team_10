@@ -1,19 +1,23 @@
 package com.example.teachomatic3000.ui.Einstellungen
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.Switch
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.teachomatic3000.MainActivity
 import com.example.teachomatic3000.R
 import com.example.teachomatic3000.database.DataBaseHelper
-import com.example.teachomatic3000.models.StudentModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -155,7 +159,7 @@ class EinstellungenFragment : Fragment() {
         }
 
         val languageRegulator: Switch = root.findViewById(R.id.language_regulator)
-        if(einstellungenDatabase.getLanguage()!="de"){
+        if(einstellungenDatabase.getLanguage()!="en"){
             languageRegulator.toggle()
         }
 
@@ -171,7 +175,7 @@ class EinstellungenFragment : Fragment() {
                 //currentDate = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
 
                 //helper.text = currentDate
-                einstellungenDatabase.updateLanguage("de")
+                einstellungenDatabase.updateLanguage("en")
             }
 
             // if switch is turned on, user can choose date manually
@@ -180,11 +184,15 @@ class EinstellungenFragment : Fragment() {
                 einstellungenDatabase.updateLanguage("zh")
 
             }
-        }
-        // -----------------------------------
-        // *** ADDED CODE END T-012 ***
-        // ----------------------------------
 
-        return root
-    }
+            val intent = Intent(root.context, MainActivity::class.java).apply {
+            }
+            startActivity(intent)
+}
+// -----------------------------------
+// *** ADDED CODE END T-012 ***
+// ----------------------------------
+
+return root
+}
 }

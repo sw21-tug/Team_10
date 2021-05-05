@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.teachomatic3000.database.DataBaseHelper
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -22,8 +23,9 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val db = DataBaseHelper(this)
 
-        val locale = Locale("de")
+        val locale = Locale(db.getLanguage())
         Locale.setDefault(locale)
         val config = resources.configuration
         config.setLocale(locale)

@@ -48,4 +48,6 @@
 
     <string name="home_title">老师的应用程序</string>
 
+    <string name="language_regulator_string">Deutsch {} Chinesisch</string>
+
 </resources>

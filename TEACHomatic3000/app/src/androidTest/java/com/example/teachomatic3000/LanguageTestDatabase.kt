@@ -32,7 +32,7 @@ class LanguageTestDatabase {
     @Test
     fun languageTestDatabase() {
         val database = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
-        database.updateLanguage("de")
+        database.updateLanguage("en")
         val appCompatImageButton = onView(
             allOf(
                 withContentDescription("Open navigation drawer"),
@@ -84,7 +84,7 @@ class LanguageTestDatabase {
         )
         switch_.perform(click())
         Assert.assertEquals("zh", database.getLanguage())
-        database.updateLanguage("de")
+        database.updateLanguage("en")
     }
 
     private fun childAtPosition(

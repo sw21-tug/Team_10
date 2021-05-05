@@ -51,7 +51,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         db!!.execSQL(createTableStatementDatum)
 
         val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
-        val insertTableStatementLanguage = "insert into $LANGUAGE_TABLE ($LANGUAGE_ID, $LANGUAGE_CODE) values (1, 'de')"
+        val insertTableStatementLanguage = "insert into $LANGUAGE_TABLE ($LANGUAGE_ID, $LANGUAGE_CODE) values (1, 'en')"
 
        val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
                 "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
@@ -89,7 +89,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
                 db!!.execSQL(createTableStatementLanguage)
 
-                val insertTableStatementLanguage = "insert into $LANGUAGE_TABLE ($LANGUAGE_ID, $LANGUAGE_CODE) values (1, 'de')"
+                val insertTableStatementLanguage = "insert into $LANGUAGE_TABLE ($LANGUAGE_ID, $LANGUAGE_CODE) values (1, 'en')"
                 db.execSQL(insertTableStatementLanguage)
             }
         }
