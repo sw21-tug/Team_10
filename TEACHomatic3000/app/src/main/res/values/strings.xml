@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TEACHomatic 3000</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -12,7 +13,6 @@
     <string name="anonymize">Anonymisieren</string>
 
     <string name="menu_classes">Klassen</string>
-    <string name="menu_slideshow">Slideshow</string>
 
     <string name="menu_students">Students</string>
     <string name="save">Speichern</string>
@@ -32,10 +32,9 @@
 
     <string name="lehrstoff_list">Lehrstoffübersicht</string>
     <string name="lehrstoff_uebersicht">Lehrstoffübersicht:</string>
-    <string name="lehrstoff_list_database"></string>
     <string name="text_length255">Name muss zwischen 1 und 255 Zeichen haben.</string>
     <string name="error_add_class">Klasse konnte nicht hinzugefügt werden</string>
-    <string name="student_anonym">"Schülernamen wurden anonymisiert!"</string>
+    <string name="student_anonym">Schülernamen wurden anonymisiert!</string>
     <string name="error_wrong_input">Eingabe unvollständig.\nBitte sowohl Titel als auch Beschreibung und Datum eingeben.</string>
     <string name="error_add_lehrstoff">Lehrstoff kann nicht hinzugefügt werden.</string>
     <string name="error_long_input">Eingabe zu lang.</string>
@@ -46,5 +45,7 @@
     <string name="lehrstoff_description_hint">Lehrstoffbeschreibung</string>
     <string name="student_firstname_hint">Max</string>
     <string name="student_lastname_hint">Mustermann</string>
+
+    <string name="home_title">Die App für Lehrer</string>
 
 </resources>
