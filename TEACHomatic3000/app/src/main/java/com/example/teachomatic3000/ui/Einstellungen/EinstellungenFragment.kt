@@ -154,6 +154,33 @@ class EinstellungenFragment : Fragment() {
             Toast.makeText(root.context, R.string.student_anonym, Toast.LENGTH_LONG).show()
         }
 
+        val languageRegulator: Switch = root.findViewById(R.id.language_regulator)
+        if(einstellungenDatabase.getLanguage()!="de"){
+            languageRegulator.toggle()
+        }
+
+        languageRegulator.setOnCheckedChangeListener(){_,isChecked->
+
+            // variable for storing the current data as a string
+            val currentDate:String
+
+            // if switch is turned off, use automatic date from phone
+            if (!isChecked)
+            {
+                //val automaticDate = LocalDateTime.now()
+                //currentDate = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
+
+                //helper.text = currentDate
+                einstellungenDatabase.updateLanguage("de")
+            }
+
+            // if switch is turned on, user can choose date manually
+            else
+            {
+                einstellungenDatabase.updateLanguage("zh")
+
+            }
+        }
         // -----------------------------------
         // *** ADDED CODE END T-012 ***
         // ----------------------------------

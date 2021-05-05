@@ -48,4 +48,6 @@
 
     <string name="home_title">Die App für Lehrer</string>
 
+    <string name="language_regulator_string">Deutsch {} Chinesisch</string>
+
 </resources>

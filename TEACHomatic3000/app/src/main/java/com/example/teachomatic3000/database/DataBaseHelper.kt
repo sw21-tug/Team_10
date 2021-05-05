@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter
 import com.example.teachomatic3000.models.ClassModel
 import com.example.teachomatic3000.models.LehrstoffModel
 
-class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 4) {
+class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 5) {
 
     val STUDENT_TABLE = "STUDENT_TABLE"
     val STUDENT_FIRSTNAME = "STUDENT_FIRSTNAME"
@@ -37,16 +37,21 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     val LEHRSTOFF_ERSTELLDATUM = "LEHRSTOFF_ERSTELLDATUM"
     val LEHRSTOFF_BEARBEITUNGSDATUM = "LEHRSTOFF_BEARBEITUNGSDATUM"
 
+    val LANGUAGE_TABLE = "LANGUAGE_TABLE"
+    val LANGUAGE_ID = "LANGUAGE_ID"
+    val LANGUAGE_CODE = "LANGUAGE_CODE"
+
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableStatementStudent = "CREATE TABLE $STUDENT_TABLE($STUDENT_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_FIRSTNAME TEXT, $STUDENT_LASTNAME TEXT)"
         val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
-
+        val createTableStatementLanguage = "CREATE TABLE $LANGUAGE_TABLE($LANGUAGE_ID INTEGER, $LANGUAGE_CODE TEXT)"
         val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
 
         db!!.execSQL(createTableStatementDatum)
 
         val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
+        val insertTableStatementLanguage = "insert into $LANGUAGE_TABLE ($LANGUAGE_ID, $LANGUAGE_CODE) values (1, 'de')"
 
        val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
                 "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
@@ -55,6 +60,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         db.execSQL(createTableStatementStudent)
         db.execSQL(createTableStatementClasses)
         db.execSQL(createTableStatementLehrstoff)
+        db.execSQL(createTableStatementLanguage)
+        db.execSQL(insertTableStatementLanguage)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -75,6 +82,15 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
                         "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
 
                  db!!.execSQL(createTableStatementLehrstoff)
+            }
+            4 -> {
+
+                val createTableStatementLanguage = "CREATE TABLE $LANGUAGE_TABLE($LANGUAGE_ID INTEGER, $LANGUAGE_CODE TEXT)"
+
+                db!!.execSQL(createTableStatementLanguage)
+
+                val insertTableStatementLanguage = "insert into $LANGUAGE_TABLE ($LANGUAGE_ID, $LANGUAGE_CODE) values (1, 'de')"
+                db.execSQL(insertTableStatementLanguage)
             }
         }
     }
@@ -326,9 +342,42 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
             }while (curser.moveToNext())
         }
 
+
         curser.close()
         db.close()
 
         return retList
     }
-}
+        fun updateLanguage(newLanguage: String): Boolean{
+            var db = this.writableDatabase
+            val success = db.execSQL("update $LANGUAGE_TABLE SET $LANGUAGE_CODE = '" + newLanguage + "'")
+            if (success.equals(-1)){
+                return false
+            }
+            return true
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun getLanguage() : String {
+            var retString = ""
+
+            var query = "SELECT $LANGUAGE_CODE FROM $LANGUAGE_TABLE"
+
+            val db = this.readableDatabase
+
+            var curser = db.rawQuery(query, null)
+
+            if(curser.moveToFirst()) {
+                do{
+                    retString = curser.getString(0)
+
+
+                }while (curser.moveToNext())
+            }
+
+            curser.close()
+            db.close()
+
+            return retString
+        }
+    }
