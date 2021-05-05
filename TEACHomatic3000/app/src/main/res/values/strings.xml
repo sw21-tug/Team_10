@@ -34,4 +34,6 @@
     <string name="lehrstoff_uebersicht">Lehrstoffübersicht:</string>
     <string name="lehrstoff_list_database"></string>
 
+    <string name="language_regulator_string">Deutsch {} Chinesisch</string>
+
 </resources>
