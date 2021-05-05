@@ -12,8 +12,9 @@ import com.example.teachomatic3000.models.StudentModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import com.example.teachomatic3000.models.ClassModel
+import com.example.teachomatic3000.models.LehrstoffModel
 
-class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 3) {
+class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 4) {
 
     val STUDENT_TABLE = "STUDENT_TABLE"
     val STUDENT_FIRSTNAME = "STUDENT_FIRSTNAME"
@@ -28,6 +29,15 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     val CLASS_ID = "CLASS_ID"
     val CLASS_NAME = "CLASS_NAME"
 
+    val LEHRSTOFF_TABLE = "LEHRSTOFF_TABLE"
+    val LEHRSTOFF_TITEL = "LEHRSTOFF_TITEL"
+    val LEHRSTOFF_ID = "LEHRSTOFF_ID"
+    val LEHRSTOFF_LANGTEXT = "LEHRSTOFF_LANGTEXT"
+    val LEHRSTOFF_DATUM = "LEHRSTOFF_DATUM"
+    val LEHRSTOFF_ERSTELLDATUM = "LEHRSTOFF_ERSTELLDATUM"
+    val LEHRSTOFF_BEARBEITUNGSDATUM = "LEHRSTOFF_BEARBEITUNGSDATUM"
+
+
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableStatementStudent = "CREATE TABLE $STUDENT_TABLE($STUDENT_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_FIRSTNAME TEXT, $STUDENT_LASTNAME TEXT)"
         val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
@@ -38,9 +48,13 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
         val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
 
+       val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
+                "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
+
         db.execSQL(insertTableStatementDatum)
         db.execSQL(createTableStatementStudent)
         db.execSQL(createTableStatementClasses)
+        db.execSQL(createTableStatementLehrstoff)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -54,6 +68,13 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
                 db!!.execSQL(createTableStatementDatum)
                 val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
                 db.execSQL(insertTableStatementDatum)
+            }
+            3 -> {
+
+                val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
+                        "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
+
+                 db!!.execSQL(createTableStatementLehrstoff)
             }
         }
     }
@@ -258,5 +279,56 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
         return retList
     }
-}
 
+    fun addLehrstoff(lehrstoff: LehrstoffModel) : Boolean {
+
+        val db = this.writableDatabase
+
+        var content = ContentValues()
+
+        content.put(LEHRSTOFF_TITEL, lehrstoff.LehrstoffTitel)
+        content.put(LEHRSTOFF_LANGTEXT, lehrstoff.LehrstoffLangtext)
+        content.put(LEHRSTOFF_DATUM,lehrstoff.LehrstoffDatum)
+        content.put(LEHRSTOFF_ERSTELLDATUM, lehrstoff.ErstellDatum)
+        content.put(LEHRSTOFF_BEARBEITUNGSDATUM, lehrstoff.Bearbeitungsdatum)
+
+        val sucess = db.insert(LEHRSTOFF_TABLE, null, content)
+
+        if(sucess.equals(-1)) {
+            return false
+        }
+        return true;
+    }
+
+    fun getLehrstoffe() : ArrayList<String> {
+        var retList = ArrayList<String>()
+
+        var query = "SELECT * FROM $LEHRSTOFF_TABLE"
+
+        val db = this.readableDatabase
+
+        var curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                var lehrstoff_id = curser.getString(0)
+                var lehrstoff_title = curser.getString(1)
+                var lehrstoff_description = curser.getString(2)
+                var lehrstoff_datum = curser.getString(3)
+                var lehrstoff_date_create = curser.getString(4)
+                var lehrstoff_date_edit = curser.getString(5)
+
+                val lehrstoffInfo = " Lehrstoff-ID: $lehrstoff_id \n Lehrstofftitel: $lehrstoff_title \n " +
+                        "Lehrstoffbeschreibung: $lehrstoff_description \n Lehrstoffdatum: $lehrstoff_datum \n " +
+                        "Erstelldatum: $lehrstoff_date_create \n Bearbeitungsdatum: $lehrstoff_date_edit"
+                retList.add(lehrstoffInfo)
+
+            }while (curser.moveToNext())
+        }
+
+        curser.close()
+        db.close()
+
+        return retList
+    }
+}
