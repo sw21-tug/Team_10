@@ -71,7 +71,7 @@ class LanguageTestDatabase {
 
         val switch_ = onView(
             allOf(
-                withId(R.id.language_regulator), withText("Deutsch {} Chinesisch"),
+                withId(R.id.language_regulator), withText("Deutsch {} 中国人"),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.nav_host_fragment),
