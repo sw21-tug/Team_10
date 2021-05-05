@@ -36,5 +36,7 @@ alle erfassten Inhalte einfach ausgewertet werden.
 | T-017  | Datum aus Einstellungen wird gespeichert [BE]
 | T-020  | Klassen DB und Model [BE]
 | T-023  | Lehrstoff erfassen [FE]
-
+| T-021  | Klassen Detailansicht
+| T-024  | Daten annonymisieren
+| T-029  | Ein Lehrstoff in DB [BE]
 
