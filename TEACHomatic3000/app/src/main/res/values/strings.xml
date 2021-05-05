@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TEACHomatic 3000</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">TEACHomatic 3000</string>
+    <string name="nav_header_subtitle">Die App für Lehrer</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="menu_home">Home</string>
+
+    <string name="menu_datum">Einstellungen</string>
+    <string name="date_regulator_string">Datum manuell einstellen</string>
+    <string name="anonymize">Anonymisieren</string>
+
+    <string name="menu_classes">Klassen</string>
+
+    <string name="menu_students">Students</string>
+    <string name="save">Speichern</string>
+
+    <string name="add_class_text">Neue Klasse hinzufügen:</string>
+    <string name="add_class_hint">Name der Klasse</string>
+    <string name="add_class_button">Hinzufügen</string>
+    <string name="add_class_available">Verfügbare Klassen:</string>
+
+    <string name="menu_lehrstoff">Lehrstoff erstellen</string>
+    <string name="lehrstoff_class">Neuen Lehrstoff hinzufügen:</string>
+    <string name="lehrstoff_class_date_button">Lehrstoffdatum</string>
+    <string name="lehrstoff_class_save_button">Speichern</string>
+    <string name="lehrstoff_feld_beschreibung">Beschreibung des Lehrstoffs:</string>
+    <string name="bearbeitungsdatum">Bearbeitungsdatum:</string>
+    <string name="Erstelldatum">Erstelldatum:</string>
+
+    <string name="lehrstoff_list">Lehrstoffübersicht</string>
+    <string name="lehrstoff_uebersicht">Lehrstoffübersicht:</string>
+    <string name="text_length255">Name muss zwischen 1 und 255 Zeichen haben.</string>
+    <string name="error_add_class">Klasse konnte nicht hinzugefügt werden</string>
+    <string name="student_anonym">Schülernamen wurden anonymisiert!</string>
+    <string name="error_wrong_input">Eingabe unvollständig.\nBitte sowohl Titel als auch Beschreibung und Datum eingeben.</string>
+    <string name="error_add_lehrstoff">Lehrstoff kann nicht hinzugefügt werden.</string>
+    <string name="error_long_input">Eingabe zu lang.</string>
+    <string name="error_add_student">SuS konnte nicht hinzugefügt werden</string>
+    <string name="error_input">Fehlerhafte Eingabe</string>
+
+    <string name="lehrstoff_title_hint">Lehrstofftitel</string>
+    <string name="lehrstoff_description_hint">Lehrstoffbeschreibung</string>
+    <string name="student_firstname_hint">Max</string>
+    <string name="student_lastname_hint">Mustermann</string>
+
+    <string name="home_title">Die App für Lehrer</string>
+
+    <string name="language_regulator_string">Deutsch {} 中国人</string>
+
+</resources>
