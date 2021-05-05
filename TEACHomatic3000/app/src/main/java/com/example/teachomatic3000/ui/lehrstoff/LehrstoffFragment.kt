@@ -95,7 +95,7 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
 
         lehrstoff_save_button.setOnClickListener {
             if(lehrstoff_title.text.isEmpty() || lehrstoff_description.text.isEmpty() || lehrstoff_date_choice.text.isEmpty() ){
-                Toast.makeText(this.requireContext(),"Eingabe unvollständig.\nBitte sowohl Titel als auch Beschreibung und Datum eingeben.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this.requireContext(),R.string.error_wrong_input, Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
@@ -116,11 +116,11 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
 
 
                 } catch (exception: Exception){
-                    Toast.makeText(root.context,"Lehrstoff kann nicht hinzugefügt werden.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(root.context,R.string.error_add_lehrstoff, Toast.LENGTH_SHORT).show()
                 }
 
                 } else (
-                    Toast.makeText(root.context,"Eingabe zu lang.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(root.context,R.string.error_long_input, Toast.LENGTH_SHORT).show()
                     )
 
             lehrstoff_title.text.clear()
