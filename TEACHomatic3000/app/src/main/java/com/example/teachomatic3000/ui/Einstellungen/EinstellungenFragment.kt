@@ -151,7 +151,7 @@ class EinstellungenFragment : Fragment() {
            // var student: StudentModel
            // student = StudentModel()
             einstellungenDatabase.anonymizeCurrentStudents()
-            Toast.makeText(root.context, "Schülernamen wurden anonymisiert!",Toast.LENGTH_LONG).show()
+            Toast.makeText(root.context, R.string.student_anonym, Toast.LENGTH_LONG).show()
         }
 
         // -----------------------------------

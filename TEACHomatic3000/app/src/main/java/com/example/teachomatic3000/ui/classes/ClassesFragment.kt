@@ -46,7 +46,7 @@ class ClassesFragment : Fragment() {
         buttonAddClass.setOnClickListener {
             if(textClassName.text.isEmpty() || textClassName.text.length > 255)
             {
-                Toast.makeText(root.context,"Name muss zwischen 1 und 255 Zeichen haben.",Toast.LENGTH_LONG).show()
+                Toast.makeText(root.context,R.string.text_length255,Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             else
@@ -58,11 +58,11 @@ class ClassesFragment : Fragment() {
                     val success = classDatabase.addClass(classModel) //implement in dbHelper
 
                     if(!success) {
-                        Toast.makeText(root.context,"Klasse konnte nicht hinzugefügt werden",Toast.LENGTH_LONG).show()
+                        Toast.makeText(root.context,R.string.error_add_class,Toast.LENGTH_LONG).show()
                     }
                 }
                 catch (exception: Exception) {
-                    Toast.makeText(root.context,"Klasse konnte nicht hinzugefügt werden",Toast.LENGTH_LONG).show()
+                    Toast.makeText(root.context,R.string.error_add_class,Toast.LENGTH_LONG).show()
                 }
             }
             updateClassList()

@@ -60,11 +60,11 @@ class StudentFragment : Fragment() {
                     student = StudentModel(0, first, last)
                     var success = studentDatabase.addStudent(student)
                 } catch (exception: Exception){
-                    Toast.makeText(root.context,"Student cannot added to Database", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(root.context,R.string.error_add_student, Toast.LENGTH_SHORT).show()
                 }
 
             } else (
-                Toast.makeText(root.context,"Fehlerhafte Eingabe", Toast.LENGTH_SHORT).show()
+                Toast.makeText(root.context,R.string.error_input, Toast.LENGTH_SHORT).show()
             )
             updateStudentList()
         }
