@@ -77,13 +77,14 @@ class LanguageTestDatabase {
                         withId(R.id.nav_host_fragment),
                         0
                     ),
-                    0
+                    3
                 ),
                 isDisplayed()
             )
         )
         switch_.perform(click())
         Assert.assertEquals("zh", database.getLanguage())
+        database.updateLanguage("de")
     }
 
     private fun childAtPosition(
