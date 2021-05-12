@@ -88,10 +88,38 @@ class DatabaseTests {
         db.addStudent(student)
         db.addClass(classModel)
 
-        val current_students = db.getStudentsOfClass().size
+        val current_students = db.getStudentsOfClass(classModel).size
         db.addStudentToClass(student, classModel)
 
-        val students_plus_one = db.getStudentsOfClass().size
+        val students_plus_one = db.getStudentsOfClass(classModel).size
         assertEquals(current_students + 1, students_plus_one)
+    }
+
+    @Test
+    fun testSCTableContent() {
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val student1 = StudentModel(0,"Max","Müller")
+        val student2 = StudentModel(0,"Peter","Heinz")
+        val student3 = StudentModel(0,"Susanne","Peters")
+        val classModel = ClassModel(0, "3a")
+
+        db.addStudent(student1)
+        db.addStudent(student2)
+        db.addStudent(student3)
+        db.addClass(classModel)
+
+        val current_students = db.getStudentsOfClass(classModel).size
+        db.addStudentToClass(student1, classModel)
+        db.addStudentToClass(student2, classModel)
+        db.addStudentToClass(student3, classModel)
+
+        val students_plus_three = db.getStudentsOfClass(classModel)
+        assertEquals(current_students + 3, students_plus_three.size)
+
+        assertEquals("Max", students_plus_three.get(students_plus_three.size-3).split(" ").get(1))
+
+        assertEquals("Peter", students_plus_three.get(students_plus_three.size-2).split(" ").get(1))
+        assertEquals("Susanne", students_plus_three.get(students_plus_three.size-1).split(" ").get(1))
+
     }
 }

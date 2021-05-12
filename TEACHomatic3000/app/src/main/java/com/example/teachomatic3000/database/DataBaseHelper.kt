@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter
 import com.example.teachomatic3000.models.ClassModel
 import com.example.teachomatic3000.models.LehrstoffModel
 
-class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 5) {
+class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 6) {
 
     val STUDENT_TABLE = "STUDENT_TABLE"
     val STUDENT_FIRSTNAME = "STUDENT_FIRSTNAME"
@@ -42,11 +42,18 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     val LANGUAGE_CODE = "LANGUAGE_CODE"
 
 
+    val STUDENT_CLASS_TABLE = "STUDENT_CLASS_TABLE"
+    val STUDENT_CLASS_ID = "STUDENT_CLASS_ID"
+    val STUDENT_CLASS_F_CLASS_ID = "STUDENT_CLASS_F_CLASS_ID"
+    val STUDENT_CLASS_F_SUS_ID = "STUDENT_CLASS_F_SUS_ID"
+
+
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableStatementStudent = "CREATE TABLE $STUDENT_TABLE($STUDENT_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_FIRSTNAME TEXT, $STUDENT_LASTNAME TEXT)"
         val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
         val createTableStatementLanguage = "CREATE TABLE $LANGUAGE_TABLE($LANGUAGE_ID INTEGER, $LANGUAGE_CODE TEXT)"
         val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
+        val createTableStatementSC = "CREATE TABLE $STUDENT_CLASS_TABLE($STUDENT_CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_CLASS_F_CLASS_ID INTEGER, $STUDENT_CLASS_F_SUS_ID INTEGER)"
 
         db!!.execSQL(createTableStatementDatum)
 
@@ -62,6 +69,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         db.execSQL(createTableStatementLehrstoff)
         db.execSQL(createTableStatementLanguage)
         db.execSQL(insertTableStatementLanguage)
+        db.execSQL(createTableStatementSC)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -92,6 +100,12 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
                 val insertTableStatementLanguage = "insert into $LANGUAGE_TABLE ($LANGUAGE_ID, $LANGUAGE_CODE) values (1, 'en')"
                 db.execSQL(insertTableStatementLanguage)
             }
+
+            5 -> {
+
+                val createTableStatementSC = "CREATE TABLE $STUDENT_CLASS_TABLE($STUDENT_CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_CLASS_F_CLASS_ID INTEGER, $STUDENT_CLASS_F_SUS_ID INTEGER)"
+                db!!.execSQL(createTableStatementSC)
+            }
         }
     }
 
@@ -104,9 +118,13 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
         val sucess = db.insert(STUDENT_TABLE, null, content)
 
+
+
         if(sucess.equals(-1)) {
             return false
         }
+
+        student.studentID = sucess.toInt()
         return true
     }
 
@@ -135,6 +153,33 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         db.close()
 
         return retList
+    }
+
+    fun getStudent(id: String) : String {
+        var student = String()
+
+        var query = "SELECT * FROM $STUDENT_TABLE WHERE $STUDENT_ID = "+id
+
+        val db = this.readableDatabase
+
+        var curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                var student_id = curser.getString(0)
+                var first_name = curser.getString(1)
+                var last_name = curser.getString(2)
+
+                student = "$student_id $first_name $last_name"
+                break
+
+            }while (curser.moveToNext())
+        }
+
+        curser.close()
+        db.close()
+
+        return student
     }
 
     fun addDatum(datum: DatumModel): Boolean {
@@ -243,6 +288,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         if(success.equals(-1)) {
             return false
         }
+
+        classModel.class_id = success.toInt()
         return true
     }
 
@@ -382,11 +429,46 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         }
 
         fun addStudentToClass(student: StudentModel, classModel: ClassModel) : Boolean{
-            return false
+
+            val db = this.writableDatabase
+            var content = ContentValues()
+
+            content.put(STUDENT_CLASS_F_CLASS_ID, classModel.class_id)
+            content.put(STUDENT_CLASS_F_SUS_ID, student.studentID)
+
+            val success = db.insert(STUDENT_CLASS_TABLE, null, content)
+
+            if(success.equals(-1)) {
+                return false
+            }
+            return true
         }
 
-        fun getStudentsOfClass() : List<StudentModel> {
-            val ret_list = ArrayList<StudentModel>()
-            return ret_list
+        fun getStudentsOfClass(classModel: ClassModel) : List<String> {
+
+            var retList = ArrayList<String>()
+
+            var query = "SELECT * FROM $STUDENT_CLASS_TABLE WHERE $STUDENT_CLASS_F_CLASS_ID = "+classModel.class_id.toString()
+
+
+            val db = this.readableDatabase
+
+            var curser = db.rawQuery(query, null)
+
+            if(curser.moveToFirst()) {
+                do{
+
+                    var student_id = curser.getString(2)
+
+                    val studentInfo = getStudent(student_id)
+                    retList.add(studentInfo)
+
+                }while (curser.moveToNext())
+            }
+
+            curser.close()
+            db.close()
+
+            return retList
         }
     }
