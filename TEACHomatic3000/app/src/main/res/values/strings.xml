@@ -48,6 +48,8 @@
 
     <string name="home_title">Die App für Lehrer</string>
 
+    <string name="create_lehrstoff">Lehrstoff erstellen</string>
+
     <string name="language_regulator_string">Deutsch {} 中国人</string>
 
 </resources>
