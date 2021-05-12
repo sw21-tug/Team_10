@@ -23,6 +23,9 @@
             android:name=".ui.classes.ClassDetails"
             android:theme="@style/Theme.TEACHomatic3000.NoActionBar" />
         <activity
+            android:name=".ui.lehrstoff.LehrstoffKlassenHelper"
+            android:theme="@style/Theme.TEACHomatic3000.NoActionBar" />
+        <activity
             android:name=".ui.classes.ClassDetailsAddSus"
             android:theme="@style/Theme.TEACHomatic3000.NoActionBar" />
         <activity

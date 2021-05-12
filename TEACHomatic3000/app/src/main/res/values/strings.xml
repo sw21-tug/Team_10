@@ -47,6 +47,9 @@
     <string name="student_lastname_hint">Mustermann</string>
 
     <string name="home_title">Die App für Lehrer</string>
+
+    <string name="create_lehrstoff">Lehrstoff erstellen</string>
+
     <string name="pruefung_erstellen_text">Prüfung erstellen</string>
     <string name="pruefungsstoff_description_hint">Prüfungsstoff</string>
     <string name="pruefungsdate_button">Prüfungsdatum</string>

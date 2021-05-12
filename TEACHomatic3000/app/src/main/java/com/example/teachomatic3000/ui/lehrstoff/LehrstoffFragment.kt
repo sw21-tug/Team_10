@@ -46,6 +46,7 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
 
        lehrstoff_date_creation.text = Database.getDatumHuman()
        lehrstoff_date_edit.text = Database.getDatumHuman() //im Moment noch aktuelles Systemdatum
+        val test = activity?.intent?.getStringExtra("class_id")
 
 
         lehrstoff_date_button.setOnClickListener {
