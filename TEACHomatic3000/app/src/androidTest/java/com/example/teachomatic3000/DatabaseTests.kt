@@ -66,11 +66,6 @@ class DatabaseTests {
         val success = db.addLehrstoff(Lehrstoff)
         assertEquals(true, success) }
 
-
-
-
-
-
     @Test
     fun testAnonymization() {
         val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
@@ -85,4 +80,18 @@ class DatabaseTests {
         assertEquals(normalstudent, anonymized)
     }
 
+    @Test
+    fun testSCTableSize() {
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val student = StudentModel(0,"Markus","Müller")
+        val classModel = ClassModel(0, "2a")
+        db.addStudent(student)
+        db.addClass(classModel)
+
+        val current_students = db.getStudentsOfClass().size
+        db.addStudentToClass(student, classModel)
+
+        val students_plus_one = db.getStudentsOfClass().size
+        assertEquals(current_students + 1, students_plus_one)
+    }
 }

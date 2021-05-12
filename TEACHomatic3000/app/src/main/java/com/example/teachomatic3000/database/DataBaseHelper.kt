@@ -380,4 +380,13 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
             return retString
         }
+
+        fun addStudentToClass(student: StudentModel, classModel: ClassModel) : Boolean{
+            return false
+        }
+
+        fun getStudentsOfClass() : List<StudentModel> {
+            val ret_list = ArrayList<StudentModel>()
+            return ret_list
+        }
     }
