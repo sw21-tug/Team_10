@@ -11,6 +11,5 @@ class LehrstoffKlassenHelper : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.lehrstoff_kassen_helper)
-        val test = intent.getStringExtra("class_id")!!.toInt()
     }
 }

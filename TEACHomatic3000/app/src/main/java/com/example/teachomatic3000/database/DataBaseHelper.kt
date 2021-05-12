@@ -40,6 +40,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     val LEHRSTOFF_ERSTELLDATUM = "LEHRSTOFF_ERSTELLDATUM"
     val LEHRSTOFF_BEARBEITUNGSDATUM = "LEHRSTOFF_BEARBEITUNGSDATUM"
 
+    val LEHRSTOFF_F_KLASSE = "LEHRSTOFF_F_KLASSE"
+
     val LANGUAGE_TABLE = "LANGUAGE_TABLE"
     val LANGUAGE_ID = "LANGUAGE_ID"
     val LANGUAGE_CODE = "LANGUAGE_CODE"
@@ -63,6 +65,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
         val createTableStatementLanguage = "CREATE TABLE $LANGUAGE_TABLE($LANGUAGE_ID INTEGER, $LANGUAGE_CODE TEXT)"
         val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
+        val alterTableLehrstoff = "ALTER TABLE  $LEHRSTOFF_TABLE ADD $LEHRSTOFF_F_KLASSE INTEGER"
         val createTableStatementPruefung = "CREATE TABLE $PRUEFUNG_TABLE($PRUEFUNG_ID INTEGER PRIMARY KEY AUTOINCREMENT, $PRUEFUNGKLASSEID INTEGER, $PRUEFUNG_LANGTEXT TEXT, $PRUEFUNG_DATUM TEXT, $PRUEFUNG_ART TEXT)"
         val createTableStatementSC = "CREATE TABLE $STUDENT_CLASS_TABLE($STUDENT_CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_CLASS_F_CLASS_ID INTEGER, $STUDENT_CLASS_F_SUS_ID INTEGER)"
 
@@ -80,6 +83,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         db.execSQL(createTableStatementLehrstoff)
         db.execSQL(createTableStatementLanguage)
         db.execSQL(insertTableStatementLanguage)
+        db.execSQL(alterTableLehrstoff)
         db.execSQL(createTableStatementPruefung)
         db.execSQL(createTableStatementSC)
     }
@@ -374,6 +378,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         content.put(LEHRSTOFF_DATUM,lehrstoff.LehrstoffDatum)
         content.put(LEHRSTOFF_ERSTELLDATUM, lehrstoff.ErstellDatum)
         content.put(LEHRSTOFF_BEARBEITUNGSDATUM, lehrstoff.Bearbeitungsdatum)
+        content.put(LEHRSTOFF_F_KLASSE, lehrstoff.Lehrstoff_f_Klasse)
+
 
         val sucess = db.insert(LEHRSTOFF_TABLE, null, content)
 
@@ -400,10 +406,54 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
                 var lehrstoff_datum = curser.getString(3)
                 var lehrstoff_date_create = curser.getString(4)
                 var lehrstoff_date_edit = curser.getString(5)
+                var lehrstoff_k_klasse = curser.getString(6)
+                var klasse = ""
+                if(lehrstoff_k_klasse.toInt() > 0) {
+                    var classModel = this.getClass(lehrstoff_k_klasse.toInt())
+                    klasse = "\n Klasse: " + classModel?.class_name
+                }
 
                 val lehrstoffInfo = " Lehrstoff-ID: $lehrstoff_id \n Lehrstofftitel: $lehrstoff_title \n " +
                         "Lehrstoffbeschreibung: $lehrstoff_description \n Lehrstoffdatum: $lehrstoff_datum \n " +
-                        "Erstelldatum: $lehrstoff_date_create \n Bearbeitungsdatum: $lehrstoff_date_edit"
+                        "Erstelldatum: $lehrstoff_date_create \n Bearbeitungsdatum: $lehrstoff_date_edit $klasse"
+                retList.add(lehrstoffInfo)
+
+            }while (curser.moveToNext())
+        }
+
+
+        curser.close()
+        db.close()
+
+        return retList
+    }
+    fun getLehrstoffeForKlasse(Klasse_id: Int) : ArrayList<String> {
+        var retList = ArrayList<String>()
+
+        var query = "SELECT * FROM $LEHRSTOFF_TABLE WHERE $LEHRSTOFF_F_KLASSE = $Klasse_id"
+
+        val db = this.readableDatabase
+
+        var curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                var lehrstoff_id = curser.getString(0)
+                var lehrstoff_title = curser.getString(1)
+                var lehrstoff_description = curser.getString(2)
+                var lehrstoff_datum = curser.getString(3)
+                var lehrstoff_date_create = curser.getString(4)
+                var lehrstoff_date_edit = curser.getString(5)
+                var lehrstoff_k_klasse = curser.getString(6)
+                var klasse = ""
+                if(lehrstoff_k_klasse.toInt() > 0) {
+                    var classModel = this.getClass(lehrstoff_k_klasse.toInt())
+                    klasse = "\n Klasse: " + classModel?.class_name
+                }
+
+                val lehrstoffInfo = " Lehrstoff-ID: $lehrstoff_id \n Lehrstofftitel: $lehrstoff_title \n " +
+                        "Lehrstoffbeschreibung: $lehrstoff_description \n Lehrstoffdatum: $lehrstoff_datum \n " +
+                        "Erstelldatum: $lehrstoff_date_create \n Bearbeitungsdatum: $lehrstoff_date_edit $klasse"
                 retList.add(lehrstoffInfo)
 
             }while (curser.moveToNext())

@@ -3,8 +3,8 @@ package com.example.teachomatic3000.ui.classes
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -29,6 +29,8 @@ class ClassDetails : AppCompatActivity() {
     private lateinit var pruefung_erstellen: Button
     private var class_id by Delegates.notNull<Int>()
     private lateinit var create_lehrstoff_button: Button
+    private lateinit var lehrstoff_liste: ListView
+    private lateinit var LehrstoffListAdapter: ArrayAdapter<String>
     private lateinit var PruefungListAdapter: ArrayAdapter<String>
     private lateinit var PruefungList: ListView
 
@@ -63,6 +65,14 @@ class ClassDetails : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //Database = DataBaseHelper(root.context)
+        lehrstoff_liste = findViewById(R.id.lehrstoff_klassen_liste)
+        LehrstoffListAdapter = ArrayAdapter<String>(this.applicationContext, android.R.layout.simple_list_item_1, db.getLehrstoffeForKlasse(class_id))
+        lehrstoff_liste.adapter = LehrstoffListAdapter
+
+        //lehrstoff_liste.invalidate()
+
+
         pruefung_erstellen.setOnClickListener {
             val intent = Intent (this.baseContext, PruefungErstellen::class.java).apply {
             putExtra("class_id", class_id)
@@ -72,10 +82,5 @@ class ClassDetails : AppCompatActivity() {
     fun updateClassInfoText() {
         val class_model = db.getClass(class_id)
         class_info.setText(class_model.toString()).toString()
-    }
-
-    fun openActivity2(view: View) {
-        intent = Intent(view.context,LehrstoffFragment::class.java)
-        startActivity(intent)
     }
 }
