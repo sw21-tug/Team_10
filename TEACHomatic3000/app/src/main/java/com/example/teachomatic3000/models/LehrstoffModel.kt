@@ -9,10 +9,11 @@ class LehrstoffModel {
     var LehrstoffDatum: String
     var ErstellDatum: String
     var Bearbeitungsdatum: String
+    var Lehrstoff_f_Klasse: Int
 
 
        constructor(LehrstoffID: Int, LehrstoffTitel: String, LehrstoffLangtext: String, LehrstoffDatum: String,
-                ErstellDatum: String, Bearbeitungsdatum: String ) {
+                ErstellDatum: String, Bearbeitungsdatum: String, Lehrstoff_f_Klasse: Int) {
 
         this.LehrstoffID = LehrstoffID
         this.LehrstoffTitel = LehrstoffTitel
@@ -20,6 +21,7 @@ class LehrstoffModel {
         this.LehrstoffDatum = LehrstoffDatum
         this.ErstellDatum = ErstellDatum
         this.Bearbeitungsdatum = Bearbeitungsdatum
+           this.Lehrstoff_f_Klasse = Lehrstoff_f_Klasse
 
 
     }
@@ -28,6 +30,6 @@ class LehrstoffModel {
 
         return "LehrstoffModel(LehrstoffID='$LehrstoffID', LehrstoffTitel='$LehrstoffTitel', " +
                 "LehrstoffLangtext='$LehrstoffLangtext', LehrstoffDatum='$LehrstoffDatum', " +
-                "ErstellDatum='$ErstellDatum', Bearbeitungsdatum='$Bearbeitungsdatum')"
+                "ErstellDatum='$ErstellDatum', Bearbeitungsdatum='$Bearbeitungsdatum', Lehrstoff_f_Klasse='$Lehrstoff_f_Klasse')"
     }
 }

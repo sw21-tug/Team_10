@@ -3,7 +3,9 @@ package com.example.teachomatic3000.ui.classes
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.teachomatic3000.MainActivity
@@ -21,6 +23,8 @@ class ClassDetails : AppCompatActivity() {
     private lateinit var db: DataBaseHelper
     private var class_id by Delegates.notNull<Int>()
     private lateinit var create_lehrstoff_button: Button
+    private lateinit var lehrstoff_liste: ListView
+    private lateinit var LehrstoffListAdapter: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,30 +36,24 @@ class ClassDetails : AppCompatActivity() {
 
         create_lehrstoff_button = findViewById(R.id.create_lehrstoff_button)
         create_lehrstoff_button.setOnClickListener {
-            //this.setContentView(R.layout.fragment_lehrstoff)
 
             val intent = Intent(this.baseContext, LehrstoffKlassenHelper::class.java).apply {
                 putExtra("class_id", class_id)
-                println(class_id)
-                //putExtra("pos", )
             }
             startActivity(intent)
-            //startActivity(Intent(this, LehrstoffFragment::class.java))
-            //setContentView(R.layout.fragment_lehrstoff)
-            //startActivity( Intent(MainActivity::class, LehrstoffFragment::class.java))
-
         }
 
-    }
+        //Database = DataBaseHelper(root.context)
+        lehrstoff_liste = findViewById(R.id.lehrstoff_klassen_liste)
+        LehrstoffListAdapter = ArrayAdapter<String>(this.applicationContext, android.R.layout.simple_list_item_1, db.getLehrstoffeForKlasse(class_id))
+        lehrstoff_liste.adapter = LehrstoffListAdapter
 
+        //lehrstoff_liste.invalidate()
+
+    }
 
     fun updateClassInfoText() {
         val class_model = db.getClass(class_id)
         class_info.setText(class_model.toString()).toString()
-    }
-
-    fun openActivity2(view: View) {
-        intent = Intent(view.context,LehrstoffFragment::class.java)
-        startActivity(intent)
     }
 }

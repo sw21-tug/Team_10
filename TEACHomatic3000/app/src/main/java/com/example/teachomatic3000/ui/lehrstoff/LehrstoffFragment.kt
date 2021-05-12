@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 //import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -46,7 +43,15 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
 
        lehrstoff_date_creation.text = Database.getDatumHuman()
        lehrstoff_date_edit.text = Database.getDatumHuman() //im Moment noch aktuelles Systemdatum
-        val test = activity?.intent?.getStringExtra("class_id")
+
+        // INTENT:
+        val extras = activity?.intent?.extras
+        var klasse_id = 0;
+        if(null != extras){
+            val value = extras.getInt("class_id")
+            klasse_id = value;
+        }
+        //EOF INTENT
 
 
         lehrstoff_date_button.setOnClickListener {
@@ -111,10 +116,9 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
                     val titel = String(lehrstoff_title.text.toString().toByteArray(), charset("UTF-8"))
                     val long = String(lehrstoff_description.text.toString().toByteArray(), charset("UTF-8"))
 
-                   lehrstoff = LehrstoffModel(0, titel, long, lehrstoff_date_choice.text.toString(), lehrstoff_date_creation.text.toString(), lehrstoff_date_edit.text.toString())
+                   lehrstoff = LehrstoffModel(0, titel, long, lehrstoff_date_choice.text.toString(), lehrstoff_date_creation.text.toString(), lehrstoff_date_edit.text.toString(), klasse_id)
 
                     var success = Database.addLehrstoff(lehrstoff)
-
 
                 } catch (exception: Exception){
                     Toast.makeText(root.context,R.string.error_add_lehrstoff, Toast.LENGTH_SHORT).show()
