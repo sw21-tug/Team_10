@@ -47,7 +47,9 @@
     <string name="student_lastname_hint">Mustermann</string>
 
     <string name="home_title">Die App für Lehrer</string>
+    <string name="pruefung_erstellen_text">Prüfung erstellen</string>
 
     <string name="language_regulator_string">Deutsch {} 中国人</string>
+
 
 </resources>
