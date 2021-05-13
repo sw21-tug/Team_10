@@ -49,5 +49,6 @@
     <string name="home_title">Die App für Lehrer</string>
 
     <string name="language_regulator_string">Deutsch {} 中国人</string>
+    <string name="sus_hinzufügen">SuS hinzufügen</string>
 
 </resources>
