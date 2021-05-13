@@ -40,6 +40,8 @@ class LehrstoffUebersichtFragment : androidx.fragment.app.Fragment() {
         LehrstoffListAdapter = ArrayAdapter<String>(root.context, android.R.layout.simple_list_item_1, Database.getLehrstoffe())
         LehrstoffList.adapter = LehrstoffListAdapter
 
+
+
         return root
     }
 
