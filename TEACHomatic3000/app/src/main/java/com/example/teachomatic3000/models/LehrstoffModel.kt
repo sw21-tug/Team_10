@@ -9,7 +9,7 @@ class LehrstoffModel {
     var LehrstoffDatum: String
     var ErstellDatum: String
     var Bearbeitungsdatum: String
-    var Lehrstoff_f_Klasse: Int
+    var Lehrstoff_f_Klasse: Int // Foreign key for class_id
 
 
        constructor(LehrstoffID: Int, LehrstoffTitel: String, LehrstoffLangtext: String, LehrstoffDatum: String,

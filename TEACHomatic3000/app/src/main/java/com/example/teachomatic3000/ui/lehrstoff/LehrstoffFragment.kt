@@ -16,6 +16,8 @@ import com.example.teachomatic3000.database.DataBaseHelper
 import com.example.teachomatic3000.models.LehrstoffModel
 import com.example.teachomatic3000.ui.classes.ClassDetails
 import java.lang.Exception
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class LehrstoffFragment : androidx.fragment.app.Fragment() {
@@ -53,6 +55,25 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
             klasse_id = value;
         }
         //EOF INTENT
+
+        //INTENT EDIT:
+        if(null != extras){
+            val check_edit = extras?.getBoolean("check_edit")
+            if(check_edit == true)
+            {
+                lehrstoff_title.setText(extras.getString("title"))
+                lehrstoff_description.setText(extras.getString("description"))
+                lehrstoff_date_choice.text = extras.getString("date")
+                lehrstoff_date_creation.text = extras.getString("date_create")
+                val currentDateTime = LocalDateTime.now()
+                lehrstoff_date_edit.text = currentDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                val c_id = extras.getString("class")?.toInt()
+                if (c_id != null) {
+                    klasse_id = c_id
+                }
+            }
+        }
+        //EOF INTENT EDIT
 
 
         lehrstoff_date_button.setOnClickListener {
@@ -117,9 +138,26 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
                     val titel = String(lehrstoff_title.text.toString().toByteArray(), charset("UTF-8"))
                     val long = String(lehrstoff_description.text.toString().toByteArray(), charset("UTF-8"))
 
-                   lehrstoff = LehrstoffModel(0, titel, long, lehrstoff_date_choice.text.toString(), lehrstoff_date_creation.text.toString(), lehrstoff_date_edit.text.toString(), klasse_id)
+                    if(null != extras){
+                        val check_edit = extras?.getBoolean("check_edit")
+                        if(check_edit == true)
+                        {
+                            val lehrtoff_id = extras!!.getInt("lehrstoff_id")
+                            lehrstoff = LehrstoffModel(lehrtoff_id, titel, long, lehrstoff_date_choice.text.toString(), lehrstoff_date_creation.text.toString(), lehrstoff_date_edit.text.toString(), klasse_id)
+                            var success = Database.editLehrstoff(lehrstoff)
+                        }
+                        else
+                        {
+                            lehrstoff = LehrstoffModel(0, titel, long, lehrstoff_date_choice.text.toString(), lehrstoff_date_creation.text.toString(), lehrstoff_date_edit.text.toString(), klasse_id)
+                            var success = Database.addLehrstoff(lehrstoff)
+                        }
+                    }
+                    else
+                    {
+                        lehrstoff = LehrstoffModel(0, titel, long, lehrstoff_date_choice.text.toString(), lehrstoff_date_creation.text.toString(), lehrstoff_date_edit.text.toString(), klasse_id)
+                        var success = Database.addLehrstoff(lehrstoff)
+                    }
 
-                    var success = Database.addLehrstoff(lehrstoff)
 
                 } catch (exception: Exception){
                     Toast.makeText(root.context,R.string.error_add_lehrstoff, Toast.LENGTH_SHORT).show()
