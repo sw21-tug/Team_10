@@ -62,7 +62,7 @@ class DatabaseTests {
     fun testAddLehrstoffElements() {
         val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
         val Lehrstoff = LehrstoffModel(0,"Programmieren", "Small Basic Grundlagen werden erarbeitet",
-            "2021-04-28", "2021-04-28", "2021-04-29")
+            "2021-04-28", "2021-04-28", "2021-04-29", 9)
         val success = db.addLehrstoff(Lehrstoff)
         assertEquals(true, success) }
 
