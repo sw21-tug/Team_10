@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.teachomatic3000.R
 import com.example.teachomatic3000.database.DataBaseHelper
 import com.example.teachomatic3000.models.LehrstoffModel
+import com.example.teachomatic3000.ui.classes.ClassDetails
 import java.lang.Exception
 import java.util.*
 
@@ -130,6 +131,10 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
 
             lehrstoff_title.text.clear()
             lehrstoff_description.text.clear()
+            // If Fragment is opened via ClassDetails
+            if(null != extras){
+                activity?.onBackPressed()
+            }
         }
 
 

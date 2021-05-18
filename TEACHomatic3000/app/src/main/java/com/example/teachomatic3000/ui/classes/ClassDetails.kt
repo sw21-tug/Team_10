@@ -8,12 +8,9 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.teachomatic3000.MainActivity
 import com.example.teachomatic3000.R
 import com.example.teachomatic3000.database.DataBaseHelper
-import com.example.teachomatic3000.ui.lehrstoff.LehrstoffFragment
 import com.example.teachomatic3000.ui.lehrstoff.LehrstoffKlassenHelper
-import com.example.teachomatic3000.ui.lehrstoff.LehrstoffViewModel
 import kotlin.properties.Delegates
 
 
@@ -25,6 +22,7 @@ class ClassDetails : AppCompatActivity() {
     private lateinit var create_lehrstoff_button: Button
     private lateinit var lehrstoff_liste: ListView
     private lateinit var LehrstoffListAdapter: ArrayAdapter<String>
+    private lateinit var lehrstoff_klassen_liste: ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +47,14 @@ class ClassDetails : AppCompatActivity() {
         lehrstoff_liste.adapter = LehrstoffListAdapter
 
         //lehrstoff_liste.invalidate()
+
+        lehrstoff_klassen_liste = findViewById(R.id.lehrstoff_klassen_liste)
+        lehrstoff_klassen_liste.setOnItemClickListener { parent, view, position, id ->
+            val class_info = parent.getItemAtPosition(position)
+            val class_parts = class_info.toString().split(" ").toTypedArray()
+            val class_id = class_parts[0]
+            // TODO: Lehrstoff bearbeiten.
+        }
 
     }
 
