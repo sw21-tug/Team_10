@@ -6,11 +6,13 @@ class PruefungModel {
     var PruefungDatum: String
     var PruefungLangtext: String
     var PruefungArt: String
+    var PruefungKlasseID: Int
 
 
-    constructor(PruefungID: Int, PruefungDatum: String, PruefungLangtext: String, PruefungArt: String) {
+    constructor(PruefungID: Int, PruefungKlasseID: Int, PruefungDatum: String, PruefungLangtext: String, PruefungArt: String) {
 
         this.PruefungID = PruefungID
+        this.PruefungKlasseID = PruefungKlasseID
         this.PruefungDatum = PruefungDatum
         this.PruefungLangtext = PruefungLangtext
         this.PruefungArt = PruefungArt
@@ -18,7 +20,7 @@ class PruefungModel {
 
     override fun toString(): String {
 
-        return "PruefungModel(PruefungID='$PruefungID', PruefungDatum='$PruefungDatum', " +
+        return "PruefungModel(PruefungID='$PruefungID', PruefungKlasseID='$PruefungKlasseID', PruefungDatum='$PruefungDatum', " +
                 "PruefungLangtext='$PruefungLangtext', PruefungArt='$PruefungArt')"
     }
 }

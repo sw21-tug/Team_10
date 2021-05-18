@@ -48,7 +48,12 @@
 
     <string name="home_title">Die App für Lehrer</string>
     <string name="pruefung_erstellen_text">Prüfung erstellen</string>
-
+    <string name="pruefungsstoff_description_hint">Prüfungsstoff</string>
+    <string name="pruefungsdate_button">Prüfungsdatum</string>
+    <string name="pruefung_save_button">Speichern</string>
+    <string name="radioButton1">Schriftlicher Test</string>
+    <string name="radioButton2">Schularbeit</string>
+    <string name="radioButton3">Portfolioabgabe</string>
     <string name="language_regulator_string">Deutsch {} 中国人</string>
     <string name="sus_hinzufügen">SuS hinzufügen</string>
 

@@ -44,6 +44,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
     val PRUEFUNG_TABLE = "PRUEFUNG_TABLE"
     val PRUEFUNG_ID = "PRUEFUNG_ID"
+    val PRUEFUNGKLASSEID = "PRUEFUNGKLASSEID"
     val PRUEFUNG_LANGTEXT = "PRUEFUNG_LANGTEXT"
     val PRUEFUNG_DATUM = "PRUEFUNG_DATUM"
     val PRUEFUNG_ART = "PRUEFUNG_ART"
@@ -60,7 +61,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
         val createTableStatementLanguage = "CREATE TABLE $LANGUAGE_TABLE($LANGUAGE_ID INTEGER, $LANGUAGE_CODE TEXT)"
         val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
-        val createTableStatementPruefung = "CREATE TABLE $PRUEFUNG_TABLE($PRUEFUNG_ID INTEGER PRIMARY KEY AUTOINCREMENT, $PRUEFUNG_LANGTEXT TEXT, $PRUEFUNG_DATUM TEXT, $PRUEFUNG_ART TEXT)"
+        val createTableStatementPruefung = "CREATE TABLE $PRUEFUNG_TABLE($PRUEFUNG_ID INTEGER PRIMARY KEY AUTOINCREMENT, $PRUEFUNGKLASSEID INTEGER, $PRUEFUNG_LANGTEXT TEXT, $PRUEFUNG_DATUM TEXT, $PRUEFUNG_ART TEXT)"
         val createTableStatementSC = "CREATE TABLE $STUDENT_CLASS_TABLE($STUDENT_CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_CLASS_F_CLASS_ID INTEGER, $STUDENT_CLASS_F_SUS_ID INTEGER)"
 
         db!!.execSQL(createTableStatementDatum)
@@ -116,7 +117,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
             }
 
             7 -> {
-                val createTableStatementPruefung = "CREATE TABLE $PRUEFUNG_TABLE($PRUEFUNG_ID INTEGER PRIMARY KEY AUTOINCREMENT, $PRUEFUNG_LANGTEXT TEXT, $PRUEFUNG_DATUM TEXT, $PRUEFUNG_ART TEXT)"
+                val createTableStatementPruefung = "CREATE TABLE $PRUEFUNG_TABLE($PRUEFUNG_ID INTEGER PRIMARY KEY AUTOINCREMENT, $PRUEFUNGKLASSEID INTEGER, $PRUEFUNG_LANGTEXT TEXT, $PRUEFUNG_DATUM TEXT, $PRUEFUNG_ART TEXT)"
                 db!!.execSQL(createTableStatementPruefung)
             }
 
@@ -493,6 +494,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
         var content = ContentValues()
 
+        content.put(PRUEFUNGKLASSEID, pruefung.PruefungKlasseID)
         content.put(PRUEFUNG_LANGTEXT, pruefung.PruefungLangtext)
         content.put(PRUEFUNG_DATUM,pruefung.PruefungDatum)
         content.put(PRUEFUNG_ART, pruefung.PruefungArt)
@@ -505,10 +507,10 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return true;
     }
 
-    fun getPruefung() : ArrayList<String> {
+    fun getPruefung(class_id: Int) : ArrayList<String> {
         var retList = ArrayList<String>()
 
-        var query = "SELECT * FROM $PRUEFUNG_TABLE"
+        var query = "SELECT * FROM $PRUEFUNG_TABLE WHERE $PRUEFUNGKLASSEID = $class_id "
 
         val db = this.readableDatabase
 
@@ -517,14 +519,21 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         if(curser.moveToFirst()) {
             do{
                 var pruefung_id = curser.getString(0)
-                var pruefung_datum = curser.getString(1)
-                var pruefung_langtext = curser.getString(2)
-                var pruefung_art = curser.getString(3)
-
+                var pruefungklasseid = curser.getInt(1)
+                var pruefung_datum = curser.getString(2)
+                var pruefung_langtext = curser.getString(3)
+                var pruefung_art = curser.getString(4)
+                var klasse = ""
+                if(pruefungklasseid.toInt() > 0) {
+                    var classModel = this.getClass(pruefungklasseid.toInt())
+                    klasse = "Klasse: " + classModel?.class_name
+                }
                 val pruefungInfo = "Prüfung-ID: $pruefung_id \n" +
-                        "Prüfungsdatum: $pruefung_datum \n " +
-                                "Prüfungsart: $pruefung_art \n " +
-                                "Prüfungsstoff: $pruefung_langtext \n"
+                        "Prüfungsdatum: $pruefung_datum \n" +
+                        "Prüfungsart: $pruefung_art \n" +
+                        "Prüfungsstoff: $pruefung_langtext \n" +
+                        "$klasse"
+
                 retList.add(pruefungInfo)
 
             }while (curser.moveToNext())
