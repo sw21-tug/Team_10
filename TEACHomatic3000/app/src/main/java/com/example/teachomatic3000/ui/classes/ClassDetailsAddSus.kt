@@ -39,16 +39,13 @@ class ClassDetailsAddSus : AppCompatActivity() {
 
         tVClassDetailsAddSusInfo.text = classModel.toString()
 
-
         adapter = ArrayAdapter(this.baseContext, android.R.layout.simple_list_item_multiple_choice, students)
         sus_list_of_class.adapter = adapter
         adapter.notifyDataSetChanged()
 
-
         sus_list_of_class.setOnItemClickListener { adapterView, view, i, l ->
             adapter.notifyDataSetChanged()
         }
-
 
         btnAddSusToClass.setOnClickListener {
             val position: SparseBooleanArray = sus_list_of_class.checkedItemPositions
@@ -70,7 +67,6 @@ class ClassDetailsAddSus : AppCompatActivity() {
                     }
 
                     if(!flag) {
-
                         val studentModel: StudentModel
                         val parts = students.get(item).split(" ")
                         //Log.d("SUS", students.get(item))
@@ -89,6 +85,7 @@ class ClassDetailsAddSus : AppCompatActivity() {
                 }
                 item--
             }
+            finish()
         }
     }
 }
