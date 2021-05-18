@@ -177,7 +177,7 @@ childAtPosition(
 childAtPosition(
 withId(android.R.id.content),
 0),
-2),
+1),
 isDisplayed()))
         materialButton4.perform(click())
         

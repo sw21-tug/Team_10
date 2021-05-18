@@ -87,17 +87,25 @@ class PruefungErstellen : AppCompatActivity() {
 
         }
 
+
+
         pruefung_save_button.setOnClickListener {
-            if(pruefungsstoff.text.isEmpty() || pruefungsdate_choice.text.isEmpty()){
-                Toast.makeText(this.baseContext,R.string.error_wrong_input, Toast.LENGTH_LONG).show()
+
+            val radioGroup: RadioGroup = findViewById(R.id.radioGroup1)
+
+
+            if(pruefungsstoff.text.isEmpty() || pruefungsdate_choice.text.isEmpty() || radioGroup.getCheckedRadioButtonId() == -1){
+                Toast.makeText(this,"Prüfung konnte nicht hinzugefügt werden", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
+
             var pruefung: PruefungModel
 
-            val radioGroup: RadioGroup = findViewById(R.id.radioGroup1)
             val activeRadioButton: RadioButton = findViewById(radioGroup.checkedRadioButtonId)
             var pruefungsart = activeRadioButton.text.toString()
+
+
             if (pruefungsstoff.text.length < 5001){
 
                 try {
@@ -109,7 +117,7 @@ class PruefungErstellen : AppCompatActivity() {
 
 
                 } catch (exception: Exception){
-                    Toast.makeText(this.baseContext,"Prüfung kann nicht hinzugefügt werden", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.baseContext,"Prüfung konnte nicht hinzugefügt werden", Toast.LENGTH_SHORT).show()
                 }
 
             } else (
@@ -117,6 +125,8 @@ class PruefungErstellen : AppCompatActivity() {
                     )
 
             pruefungsstoff.text.clear()
+            pruefungsdate_choice.setText("")
+            radioGroup.clearCheck()
         }
     }
 
