@@ -48,12 +48,26 @@ class ClassDetails : AppCompatActivity() {
 
         //lehrstoff_liste.invalidate()
 
+        //Lehrstoff bearbeiten
         lehrstoff_klassen_liste = findViewById(R.id.lehrstoff_klassen_liste)
         lehrstoff_klassen_liste.setOnItemClickListener { parent, view, position, id ->
-            val class_info = parent.getItemAtPosition(position)
-            val class_parts = class_info.toString().split(" ").toTypedArray()
-            val class_id = class_parts[0]
-            // TODO: Lehrstoff bearbeiten.
+            val data_pos = parent.getItemAtPosition(position).toString()
+            val id_split = data_pos.split("Lehrstoff-ID: ").toTypedArray()
+            val id_split1 = id_split[1].split(" ")
+            val id = id_split1[0].toInt()
+
+            val intent = Intent(this.baseContext, LehrstoffKlassenHelper::class.java).apply {
+                putExtra("lehrstoff_id", id)
+                putExtra("title", db.getLehrstoffOnPos(id)[1])
+                putExtra("description", db.getLehrstoffOnPos(id)[2])
+                putExtra("date", db.getLehrstoffOnPos(id)[3])
+                putExtra("date_create", db.getLehrstoffOnPos(id)[4])
+                putExtra("date_edit", db.getLehrstoffOnPos(id)[5])
+                putExtra("class", db.getLehrstoffOnPos(id)[6])
+                putExtra("check_edit", true)
+            }
+            startActivity(intent)
+
         }
 
     }
