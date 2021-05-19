@@ -8,8 +8,10 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
+import com.example.teachomatic3000.database.DataBaseHelper
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.`is`
@@ -78,22 +80,25 @@ class DatumUIFunctionalityNew {
                 isDisplayed()
             )
         )
-        switch_.perform(click())
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        if(db.getDatum() == "-1") {
+            switch_.perform(click())
 
-        val materialButton = onView(
-            allOf(
-                withId(android.R.id.button1), withText("OK"),
-                childAtPosition(
-                    childAtPosition(
-                        withClassName(`is`("android.widget.ScrollView")),
-                        0
-                    ),
-                    3
-                )
+
+            val materialButton = onView(
+                    allOf(
+                            withId(android.R.id.button1), withText("OK"),
+                            childAtPosition(
+                                    childAtPosition(
+                                            withClassName(`is`("android.widget.ScrollView")),
+                                            0
+                                    ),
+                                    3
+                            )
+                    )
             )
-        )
-        materialButton.perform(scrollTo(), click())
-
+            materialButton.perform(scrollTo(), click())
+        }
         val switch_2 = onView(
             allOf(
                 withId(R.id.date_regulator), withText("Datum manuell einstellen"),
