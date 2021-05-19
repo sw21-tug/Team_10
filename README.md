@@ -40,5 +40,9 @@ alle erfassten Inhalte einfach ausgewertet werden.
 | T-024  | Daten annonymisieren
 | T-029  | Ein Lehrstoff in DB [BE]
 | T-035  | Chinesisch auswählen
-| T-034  |  Chinesisch darstellen
-
+| T-034  | Chinesisch darstellen
+| T-019  | SuS für Klassen auswählen (FE Listen Ansicht und BE)
+| T-043  | Hotfix Datum Text fix
+| T-011  | Prüfungen mit Termin einer Klasse hinzufügen
+| T-010  | Lehrstoff einer Klasse hinzufügen
+| T-047  | Scroll view in Class Details
