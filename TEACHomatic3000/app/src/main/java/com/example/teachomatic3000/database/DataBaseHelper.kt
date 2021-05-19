@@ -91,7 +91,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         for (x: Int in range(oldVersion, newVersion)) {
-             when (oldVersion) {
+             when (x) {
                 1 -> {
                     val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
                     db!!.execSQL(createTableStatementClasses)
