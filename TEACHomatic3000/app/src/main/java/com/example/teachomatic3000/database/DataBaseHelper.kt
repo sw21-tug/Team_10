@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.teachomatic3000.MainActivity
 import com.example.teachomatic3000.models.DatumModel
@@ -14,6 +15,7 @@ import java.time.format.DateTimeFormatter
 import com.example.teachomatic3000.models.ClassModel
 import com.example.teachomatic3000.models.LehrstoffModel
 import com.example.teachomatic3000.models.PruefungModel
+import java.util.stream.IntStream.range
 
 class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 8) {
 
@@ -82,47 +84,50 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         db.execSQL(createTableStatementSC)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        when (oldVersion) {
-            1 -> {
-                val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
-                db!!.execSQL(createTableStatementClasses)
+        for (x: Int in range(oldVersion, newVersion)) {
+             when (oldVersion) {
+                1 -> {
+                    val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
+                    db!!.execSQL(createTableStatementClasses)
+                }
+                2 -> {
+                    val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
+                    db!!.execSQL(createTableStatementDatum)
+                    val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
+                    db.execSQL(insertTableStatementDatum)
+                }
+                3 -> {
+
+                    val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
+                            "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
+
+                    db!!.execSQL(createTableStatementLehrstoff)
+                }
+                4 -> {
+
+                    val createTableStatementLanguage = "CREATE TABLE $LANGUAGE_TABLE($LANGUAGE_ID INTEGER, $LANGUAGE_CODE TEXT)"
+
+                    db!!.execSQL(createTableStatementLanguage)
+
+                    val insertTableStatementLanguage = "insert into $LANGUAGE_TABLE ($LANGUAGE_ID, $LANGUAGE_CODE) values (1, 'en')"
+                    db.execSQL(insertTableStatementLanguage)
+                }
+                5 -> {
+
+                    val createTableStatementSC = "CREATE TABLE $STUDENT_CLASS_TABLE($STUDENT_CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_CLASS_F_CLASS_ID INTEGER, $STUDENT_CLASS_F_SUS_ID INTEGER)"
+                    db!!.execSQL(createTableStatementSC)
+                }
+
+                7 -> {
+                    val createTableStatementPruefung = "CREATE TABLE $PRUEFUNG_TABLE($PRUEFUNG_ID INTEGER PRIMARY KEY AUTOINCREMENT, $PRUEFUNGKLASSEID INTEGER, $PRUEFUNG_LANGTEXT TEXT, $PRUEFUNG_DATUM TEXT, $PRUEFUNG_ART TEXT)"
+                    db!!.execSQL(createTableStatementPruefung)
+                }
+
             }
-            2 -> {
-                val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
-                db!!.execSQL(createTableStatementDatum)
-                val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
-                db.execSQL(insertTableStatementDatum)
-            }
-            3 -> {
-
-                val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
-                        "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
-
-                 db!!.execSQL(createTableStatementLehrstoff)
-            }
-            4 -> {
-
-                val createTableStatementLanguage = "CREATE TABLE $LANGUAGE_TABLE($LANGUAGE_ID INTEGER, $LANGUAGE_CODE TEXT)"
-
-                db!!.execSQL(createTableStatementLanguage)
-
-                val insertTableStatementLanguage = "insert into $LANGUAGE_TABLE ($LANGUAGE_ID, $LANGUAGE_CODE) values (1, 'en')"
-                db.execSQL(insertTableStatementLanguage)
-            }
-            5 -> {
-
-                val createTableStatementSC = "CREATE TABLE $STUDENT_CLASS_TABLE($STUDENT_CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_CLASS_F_CLASS_ID INTEGER, $STUDENT_CLASS_F_SUS_ID INTEGER)"
-                db!!.execSQL(createTableStatementSC)
-            }
-
-            7 -> {
-                val createTableStatementPruefung = "CREATE TABLE $PRUEFUNG_TABLE($PRUEFUNG_ID INTEGER PRIMARY KEY AUTOINCREMENT, $PRUEFUNGKLASSEID INTEGER, $PRUEFUNG_LANGTEXT TEXT, $PRUEFUNG_DATUM TEXT, $PRUEFUNG_ART TEXT)"
-                db!!.execSQL(createTableStatementPruefung)
-            }
-
         }
-    }
+        }
 
     fun addStudent(student: StudentModel): Boolean {
         val db = this.writableDatabase
