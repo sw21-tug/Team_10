@@ -24,4 +24,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/class_info" />
+
+    <ListView
+        android:id="@+id/pruefung_listview"
+        android:layout_width="343dp"
+        android:layout_height="513dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pruefung_erstellen"
+        app:layout_constraintVertical_bias="0.484" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/pruefung_erstellen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/pruefung_erstellen_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_add_student_to_class" />
 </androidx.constraintlayout.widget.ConstraintLayout>
