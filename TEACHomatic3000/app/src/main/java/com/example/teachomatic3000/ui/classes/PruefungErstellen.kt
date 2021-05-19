@@ -127,6 +127,7 @@ class PruefungErstellen : AppCompatActivity() {
             pruefungsstoff.text.clear()
             pruefungsdate_choice.setText("")
             radioGroup.clearCheck()
+            finish()
         }
     }
 
