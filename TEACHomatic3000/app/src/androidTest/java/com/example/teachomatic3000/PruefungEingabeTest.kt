@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
@@ -80,7 +79,7 @@ class PruefungEingabeTest {
                 isDisplayed()
             )
         )
-        appCompatEditText.perform(replaceText("2A"), closeSoftKeyboard())
+        appCompatEditText.perform(replaceText("1b"), closeSoftKeyboard())
 
         val materialButton = onView(
             allOf(
@@ -114,16 +113,18 @@ class PruefungEingabeTest {
             allOf(
                 withId(R.id.pruefung_erstellen), withText("Prüfung erstellen"),
                 childAtPosition(
-                    childAtPosition(
-                        withId(android.R.id.content),
-                        0
+                    allOf(
+                        withId(R.id.linearLayout),
+                        childAtPosition(
+                            withClassName(`is`("android.widget.ScrollView")),
+                            0
+                        )
                     ),
                     3
-                ),
-                isDisplayed()
+                )
             )
         )
-        materialButton2.perform(click())
+        materialButton2.perform(scrollTo(), click())
 
         val materialButton3 = onView(
             allOf(
@@ -139,7 +140,6 @@ class PruefungEingabeTest {
             )
         )
         materialButton3.perform(click())
-
         onToast("Prüfung konnte nicht hinzugefügt werden").check(matches(isDisplayed()))
     }
 

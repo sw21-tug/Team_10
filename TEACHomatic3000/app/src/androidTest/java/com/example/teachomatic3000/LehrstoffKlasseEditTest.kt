@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
@@ -78,7 +77,7 @@ class LehrstoffKlasseEditTest {
                 isDisplayed()
             )
         )
-        appCompatEditText.perform(replaceText("4R"), closeSoftKeyboard())
+        appCompatEditText.perform(replaceText("1b"), closeSoftKeyboard())
 
         val materialButton = onView(
             allOf(
@@ -112,16 +111,18 @@ class LehrstoffKlasseEditTest {
             allOf(
                 withId(R.id.create_lehrstoff_button), withText("Lehrstoff erstellen"),
                 childAtPosition(
-                    childAtPosition(
-                        withId(android.R.id.content),
-                        0
+                    allOf(
+                        withId(R.id.linearLayout),
+                        childAtPosition(
+                            withClassName(`is`("android.widget.ScrollView")),
+                            0
+                        )
                     ),
-                    1
-                ),
-                isDisplayed()
+                    5
+                )
             )
         )
-        materialButton2.perform(click())
+        materialButton2.perform(scrollTo(), click())
 
         val appCompatEditText2 = onView(
             allOf(
@@ -136,7 +137,22 @@ class LehrstoffKlasseEditTest {
                 isDisplayed()
             )
         )
-        appCompatEditText2.perform(replaceText("This is too much"), closeSoftKeyboard())
+        appCompatEditText2.perform(replaceText("test"), closeSoftKeyboard())
+
+        val appCompatEditText3 = onView(
+            allOf(
+                withId(R.id.lehrstoff_description),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.fragment),
+                        0
+                    ),
+                    2
+                ),
+                isDisplayed()
+            )
+        )
+        appCompatEditText3.perform(replaceText("lalala"), closeSoftKeyboard())
 
         val materialButton3 = onView(
             allOf(
@@ -167,21 +183,6 @@ class LehrstoffKlasseEditTest {
         )
         materialButton4.perform(scrollTo(), click())
 
-        val appCompatEditText3 = onView(
-            allOf(
-                withId(R.id.lehrstoff_description),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.fragment),
-                        0
-                    ),
-                    2
-                ),
-                isDisplayed()
-            )
-        )
-        appCompatEditText3.perform(replaceText("OMG!\n\nWOW!!"), closeSoftKeyboard())
-
         val materialButton5 = onView(
             allOf(
                 withId(R.id.lehrstoff_save_button), withText("Speichern"),
@@ -197,45 +198,62 @@ class LehrstoffKlasseEditTest {
         )
         materialButton5.perform(click())
 
-        pressBack()
+        val textView = onData(anything())
+            .inAdapterView(
+                allOf(
+                    withId(R.id.lehrstoff_klassen_liste),
+                    childAtPosition(
+                        withId(R.id.linearLayout),
+                        2
+                    )
+                )
+            )
+            .atPosition(0)
+        textView.perform(scrollTo(), click())
 
-        pressBack()
-
-        val appCompatImageButton2 = onView(
+        val materialButton6 = onView(
             allOf(
-                withContentDescription("Open navigation drawer"),
+                withId(R.id.lehrstoff_date_button), withText("Lehrstoffdatum"),
                 childAtPosition(
-                    allOf(
-                        withId(R.id.toolbar),
-                        childAtPosition(
-                            withClassName(`is`("com.google.android.material.appbar.AppBarLayout")),
-                            0
-                        )
+                    childAtPosition(
+                        withId(R.id.fragment),
+                        0
                     ),
-                    1
+                    3
                 ),
                 isDisplayed()
             )
         )
-        appCompatImageButton2.perform(click())
+        materialButton6.perform(click())
 
-        val navigationMenuItemView2 = onView(
+        val materialButton7 = onView(
             allOf(
-                withId(R.id.nav_lehrstoff_list),
+                withId(android.R.id.button1), withText("OK"),
                 childAtPosition(
-                    allOf(
-                        withId(R.id.design_navigation_view),
-                        childAtPosition(
-                            withId(R.id.nav_view),
-                            0
-                        )
+                    childAtPosition(
+                        withClassName(`is`("android.widget.ScrollView")),
+                        0
                     ),
-                    6
+                    3
+                )
+            )
+        )
+        materialButton7.perform(scrollTo(), click())
+
+        val materialButton8 = onView(
+            allOf(
+                withId(R.id.lehrstoff_save_button), withText("Speichern"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.fragment),
+                        0
+                    ),
+                    7
                 ),
                 isDisplayed()
             )
         )
-        navigationMenuItemView2.perform(click())
+        materialButton8.perform(click())
     }
 
     private fun childAtPosition(
