@@ -171,7 +171,7 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
             lehrstoff_description.text.clear()
             // If Fragment is opened via ClassDetails
             if(null != extras){
-                activity?.onBackPressed()
+                activity?.finish()
             }
         }
 

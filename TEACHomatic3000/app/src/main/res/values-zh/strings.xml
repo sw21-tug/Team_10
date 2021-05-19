@@ -59,4 +59,6 @@
     <string name="radioButton1">笔试</string>
     <string name="radioButton2">学校工作</string>
     <string name="radioButton3">作品集提交</string>
+    <string name="text_lehrstoff">课程</string>
+    <string name="text_pruefungen">考试</string>
 </resources>
