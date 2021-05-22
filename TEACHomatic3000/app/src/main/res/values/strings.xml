@@ -62,5 +62,18 @@
     <string name="text_lehrstoff">Lehrstoff:</string>
     <string name="text_pruefungen">Prüfungen:</string>
 
+    <string name="prüfung_id">Prüfung-ID: </string>
+    <string name="prüfung_datum">Prüfungsdatum: </string>
+    <string name="prüfung_art">Prüfungsart: </string>
+    <string name="prüfung_stoff">Prüfungsstoff: </string>
+    <string name="prüfung_add_error">Prüfung konnte nicht hinzugefügt werden</string>
+
+    <string name="lehrstoff_id">Lehrstoff-ID: </string>
+    <string name="lehrstoff_titel">Lehrstofftitel: </string>
+    <string name="lehrstoff_beschreibung">Lehrstoffbeschreibung: </string>
+    <string name="lehrstoff_datum">Lehrstoffdatum: </string>
+    <string name="lehrstoff_erstelldatum">Erstelldatum: </string>
+    <string name="lehrstoff_bearbeitungsdatum">Bearbeitungsdatum: </string>
+    <string name="classString">Klasse: </string>
 
 </resources>
