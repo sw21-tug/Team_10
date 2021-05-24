@@ -108,10 +108,10 @@ class EinstellungenFragment : Fragment() {
 
         languageRegulator.setOnCheckedChangeListener(){_,isChecked->
 
-            // if switch is turned off, use automatic date from phone
+            // if switch is turned off, use english language
             if (!isChecked) {
                 db.updateLanguage("en")
-            } else { // if switch is turned on, user can choose date manually
+            } else { // if switch is turned on, use chinese language
                 db.updateLanguage("zh")
             }
 
