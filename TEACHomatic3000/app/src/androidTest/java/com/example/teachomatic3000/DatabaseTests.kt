@@ -73,11 +73,29 @@ class DatabaseTests {
         db.addStudent(student)
         val student_before = db.getStudents()[db.getStudents().size-1]
 
-        assertEquals("" + db.getStudents().size + " Markus Müller", student_before)
+        assertEquals(true, student_before.contains("Markus Müller"))
         db.anonymizeCurrentStudents()
-        val normalstudent = db.getStudents()[0]
-        val anonymized = db.getStudents()[0]
-        assertEquals(normalstudent, anonymized)
+        val normalstudent = db.getStudents()[db.getStudents().size-1]
+        assertEquals(false, normalstudent.contains("Markus Müller"))
+    }
+
+    @Test
+    fun testAnonymizationClass() {
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+
+        //Erstelle Student und Class und ordne ihn der Class zu
+        val student = StudentModel(0,"Marvin","lol")
+        db.addStudent(student)
+        val class1 = ClassModel(0,"4a")
+        db.addClass(class1)
+        db.addStudentToClass(student,class1)
+
+        val student_of_class1 = db.getStudentsOfClass(class1)[0]
+        assertEquals(true, student_of_class1.contains("Marvin lol"))
+
+        db.anonymizeClass(class1.classId)
+        val student_anonymized = db.getStudentsOfClass(class1)[0]
+        assertEquals(false, student_anonymized.contains("Marvin lol"))
     }
 
     @Test
