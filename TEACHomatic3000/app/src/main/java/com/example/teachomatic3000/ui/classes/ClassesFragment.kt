@@ -7,36 +7,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.teachomatic3000.R
 import com.example.teachomatic3000.database.DataBaseHelper
 import com.example.teachomatic3000.models.ClassModel
-import com.google.android.material.snackbar.Snackbar
 import java.lang.Exception
 import java.util.*
 
 class ClassesFragment : Fragment() {
 
-    private lateinit var classesViewModel: ClassesViewModel
     private lateinit var classList: ListView
     private lateinit var classDatabase: DataBaseHelper
     private lateinit var classListAdapter: ArrayAdapter<String>
     private lateinit var textClassName: EditText
+    private lateinit var root: View
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?): View? {
 
-        classesViewModel = ViewModelProvider(this).get(ClassesViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_classes, container, false)
+        root = inflater.inflate(R.layout.fragment_classes, container, false)
         val buttonAddClass: Button = root.findViewById(R.id.button_add_class)
         textClassName = root.findViewById(R.id.text_class_name)
         classList = root.findViewById(R.id.class_list)
-        classDatabase = DataBaseHelper(root.context) //context vom layout wird hier erstellt, damit wirs unten verwenden können
+        classDatabase = DataBaseHelper(root.context)
 
         fun updateClassList(){
-            classListAdapter = ArrayAdapter<String>(root.context, android.R.layout.simple_list_item_1, classDatabase.getClasses())
+            classListAdapter = ArrayAdapter(root.context, android.R.layout.simple_list_item_1, classDatabase.getClasses())
             classList.adapter = classListAdapter
             textClassName.text.clear()
         }
@@ -51,7 +48,6 @@ class ClassesFragment : Fragment() {
             }
             else
             {
-                // database helper (mit try catch)
                 try {
                     val className = String(textClassName.text.toString().toByteArray(), charset("UTF-8"))
                     val classModel = ClassModel(0, className)

@@ -61,4 +61,18 @@
     <string name="radioButton3">作品集提交</string>
     <string name="text_lehrstoff">课程</string>
     <string name="text_pruefungen">考试</string>
+
+    <string name="prüfung_id">考试编号: </string>
+    <string name="prüfung_datum">考试日期: </string>
+    <string name="prüfung_art">考试类型: </string>
+    <string name="prüfung_stoff">考试材料: </string>
+    <string name="prüfung_add_error">无法添加支票</string>
+
+    <string name="lehrstoff_id">主题编号: </string>
+    <string name="lehrstoff_titel">主题标题: </string>
+    <string name="lehrstoff_beschreibung">课程说明: </string>
+    <string name="lehrstoff_datum">主题日期: </string>
+    <string name="lehrstoff_erstelldatum">创建日期: </string>
+    <string name="lehrstoff_bearbeitungsdatum">处理日期: </string>
+    <string name="classString">班级: </string>
 </resources>

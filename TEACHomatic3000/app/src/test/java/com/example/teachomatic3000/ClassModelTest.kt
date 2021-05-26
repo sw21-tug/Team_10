@@ -18,8 +18,8 @@ class ClassModelTest {
         val class_name = "thistestclass"
         val class_id = 0
         val testClass = ClassModel(class_id, class_name)
-        assertEquals(testClass.class_id, 0)
-        assertEquals(testClass.class_name, "thistestclass")
+        assertEquals(testClass.classId, 0)
+        assertEquals(testClass.className, "thistestclass")
     }
 
 

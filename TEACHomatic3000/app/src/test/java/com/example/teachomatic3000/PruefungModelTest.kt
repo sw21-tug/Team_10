@@ -27,8 +27,8 @@ class PruefungModelTest {
         val pruefung_art = "Prüfung"
         val pruefungKlasseID = 0
         val testPruefung = PruefungModel(pruefung_id, pruefungKlasseID, pruefung_datum, pruefung_langtext, pruefung_art)
-        assertEquals(testPruefung.PruefungID, 0)
-        assertEquals(testPruefung.PruefungLangtext, "testpruefung")
+        assertEquals(testPruefung.pruefungID, 0)
+        assertEquals(testPruefung.pruefungLangtext, "testpruefung")
     }
 
 

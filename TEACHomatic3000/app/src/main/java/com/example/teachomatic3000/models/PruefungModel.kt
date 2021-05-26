@@ -1,26 +1,14 @@
 package com.example.teachomatic3000.models
 
-class PruefungModel {
-
-    var PruefungID: Int
-    var PruefungDatum: String
-    var PruefungLangtext: String
-    var PruefungArt: String
-    var PruefungKlasseID: Int
-
-
-    constructor(PruefungID: Int, PruefungKlasseID: Int, PruefungDatum: String, PruefungLangtext: String, PruefungArt: String) {
-
-        this.PruefungID = PruefungID
-        this.PruefungKlasseID = PruefungKlasseID
-        this.PruefungDatum = PruefungDatum
-        this.PruefungLangtext = PruefungLangtext
-        this.PruefungArt = PruefungArt
-    }
-
+class PruefungModel(
+    var pruefungID: Int,
+    var pruefungKlasseID: Int,
+    var pruefungDatum: String,
+    var pruefungLangtext: String,
+    var pruefungArt: String)
+{
     override fun toString(): String {
-
-        return "PruefungModel(PruefungID='$PruefungID', PruefungKlasseID='$PruefungKlasseID', PruefungDatum='$PruefungDatum', " +
-                "PruefungLangtext='$PruefungLangtext', PruefungArt='$PruefungArt')"
+        return "PruefungModel(PruefungID='$pruefungID', PruefungKlasseID='$pruefungKlasseID', PruefungDatum='$pruefungDatum', " +
+                "PruefungLangtext='$pruefungLangtext', PruefungArt='$pruefungArt')"
     }
 }

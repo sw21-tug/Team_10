@@ -1,7 +1,6 @@
 package com.example.teachomatic3000.ui.classes
 
 import android.os.Bundle
-import android.util.Log
 import android.util.SparseBooleanArray
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -69,17 +68,12 @@ class ClassDetailsAddSus : AppCompatActivity() {
                     if(!flag) {
                         val studentModel: StudentModel
                         val parts = students.get(item).split(" ")
-                        //Log.d("SUS", students.get(item))
 
-                        if(parts.size == 2)
-                        {
+                        if(parts.size == 2) {
                             studentModel = StudentModel(parts[0].toInt(), parts[1], "")
-                        }
-                        else
-                        {
+                        } else {
                             studentModel = StudentModel(parts[0].toInt(), parts[1] , parts[2])
                         }
-                        //Log.d("SUS", studentModel.toString())
                         db.addStudentToClass(studentModel, classModel)
                     }
                 }
