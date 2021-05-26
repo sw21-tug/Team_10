@@ -46,3 +46,4 @@ alle erfassten Inhalte einfach ausgewertet werden.
 | T-011  | Prüfungen mit Termin einer Klasse hinzufügen
 | T-010  | Lehrstoff einer Klasse hinzufügen
 | T-047  | Scroll view in Class Details
+| T-050  | refactoring after sprint 3 session 2
