@@ -75,5 +75,6 @@
     <string name="lehrstoff_erstelldatum">Erstelldatum: </string>
     <string name="lehrstoff_bearbeitungsdatum">Bearbeitungsdatum: </string>
     <string name="classString">Klasse: </string>
+    <string name="add_mitarbeitsplus">Mitarbeitsplus hinzufügen</string>
 
 </resources>

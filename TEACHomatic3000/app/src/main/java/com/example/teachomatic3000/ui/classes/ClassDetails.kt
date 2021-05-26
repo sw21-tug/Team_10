@@ -24,6 +24,7 @@ class ClassDetails : AppCompatActivity() {
     private lateinit var lehrstoffListAdapter: ArrayAdapter<String>
     private lateinit var pruefungListAdapter: ArrayAdapter<String>
     private lateinit var pruefungList: ListView
+    private lateinit var button_add_mitarbeitspluss: Button
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +38,7 @@ class ClassDetails : AppCompatActivity() {
         pruefung_erstellen = findViewById(R.id.pruefung_erstellen)
         button_add_student_to_class = findViewById(R.id.button_add_student_to_class)
         create_lehrstoff_button = findViewById(R.id.create_lehrstoff_button)
+        button_add_mitarbeitspluss = findViewById(R.id.add_mitarbeitsplus)
 
         pruefungList = findViewById(R.id.pruefung_listview)
         pruefungListAdapter = ArrayAdapter(this.baseContext, android.R.layout.simple_list_item_1, db.getPruefung(class_id, this.baseContext))
@@ -55,6 +57,13 @@ class ClassDetails : AppCompatActivity() {
 
         button_add_student_to_class.setOnClickListener {
             val intent = Intent(this.baseContext, ClassDetailsAddSus::class.java).apply {
+                putExtra("class_id", class_id.toString())
+            }
+            startActivity(intent)
+        }
+
+        button_add_mitarbeitspluss.setOnClickListener {
+            val intent = Intent(this.baseContext, ClassMitarbeitsplus::class.java).apply {
                 putExtra("class_id", class_id.toString())
             }
             startActivity(intent)
