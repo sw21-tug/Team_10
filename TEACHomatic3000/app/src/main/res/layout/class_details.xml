@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="@string/sus_hinzufügen"
+                app:layout_constraintBottom_toTopOf="@+id/anonymize_class_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/class_info" />
@@ -67,7 +68,6 @@
                 app:layout_constraintBottom_toTopOf="@+id/schueler_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/create_lehrstoff_button"
                 app:layout_constraintVertical_bias="0.031" />
 
             <ListView
@@ -95,7 +95,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/anonymize_class_button" />
+                app:layout_constraintBottom_toTopOf="@+id/pruefung_erstellen" />
 
             <TextView
                 android:id="@+id/lehrstoff_text"
@@ -118,68 +118,14 @@
                 app:layout_constraintHorizontal_bias="0.507"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/schueler_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="@string/schueler_text"
-                app:layout_constraintBottom_toTopOf="@+id/schueler_klassen_liste"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.499"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ListView
-                android:id="@+id/schueler_klassen_liste"
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="56dp"
-                android:background="#66F1D2A3"
-                app:layout_constraintBottom_toTopOf="@+id/lehrstoff_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/schueler_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="@string/schueler_text"
-                app:layout_constraintBottom_toTopOf="@+id/schueler_klassen_liste"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.499"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ListView
-                android:id="@+id/schueler_klassen_liste"
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="56dp"
-                android:background="#66F1D2A3"
-                app:layout_constraintBottom_toTopOf="@+id/lehrstoff_text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent" />
-
             <Button
                 android:id="@+id/anonymize_class_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="@string/class_anonymize"
                 app:layout_constraintBottom_toTopOf="@+id/create_lehrstoff_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lehrstoff_klassen_liste" />
+                app:layout_constraintStart_toStartOf="parent" />
             <TextView
                 android:id="@+id/schueler_text"
                 android:layout_width="wrap_content"
