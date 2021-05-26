@@ -36,7 +36,7 @@
                 android:id="@+id/button_add_student_to_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/sus_hinzufügen"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +93,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_add_student_to_class" />
+                app:layout_constraintTop_toBottomOf="@+id/anonymize_class_button" />
 
             <TextView
                 android:id="@+id/lehrstoff_text"
@@ -114,6 +114,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lehrstoff_klassen_liste" />
+
+            <Button
+                android:id="@+id/anonymize_class_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/class_anonymize"
+                app:layout_constraintBottom_toTopOf="@+id/create_lehrstoff_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_add_student_to_class"
+                app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

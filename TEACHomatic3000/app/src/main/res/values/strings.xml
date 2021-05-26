@@ -75,5 +75,5 @@
     <string name="lehrstoff_erstelldatum">Erstelldatum: </string>
     <string name="lehrstoff_bearbeitungsdatum">Bearbeitungsdatum: </string>
     <string name="classString">Klasse: </string>
-
+    <string name="class_anonymize">Klasse anonymisieren</string>
 </resources>
