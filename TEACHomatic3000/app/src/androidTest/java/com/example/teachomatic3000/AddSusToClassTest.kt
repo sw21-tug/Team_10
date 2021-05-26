@@ -305,6 +305,7 @@ class AddSusToClassTest {
             )
             .atPosition(0)
         materialTextView.perform(click())
+        sleep(1000)
 
         val materialButton5 = onView(
             allOf(
