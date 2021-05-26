@@ -76,4 +76,6 @@
     <string name="lehrstoff_bearbeitungsdatum">Bearbeitungsdatum: </string>
     <string name="classString">Klasse: </string>
 
+    <string name="schueler_text">Schüler*innen:</string>
+
 </resources>
