@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.stream.IntStream.range
 
-class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 8) {
+class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 10) {
 
     val STUDENT_TABLE = "STUDENT_TABLE"
     val STUDENT_FIRSTNAME = "STUDENT_FIRSTNAME"
@@ -52,6 +52,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     val STUDENT_CLASS_ID = "STUDENT_CLASS_ID"
     val STUDENT_CLASS_F_CLASS_ID = "STUDENT_CLASS_F_CLASS_ID"
     val STUDENT_CLASS_F_SUS_ID = "STUDENT_CLASS_F_SUS_ID"
+    val STUDENT_CLASS_MITARBEITSPLUS = "STUDENT_CLASS_MITARBEITSPLUS"
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableStatementStudent = "CREATE TABLE $STUDENT_TABLE($STUDENT_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_FIRSTNAME TEXT, $STUDENT_LASTNAME TEXT)"
@@ -59,6 +60,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         val createTableStatementLanguage = "CREATE TABLE $LANGUAGE_TABLE($LANGUAGE_ID INTEGER, $LANGUAGE_CODE TEXT)"
         val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
         val alterTableLehrstoff = "ALTER TABLE  $LEHRSTOFF_TABLE ADD $LEHRSTOFF_F_KLASSE INTEGER"
+        val alterTableMitarbeitsplus = "ALTER TABLE  ${STUDENT_CLASS_TABLE} ADD $STUDENT_CLASS_MITARBEITSPLUS INTEGER"
         val createTableStatementPruefung = "CREATE TABLE $PRUEFUNG_TABLE($PRUEFUNG_ID INTEGER PRIMARY KEY AUTOINCREMENT, $PRUEFUNGKLASSEID INTEGER, $PRUEFUNG_LANGTEXT TEXT, $PRUEFUNG_DATUM TEXT, $PRUEFUNG_ART TEXT)"
         val createTableStatementSC = "CREATE TABLE $STUDENT_CLASS_TABLE($STUDENT_CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_CLASS_F_CLASS_ID INTEGER, $STUDENT_CLASS_F_SUS_ID INTEGER)"
 
@@ -79,6 +81,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         db.execSQL(alterTableLehrstoff)
         db.execSQL(createTableStatementPruefung)
         db.execSQL(createTableStatementSC)
+        db.execSQL(alterTableMitarbeitsplus)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -119,6 +122,10 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
                     val createTableStatementPruefung = "CREATE TABLE $PRUEFUNG_TABLE($PRUEFUNG_ID INTEGER PRIMARY KEY AUTOINCREMENT, $PRUEFUNGKLASSEID INTEGER, $PRUEFUNG_LANGTEXT TEXT, $PRUEFUNG_DATUM TEXT, $PRUEFUNG_ART TEXT)"
                     db!!.execSQL(createTableStatementPruefung)
                 }
+                 9 -> {
+                     val alterTableMitarbeitsplus = "ALTER TABLE  ${STUDENT_CLASS_TABLE} ADD $STUDENT_CLASS_MITARBEITSPLUS INTEGER"
+                     db!!.execSQL(alterTableMitarbeitsplus)
+                 }
             }
         }
     }
@@ -314,7 +321,9 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         if(curser.moveToFirst()) {
             do{
                 val student_id = curser.getString(2)
-                val studentInfo = getStudent(student_id)
+                var studentInfo = getStudent(student_id)
+                val studentMitarbeitsplus: String = " " + curser.getInt(3).toString() + " Plus"
+                studentInfo = studentInfo + studentMitarbeitsplus
 
                 retList.add(studentInfo)
             }while (curser.moveToNext())
@@ -594,6 +603,17 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
             return false
         }
         return true;
+    }
+    fun updateMitarbeitsPlus(student: StudentModel, classModel: ClassModel): Boolean{
+        val db = this.writableDatabase
+
+        val success = db.execSQL("update ${STUDENT_CLASS_TABLE} SET $STUDENT_CLASS_MITARBEITSPLUS = COALESCE( $STUDENT_CLASS_MITARBEITSPLUS, 0) + 1 WHERE $STUDENT_CLASS_F_CLASS_ID = " +
+                classModel.classId.toString() + " AND $STUDENT_CLASS_F_SUS_ID = "+ student.studentID.toString())
+
+        if (success.equals(-1)){
+            return false
+        }
+        return true
     }
 
     fun getPruefung(class_id: Int, context: Context) : ArrayList<String> {
