@@ -202,6 +202,13 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return true
     }
 
+    fun anonymizeClass(): Boolean
+    {
+
+        return false
+
+    }
+
     fun addClass(classModel: ClassModel): Boolean {
         val db = this.writableDatabase
 

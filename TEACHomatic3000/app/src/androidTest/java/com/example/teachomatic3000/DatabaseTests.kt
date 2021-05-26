@@ -81,6 +81,23 @@ class DatabaseTests {
     }
 
     @Test
+    fun testAnonymizationClass() {
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+
+        val class1 = ClassModel(0,"4a")
+        db.addClass(class1)
+
+
+        val class_before = db.getClasses()[db.getClasses().size-1]
+
+        assertEquals("" + db.getClasses().size + " 4a", class_before)
+        db.anonymizeClass()
+        val normalclass = db.getClasses()[0]
+        val anonymized = "Anonyme Klasse"
+        assertEquals(normalclass, anonymized)
+    }
+
+    @Test
     fun testSCTableSize() {
         val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
         val student = StudentModel(0,"Markus","Müller")
