@@ -35,7 +35,6 @@
     <string name="text_length255">名称必须介于1到255个字符之间</string>
     <string name="error_add_class">无法添加课程</string>
     <string name="student_anonym">学生姓名已被匿名！</string>
-    <string name="class_anonym">班上的学生姓名已被匿名！</string>
     <string name="error_wrong_input">输入不完整。\n请同时输入标题，描述和日期。</string>
     <string name="error_add_lehrstoff">课程无法添加。</string>
     <string name="error_long_input">输入时间过长。</string>
@@ -76,5 +75,6 @@
     <string name="lehrstoff_erstelldatum">创建日期: </string>
     <string name="lehrstoff_bearbeitungsdatum">处理日期: </string>
     <string name="classString">班级: </string>
-    <string name="class_anonymize">将课程设为匿名</string>
+
+    <string name="schueler_text">学生们:</string>
 </resources>
