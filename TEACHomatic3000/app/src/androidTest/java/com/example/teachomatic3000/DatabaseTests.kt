@@ -140,4 +140,34 @@ class DatabaseTests {
         assertEquals("Susanne", students_plus_three.get(students_plus_three.size-1).split(" ").get(1))
 
     }
+
+    @Test
+    fun testaddMitarbeitsplus() {
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val student1 = StudentModel(0,"Markus","Müller")
+        val student2 = StudentModel (0,"Julia", "Muster")
+        val classModel = ClassModel(0, "3a")
+        db.addStudent(student1)
+        db.addStudent(student2)
+        db.addClass(classModel)
+
+        val current_students = db.getStudentsOfClass(classModel).size
+        db.addStudentToClass(student1, classModel)
+        db.addStudentToClass(student2, classModel)
+
+        db.updateMitarbeitsPlus(student1, classModel)
+        db.updateMitarbeitsPlus(student1, classModel)
+
+        val afteraddMitarbeitsplus = db.getStudentsOfClass(classModel).size
+        assertEquals(current_students + 2, afteraddMitarbeitsplus)
+
+        val student1_after = db.getStudentsOfClass(classModel)[db.getStudentsOfClass(classModel).size -1]
+        val student1_plus = student1_after.split(" ")[3].toInt()
+
+        val student2_after = db.getStudentsOfClass(classModel)[db.getStudentsOfClass(classModel).size -2]
+        val student2_plus = student2_after.split(" ")[3].toInt()
+
+        assertEquals(0, student1_plus)
+        assertEquals(2, student2_plus)
+    }
 }
