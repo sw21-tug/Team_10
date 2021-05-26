@@ -35,6 +35,7 @@
     <string name="text_length255">Name muss zwischen 1 und 255 Zeichen haben.</string>
     <string name="error_add_class">Klasse konnte nicht hinzugefügt werden</string>
     <string name="student_anonym">Schülernamen wurden anonymisiert!</string>
+    <string name="class_anonym">Schülernamen in Klasse wurden anonymisiert!</string>
     <string name="error_wrong_input">Eingabe unvollständig.\nBitte sowohl Titel als auch Beschreibung und Datum eingeben.</string>
     <string name="error_add_lehrstoff">Lehrstoff kann nicht hinzugefügt werden.</string>
     <string name="error_long_input">Eingabe zu lang.</string>

@@ -202,11 +202,23 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return true
     }
 
-    fun anonymizeClass(): Boolean
+    fun anonymizeClass(classId: Int): Boolean
     {
+        val db = this.writableDatabase
 
-        return false
+       /* val success = db.execSQL("update $STUDENT_TABLE SET " +
+                "$STUDENT_FIRSTNAME = "+ classId +", $STUDENT_LASTNAME = ''")*/
 
+        val success = db.execSQL("update $STUDENT_TABLE SET " +
+                "$STUDENT_FIRSTNAME = 'Anonymisiert', $STUDENT_LASTNAME = ''" +
+        " WHERE $STUDENT_ID IN (SELECT $STUDENT_CLASS_F_SUS_ID FROM $STUDENT_CLASS_TABLE WHERE $STUDENT_CLASS_F_CLASS_ID  =" + classId.toString() +")" )
+
+
+
+        if (success.equals(-1)){
+            return false
+        }
+        return true
     }
 
     fun addClass(classModel: ClassModel): Boolean {

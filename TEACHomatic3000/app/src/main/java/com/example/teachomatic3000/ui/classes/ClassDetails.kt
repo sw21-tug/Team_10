@@ -16,6 +16,7 @@ class ClassDetails : AppCompatActivity() {
 
     private lateinit var class_info: TextView
     private lateinit var button_add_student_to_class: Button
+    private lateinit var button_anonymize_class: Button
     private lateinit var db: DataBaseHelper
     private lateinit var pruefung_erstellen: Button
     private var class_id by Delegates.notNull<Int>()
@@ -36,6 +37,7 @@ class ClassDetails : AppCompatActivity() {
 
         pruefung_erstellen = findViewById(R.id.pruefung_erstellen)
         button_add_student_to_class = findViewById(R.id.button_add_student_to_class)
+        button_anonymize_class = findViewById(R.id.anonymize_class_button)
         create_lehrstoff_button = findViewById(R.id.create_lehrstoff_button)
 
         pruefungList = findViewById(R.id.pruefung_listview)
@@ -58,6 +60,11 @@ class ClassDetails : AppCompatActivity() {
                 putExtra("class_id", class_id.toString())
             }
             startActivity(intent)
+        }
+
+        button_anonymize_class.setOnClickListener () {
+            db.anonymizeClass(class_id)
+            //Toast.makeText(root.context, R.string.class_anonym, Toast.LENGTH_LONG).show()
         }
 
         lehrstoff_liste.setOnItemClickListener { parent, view, position, id ->
