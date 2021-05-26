@@ -607,7 +607,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     fun updateMitarbeitsPlus(student: StudentModel, classModel: ClassModel): Boolean{
         val db = this.writableDatabase
 
-        val success = db.execSQL("update ${STUDENT_CLASS_TABLE} SET $STUDENT_CLASS_MITARBEITSPLUS = $STUDENT_CLASS_MITARBEITSPLUS +1 WHERE $STUDENT_CLASS_F_CLASS_ID = " + classModel.classId.toString() + " AND $STUDENT_CLASS_F_SUS_ID = "+ student.studentID.toString())
+        val success = db.execSQL("update ${STUDENT_CLASS_TABLE} SET $STUDENT_CLASS_MITARBEITSPLUS = COALESCE( $STUDENT_CLASS_MITARBEITSPLUS, 0) + 1 WHERE $STUDENT_CLASS_F_CLASS_ID = " +
+                classModel.classId.toString() + " AND $STUDENT_CLASS_F_SUS_ID = "+ student.studentID.toString())
 
         if (success.equals(-1)){
             return false

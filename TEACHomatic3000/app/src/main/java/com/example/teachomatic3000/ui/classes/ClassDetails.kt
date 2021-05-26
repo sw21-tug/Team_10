@@ -27,6 +27,7 @@ class ClassDetails : AppCompatActivity() {
     private lateinit var pruefungListAdapter: ArrayAdapter<String>
     private lateinit var schuelerKlassenListAdapter: ArrayAdapter<String>
     private lateinit var pruefungList: ListView
+    private lateinit var button_add_mitarbeitspluss: Button
     private lateinit var schueler_klassen_liste: ListView
     private lateinit var classModel: ClassModel
 
@@ -45,6 +46,7 @@ class ClassDetails : AppCompatActivity() {
         button_add_student_to_class = findViewById(R.id.button_add_student_to_class)
         button_anonymize_class = findViewById(R.id.anonymize_class_button)
         create_lehrstoff_button = findViewById(R.id.create_lehrstoff_button)
+        button_add_mitarbeitspluss = findViewById(R.id.add_mitarbeitsplus)
 
         schueler_klassen_liste = findViewById(R.id.schueler_klassen_liste)
         schuelerKlassenListAdapter = ArrayAdapter(this.baseContext, android.R.layout.simple_list_item_1, db.getStudentsOfClass(classModel))
@@ -67,6 +69,13 @@ class ClassDetails : AppCompatActivity() {
 
         button_add_student_to_class.setOnClickListener {
             val intent = Intent(this.baseContext, ClassDetailsAddSus::class.java).apply {
+                putExtra("class_id", class_id.toString())
+            }
+            startActivity(intent)
+        }
+
+        button_add_mitarbeitspluss.setOnClickListener {
+            val intent = Intent(this.baseContext, ClassMitarbeitsplus::class.java).apply {
                 putExtra("class_id", class_id.toString())
             }
             startActivity(intent)
