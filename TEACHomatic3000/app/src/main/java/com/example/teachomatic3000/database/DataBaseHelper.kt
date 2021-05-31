@@ -213,14 +213,9 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     {
         val db = this.writableDatabase
 
-       /* val success = db.execSQL("update $STUDENT_TABLE SET " +
-                "$STUDENT_FIRSTNAME = "+ classId +", $STUDENT_LASTNAME = ''")*/
-
         val success = db.execSQL("update $STUDENT_TABLE SET " +
                 "$STUDENT_FIRSTNAME = 'Anonymisiert', $STUDENT_LASTNAME = ''" +
         " WHERE $STUDENT_ID IN (SELECT $STUDENT_CLASS_F_SUS_ID FROM $STUDENT_CLASS_TABLE WHERE $STUDENT_CLASS_F_CLASS_ID  =" + classId.toString() +")" )
-
-
 
         if (success.equals(-1)){
             return false
@@ -433,15 +428,15 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
                 if(lehrstoff_k_klasse.toInt() > 0) {
                     val classModel = this.getClass(lehrstoff_k_klasse.toInt())
-                    klasse = context.getString(R.string.classString) + classModel?.className
+                    klasse = context.getString(R.string.class_text) + classModel?.className
                 }
 
-                val id = context.getString(R.string.lehrstoff_id)
-                val titel = context.getString(R.string.lehrstoff_titel)
-                val beschreibung = context.getString(R.string.lehrstoff_beschreibung)
-                val datum = context.getString(R.string.lehrstoff_datum)
-                val createDatum = context.getString(R.string.lehrstoff_erstelldatum)
-                val bearbeitungsDatum = context.getString(R.string.lehrstoff_bearbeitungsdatum)
+                val id = context.getString(R.string.lehrstoff_id) + ":"
+                val titel = context.getString(R.string.lehrstoff_title) + ":"
+                val beschreibung = context.getString(R.string.lehrstoff_description) + ":"
+                val datum = context.getString(R.string.lehrstoff_date) + ":"
+                val createDatum = context.getString(R.string.erstelldatum)
+                val bearbeitungsDatum = context.getString(R.string.bearbeitungsdatum)
 
                 val lehrstoffInfo = "$id $lehrstoff_id \n$titel $lehrstoff_title \n" +
                         "$beschreibung $lehrstoff_description \n$datum $lehrstoff_datum \n" +
@@ -513,15 +508,15 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
                 if(lehrstoff_k_klasse.toInt() > 0) {
                     val classModel = this.getClass(lehrstoff_k_klasse.toInt())
-                    klasse = context.getString(R.string.classString) + classModel?.className
+                    klasse = context.getString(R.string.class_text) + classModel?.className
                 }
 
-                val id = context.getString(R.string.lehrstoff_id)
-                val titel = context.getString(R.string.lehrstoff_titel)
-                val beschreibung = context.getString(R.string.lehrstoff_beschreibung)
-                val datum = context.getString(R.string.lehrstoff_datum)
-                val createDatum = context.getString(R.string.lehrstoff_erstelldatum)
-                val bearbeitungsDatum = context.getString(R.string.lehrstoff_bearbeitungsdatum)
+                val id = context.getString(R.string.lehrstoff_id) + ":"
+                val titel = context.getString(R.string.lehrstoff_title) + ":"
+                val beschreibung = context.getString(R.string.lehrstoff_description) + ":"
+                val datum = context.getString(R.string.lehrstoff_date) + ":"
+                val createDatum = context.getString(R.string.erstelldatum)
+                val bearbeitungsDatum = context.getString(R.string.bearbeitungsdatum)
 
                 val lehrstoffInfo = "$id $lehrstoff_id \n$titel $lehrstoff_title \n" +
                         "$beschreibung $lehrstoff_description \n$datum $lehrstoff_datum \n" +
@@ -636,13 +631,13 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
                 if(pruefungklasseid > 0) {
                     val classModel = this.getClass(pruefungklasseid)
-                    klasse = context.getString(R.string.classString) + classModel?.className
+                    klasse = context.getString(R.string.class_text) + classModel?.className
                 }
 
-                val id = context.getString(R.string.prüfung_id)
-                val datum = context.getString(R.string.prüfung_datum)
-                val art = context.getString(R.string.prüfung_art)
-                val stoff = context.getString(R.string.prüfung_stoff)
+                val id = context.getString(R.string.prüfung_id) + ":"
+                val datum = context.getString(R.string.prüfung_date) + ":"
+                val art = context.getString(R.string.prüfung_art) + ":"
+                val stoff = context.getString(R.string.prüfung_description) + ":"
 
                 val pruefungInfo = "$id $pruefung_id \n" +
                         "$datum $pruefung_datum \n" +

@@ -198,6 +198,8 @@ class LehrstoffKlasseEditTest {
         )
         materialButton5.perform(click())
 
+        onView(withId(R.id.lehrstoff_klassen_liste)).perform(scrollTo())
+
         val textView = onData(anything())
             .inAdapterView(
                 allOf(

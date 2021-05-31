@@ -43,7 +43,7 @@ class ClassesFragment : Fragment() {
         buttonAddClass.setOnClickListener {
             if(textClassName.text.isEmpty() || textClassName.text.length > 255)
             {
-                Toast.makeText(root.context,R.string.text_length255,Toast.LENGTH_LONG).show()
+                Toast.makeText(root.context,R.string.error_text_length_255,Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             else

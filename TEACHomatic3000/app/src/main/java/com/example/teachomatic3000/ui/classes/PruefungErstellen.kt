@@ -73,7 +73,7 @@ class PruefungErstellen : AppCompatActivity() {
             val radioGroup: RadioGroup = findViewById(R.id.radioGroup1)
 
             if(pruefungsstoff.text.isEmpty() || pruefungsdate_choice.text.isEmpty() || radioGroup.getCheckedRadioButtonId() == -1){
-                Toast.makeText(this.baseContext, R.string.prüfung_add_error, Toast.LENGTH_LONG).show()
+                Toast.makeText(this.baseContext, R.string.error_add_prüfung, Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
@@ -88,7 +88,7 @@ class PruefungErstellen : AppCompatActivity() {
                     db.addPruefung(pruefung)
 
                 } catch (exception: Exception){
-                    Toast.makeText(this.baseContext, R.string.prüfung_add_error, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.baseContext, R.string.error_add_prüfung, Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Toast.makeText(this.baseContext,R.string.error_long_input, Toast.LENGTH_SHORT).show()
