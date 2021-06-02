@@ -30,6 +30,7 @@
     <string name="error_add_class">Klasse konnte nicht hinzugefügt werden</string>
     <string name="error_add_lehrstoff">Lehrstoff konnte nicht hinzugefügt werden</string>
     <string name="error_add_prüfung">Prüfung konnte nicht hinzugefügt werden</string>
+    <string name="error_edit_student">Schülername konnte nicht bearbeitet werden</string>
 
     <!--Students-->
     <string name="student_text">Schüler*innen:</string>

@@ -30,6 +30,8 @@
     <string name="error_add_class">无法添加课程</string>
     <string name="error_add_lehrstoff">课程无法添加。</string>
     <string name="error_add_prüfung">无法添加支票</string>
+    <string name="error_edit_student">无法编辑学生姓名</string>
+
 
     <!--Students-->
     <string name="student_text">学生们:</string>
