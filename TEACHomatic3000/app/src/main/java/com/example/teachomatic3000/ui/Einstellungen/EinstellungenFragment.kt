@@ -97,7 +97,7 @@ class EinstellungenFragment : Fragment() {
 
         anonymizer.setOnClickListener(){
             db.anonymizeCurrentStudents()
-            Toast.makeText(root.context, R.string.student_anonym, Toast.LENGTH_LONG).show()
+            Toast.makeText(root.context, R.string.settings_anonymize_students, Toast.LENGTH_LONG).show()
         }
 
         val languageRegulator: Switch = root.findViewById(R.id.language_regulator)
