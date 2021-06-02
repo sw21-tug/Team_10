@@ -95,9 +95,19 @@ class ClassesFragment : Fragment() {
                         input.inputType = InputType.TYPE_CLASS_TEXT
                         builder.setView(input)
                         builder.setPositiveButton("Speichern", DialogInterface.OnClickListener { dialog, which ->
-                            var new_class_name = input.text.toString()
+                            val new_class_name = input.text.toString()
+                            val class_info = parent.getItemAtPosition(position)
+                            val class_parts = class_info.toString().split(" ").toTypedArray()
+                            val class_id = class_parts[0].toInt()
+
+                            classDatabase.changeClassName(class_id, new_class_name)
+                            updateClassList()
+
+                            Toast.makeText(root.context,"Klassenname wurde erfolgreich geändert.",Toast.LENGTH_LONG).show()
                         })
-                        builder.setNegativeButton("Abbrechen", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
+                        builder.setNegativeButton("Abbrechen", DialogInterface.OnClickListener { dialog, which -> dialog.cancel()
+                            Toast.makeText(root.context,"Klassenname wurde nicht geändert.",Toast.LENGTH_LONG).show()
+                        })
                         builder.show()
                     }
                 }
