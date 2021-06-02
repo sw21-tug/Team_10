@@ -89,12 +89,12 @@ class ClassesFragment : Fragment() {
                     R.id.popup_edit -> {
 
                         val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(root.context)
-                        builder.setTitle("Klassenname bearbeiten:")
+                        builder.setTitle(R.string.class_edit_text)
                         val input = EditText(root.context)
-                        input.setHint("Neuen Klassennamen eingeben")
+                        input.setHint(R.string.class_edit_hint)
                         input.inputType = InputType.TYPE_CLASS_TEXT
                         builder.setView(input)
-                        builder.setPositiveButton("Speichern", DialogInterface.OnClickListener { dialog, which ->
+                        builder.setPositiveButton(R.string.save, DialogInterface.OnClickListener { dialog, which ->
                             val new_class_name = input.text.toString()
                             val class_info = parent.getItemAtPosition(position)
                             val class_parts = class_info.toString().split(" ").toTypedArray()
@@ -103,10 +103,10 @@ class ClassesFragment : Fragment() {
                             classDatabase.changeClassName(class_id, new_class_name)
                             updateClassList()
 
-                            Toast.makeText(root.context,"Klassenname wurde erfolgreich geändert.",Toast.LENGTH_LONG).show()
+                            Toast.makeText(root.context,R.string.class_edit_success,Toast.LENGTH_LONG).show()
                         })
-                        builder.setNegativeButton("Abbrechen", DialogInterface.OnClickListener { dialog, which -> dialog.cancel()
-                            Toast.makeText(root.context,"Klassenname wurde nicht geändert.",Toast.LENGTH_LONG).show()
+                        builder.setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialog, which -> dialog.cancel()
+                            Toast.makeText(root.context,R.string.class_edit_cancel,Toast.LENGTH_LONG).show()
                         })
                         builder.show()
                     }

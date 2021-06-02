@@ -301,6 +301,18 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return retList
     }
 
+    fun changeClassName(classId: Int, newName: String): Boolean
+    {
+        val db = this.writableDatabase
+
+        val success = db.execSQL("UPDATE $CLASS_TABLE SET $CLASS_NAME = '$newName' WHERE $CLASS_ID = '$classId'")
+
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
+
     fun addStudentToClass(student: StudentModel, classModel: ClassModel) : Boolean{
         val db = this.writableDatabase
 
@@ -664,18 +676,6 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         db.close()
 
         return retList
-    }
-
-    fun changeClassName(classId: Int, newName: String): Boolean
-    {
-        val db = this.writableDatabase
-
-        val success = db.execSQL("UPDATE $CLASS_TABLE SET $CLASS_NAME = '$newName' WHERE $CLASS_ID = '$classId'")
-
-        if (success.equals(-1)){
-            return false
-        }
-        return true
     }
 
 }
