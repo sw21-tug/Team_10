@@ -1,7 +1,10 @@
 package com.example.teachomatic3000.ui.classes
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -79,11 +82,30 @@ class ClassesFragment : Fragment() {
         classList.setOnItemLongClickListener { parent, view, position, id ->
             val pop = PopupMenu(root.context, view)
             pop.inflate(R.menu.popup_edit_class_name)
-            pop.show()
 
+            pop.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+
+                when (item!!.itemId) {
+                    R.id.popup_edit -> {
+
+                        val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(root.context)
+                        builder.setTitle("Klassenname bearbeiten:")
+                        val input = EditText(root.context)
+                        input.setHint("Neuen Klassennamen eingeben")
+                        input.inputType = InputType.TYPE_CLASS_TEXT
+                        builder.setView(input)
+                        builder.setPositiveButton("Speichern", DialogInterface.OnClickListener { dialog, which ->
+                            var new_class_name = input.text.toString()
+                        })
+                        builder.setNegativeButton("Abbrechen", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
+                        builder.show()
+                    }
+                }
+                return@OnMenuItemClickListener(true)
+            })
+            pop.show()
             return@setOnItemLongClickListener(true)
         }
-
         return root
     }
 
