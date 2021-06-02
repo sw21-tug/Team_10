@@ -149,7 +149,14 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
     fun editStudent(id: String, firstname: String, lastname: String): Boolean {
 
-        return false
+        val db = this.writableDatabase
+
+        val success = db.execSQL("update $STUDENT_TABLE SET " + "$STUDENT_FIRSTNAME = '" + firstname + "', $STUDENT_LASTNAME = '" + lastname + "' WHERE $STUDENT_ID = " + id)
+
+        if (success.equals(-1)){
+            return false
+        }
+        return true
     }
 
     fun getStudent(id: String) : String {
