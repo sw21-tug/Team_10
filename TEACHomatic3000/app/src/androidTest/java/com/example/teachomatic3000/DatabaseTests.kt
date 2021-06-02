@@ -1,5 +1,6 @@
 package com.example.teachomatic3000
 
+import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.teachomatic3000.database.DataBaseHelper
 import com.example.teachomatic3000.models.ClassModel
@@ -57,6 +58,21 @@ class DatabaseTests {
 
         val students_plus_five = db.getStudents()
         assertEquals(current_students + 5, students_plus_five.size)
+    }
+
+    @Test
+    fun testEditStudent() {
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val studentModel = StudentModel(0, "Hans", "Peter")
+
+        db.addStudent(studentModel)
+        Log.d("PLS", studentModel.studentID.toString())
+        val success = db.editStudent(studentModel.studentID.toString(), "Hansi", "Peterli")
+
+        val edited_student = db.getStudent(studentModel.studentID.toString())
+
+        assertEquals(true, success)
+        assertEquals(true, edited_student.contains("Hansi Peterli"))
     }
 
     @Test
