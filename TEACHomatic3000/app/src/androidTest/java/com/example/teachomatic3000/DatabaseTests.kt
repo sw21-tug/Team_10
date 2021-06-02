@@ -66,8 +66,7 @@ class DatabaseTests {
         val studentModel = StudentModel(0, "Hans", "Peter")
 
         db.addStudent(studentModel)
-        Log.d("PLS", studentModel.studentID.toString())
-        val success = db.editStudent(studentModel.studentID.toString(), "Hansi", "Peterli")
+        val success = db.editStudent(db.getStudent(studentModel.studentID.toString()), "Hansi", "Peterli")
 
         val edited_student = db.getStudent(studentModel.studentID.toString())
 
