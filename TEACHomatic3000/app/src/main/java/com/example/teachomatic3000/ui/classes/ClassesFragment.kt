@@ -3,6 +3,7 @@ package com.example.teachomatic3000.ui.classes
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -75,6 +76,16 @@ class ClassesFragment : Fragment() {
             startActivity(intent)
         }
 
+        classList.setOnItemLongClickListener { parent, view, position, id ->
+            val pop = PopupMenu(root.context, view)
+            pop.inflate(R.menu.popup_edit_class_name)
+            pop.show()
+
+            return@setOnItemLongClickListener(true)
+        }
+
         return root
     }
+
+
 }
