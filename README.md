@@ -47,3 +47,8 @@ alle erfassten Inhalte einfach ausgewertet werden.
 | T-010  | Lehrstoff einer Klasse hinzufügen
 | T-047  | Scroll view in Class Details
 | T-050  | refactoring after sprint 3 session 2
+| T-022  | SuS mit Klassen verlinken [FE]
+| T-016  | Klassen Daten annonymisieren
+| T-015  | Mitarbeit von SK beurteilen
+
+
