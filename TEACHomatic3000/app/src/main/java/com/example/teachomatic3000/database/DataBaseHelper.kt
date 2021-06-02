@@ -147,6 +147,11 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return true
     }
 
+    fun editStudent(id: String, firstname: String, lastname: String): Boolean {
+
+        return false
+    }
+
     fun getStudent(id: String) : String {
         var student = String()
 
