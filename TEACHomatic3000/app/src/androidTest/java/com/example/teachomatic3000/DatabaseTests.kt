@@ -1,5 +1,6 @@
 package com.example.teachomatic3000
 
+import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.teachomatic3000.database.DataBaseHelper
 import com.example.teachomatic3000.models.ClassModel
@@ -65,7 +66,8 @@ class DatabaseTests {
         val studentModel = StudentModel(0, "Hans", "Peter")
 
         db.addStudent(studentModel)
-        val success = db.editStudent(db.getStudent(studentModel.studentID.toString()), "Hansi", "Peterli")
+        Log.d("PLS", studentModel.studentID.toString())
+        val success = db.editStudent(studentModel.studentID.toString(), "Hansi", "Peterli")
 
         val edited_student = db.getStudent(studentModel.studentID.toString())
 

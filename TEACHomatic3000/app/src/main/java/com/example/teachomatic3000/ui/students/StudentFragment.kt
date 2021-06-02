@@ -1,5 +1,6 @@
 package com.example.teachomatic3000.ui.students
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.teachomatic3000.R
 import com.example.teachomatic3000.database.DataBaseHelper
 import com.example.teachomatic3000.models.StudentModel
+import com.example.teachomatic3000.ui.classes.ClassDetails
 
 class StudentFragment : Fragment() {
 
