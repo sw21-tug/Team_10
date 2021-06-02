@@ -34,6 +34,9 @@
         <activity
             android:name=".ui.classes.ClassMitarbeitsplus"
             android:theme="@style/Theme.TEACHomatic3000.NoActionBar" />
+        <activity
+            android:name=".ui.students.EditStudent"
+            android:theme="@style/Theme.TEACHomatic3000.NoActionBar" />
     </application>
 
 </manifest>

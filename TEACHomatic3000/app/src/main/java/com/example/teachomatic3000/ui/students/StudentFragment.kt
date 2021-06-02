@@ -1,5 +1,6 @@
 package com.example.teachomatic3000.ui.students
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ class StudentFragment : Fragment() {
     private lateinit var studentList: ListView
     private lateinit var studentDatabase: DataBaseHelper
     private lateinit var studentListAdapter: ArrayAdapter<String>
+    private lateinit var rootcontext: Context
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +35,8 @@ class StudentFragment : Fragment() {
         eTStudentLastName = root.findViewById(R.id.eTStudentLastName)
         studentList = root.findViewById(R.id.studentList)
         studentDatabase = DataBaseHelper(root.context)
+
+        rootcontext = root.context
 
         fun updateStudentList(){
             studentListAdapter = ArrayAdapter(root.context, android.R.layout.simple_list_item_1, studentDatabase.getStudents())
@@ -63,6 +67,28 @@ class StudentFragment : Fragment() {
             updateStudentList()
         }
 
+        studentList.setOnItemLongClickListener { parent, view, position, id ->
+            val student_info = parent.getItemAtPosition(position)
+            val student_parts = student_info.toString().split(" ").toTypedArray()
+            val student_id = student_parts[0]
+            val student_fn = student_parts[1]
+            var student_ln = ""
+            if (student_parts.size > 2) {
+                student_ln = student_parts[2]
+            }
+            val intent = Intent(root.context, EditStudent::class.java).apply {
+                putExtra("student_id", student_id)
+                putExtra("firstname", student_fn)
+                putExtra("lastname", student_ln)
+            }
+            startActivity(intent)
+            return@setOnItemLongClickListener(true)
+        }
         return root
+    }
+    override fun onResume() {
+        super.onResume()
+        studentListAdapter = ArrayAdapter(rootcontext, android.R.layout.simple_list_item_1, studentDatabase.getStudents())
+        studentList.adapter = studentListAdapter
     }
 }
