@@ -18,6 +18,7 @@
     <!--General-->
     <string name="save">保存</string>
     <string name="add">添加</string>
+    <string name="cancel">中止</string>
     <string name="bearbeitungsdatum">处理日期：</string>
     <string name="erstelldatum">创建日期：</string>
 
@@ -45,6 +46,11 @@
     <string name="class_add">添加一个新类：</string>
     <string name="class_available">可用的课程：</string>
     <string name="class_add_student_plus">添加員工加</string>
+    <string name="class_edit_text">修改班级名称:</string>
+    <string name="class_edit_hint">输入新的类名:</string>
+    <string name="class_edit_success">类名更改成功</string>
+    <string name="class_edit_cancel">类名未更改</string>
+    <string name="class_edit_popup">更改班级名称</string>
 
     <!--Settings-->
     <string name="settings_date">手动设置日期</string>

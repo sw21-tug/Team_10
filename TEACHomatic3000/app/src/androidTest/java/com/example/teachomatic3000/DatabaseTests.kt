@@ -66,7 +66,7 @@ class DatabaseTests {
         val studentModel = StudentModel(0, "Hans", "Peter")
 
         db.addStudent(studentModel)
-        Log.d("PLS", studentModel.studentID.toString())
+
         val success = db.editStudent(studentModel.studentID.toString(), "Hansi", "Peterli")
 
         val edited_student = db.getStudent(studentModel.studentID.toString())
@@ -115,6 +115,20 @@ class DatabaseTests {
 
         val classes_plus_five = db.getClasses()
         assertEquals(current_classes + 5, classes_plus_five.size)
+    }
+
+    @Test
+    fun testEditClassName() {
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val classModel = ClassModel(0, "2A")
+
+        db.addClass(classModel)
+        val success = db.changeClassName(classModel.classId, "2B")
+
+        val edited_class = db.getClass(classModel.classId)
+
+        assertEquals(true, success)
+        assertEquals(true, edited_class!!.className.equals("2B"))
     }
 
     @Test

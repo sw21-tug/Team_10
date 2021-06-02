@@ -18,6 +18,7 @@
     <!--General-->
     <string name="save">Speichern</string>
     <string name="add">Hinzufügen</string>
+    <string name="cancel">Abbrechen</string>
     <string name="bearbeitungsdatum">Bearbeitungsdatum: </string>
     <string name="erstelldatum">Erstelldatum: </string>
 
@@ -44,6 +45,12 @@
     <string name="class_add">Neue Klasse hinzufügen:</string>
     <string name="class_available">Verfügbare Klassen:</string>
     <string name="class_add_student_plus">Mitarbeitsplus hinzufügen</string>
+    <string name="class_edit_text">Klassenname bearbeiten:</string>
+    <string name="class_edit_hint">Neuen Klassennamen eingeben:</string>
+    <string name="class_edit_success">Klassenname wurde erfolgreich geändert.</string>
+    <string name="class_edit_cancel">Klassenname wurde nicht geändert.</string>
+    <string name="class_edit_popup">Klassenname ändern</string>
+
 
     <!--Settings-->
     <string name="settings_date">Datum manuell einstellen</string>

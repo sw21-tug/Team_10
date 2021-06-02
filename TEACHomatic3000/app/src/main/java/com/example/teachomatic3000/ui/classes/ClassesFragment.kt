@@ -1,8 +1,12 @@
 package com.example.teachomatic3000.ui.classes
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -75,6 +79,45 @@ class ClassesFragment : Fragment() {
             startActivity(intent)
         }
 
+        classList.setOnItemLongClickListener { parent, view, position, id ->
+            val pop = PopupMenu(root.context, view)
+            pop.inflate(R.menu.popup_edit_class_name)
+
+            pop.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+
+                when (item!!.itemId) {
+                    R.id.popup_edit -> {
+
+                        val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(root.context)
+                        builder.setTitle(R.string.class_edit_text)
+                        val input = EditText(root.context)
+                        input.setHint(R.string.class_edit_hint)
+                        input.inputType = InputType.TYPE_CLASS_TEXT
+                        builder.setView(input)
+                        builder.setPositiveButton(R.string.save, DialogInterface.OnClickListener { dialog, which ->
+                            val new_class_name = input.text.toString()
+                            val class_info = parent.getItemAtPosition(position)
+                            val class_parts = class_info.toString().split(" ").toTypedArray()
+                            val class_id = class_parts[0].toInt()
+
+                            classDatabase.changeClassName(class_id, new_class_name)
+                            updateClassList()
+
+                            Toast.makeText(root.context,R.string.class_edit_success,Toast.LENGTH_LONG).show()
+                        })
+                        builder.setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialog, which -> dialog.cancel()
+                            Toast.makeText(root.context,R.string.class_edit_cancel,Toast.LENGTH_LONG).show()
+                        })
+                        builder.show()
+                    }
+                }
+                return@OnMenuItemClickListener(true)
+            })
+            pop.show()
+            return@setOnItemLongClickListener(true)
+        }
         return root
     }
+
+
 }
