@@ -60,6 +60,20 @@ class DatabaseTests {
     }
 
     @Test
+    fun testEditStudent() {
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val studentModel = StudentModel(0, "Hans", "Peter")
+
+        db.addStudent(studentModel)
+        val success = db.editStudent(db.getStudent(studentModel.studentID.toString()), "Hansi", "Peterli")
+
+        val edited_student = db.getStudent(studentModel.studentID.toString())
+
+        assertEquals(true, success)
+        assertEquals(true, edited_student.contains("Hansi Peterli"))
+    }
+
+    @Test
     fun testAddClassSuccess() {
         val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
         val classModel = ClassModel(0, "4a")
