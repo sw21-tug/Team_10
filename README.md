@@ -51,4 +51,4 @@ alle erfassten Inhalte einfach ausgewertet werden.
 | T-016  | Klassen Daten annonymisieren
 | T-015  | Mitarbeit von SK beurteilen
 | T-055  | Schüler Namen bearbeiten
-
+| T-054  | Lehrstoff bearbeiten in der Übersicht
