@@ -1,5 +1,7 @@
 package com.example.teachomatic3000.ui.lehrstoff
 
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +18,8 @@ class LehrstoffUebersichtFragment : androidx.fragment.app.Fragment() {
     private lateinit var db: DataBaseHelper
     private lateinit var LehrstoffListAdapter: ArrayAdapter<String>
     private lateinit var LehrstoffList: ListView
+    private lateinit var rootContext: Context
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -25,11 +29,37 @@ class LehrstoffUebersichtFragment : androidx.fragment.app.Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_lehrstoffuebersicht, container, false)
 
+        rootContext = root.context
         db = DataBaseHelper(root.context)
         LehrstoffList = root.findViewById(R.id.lehrstoff_list_database)
         LehrstoffListAdapter = ArrayAdapter(root.context, android.R.layout.simple_list_item_1, db.getLehrstoffe(root.context))
         LehrstoffList.adapter = LehrstoffListAdapter
 
+        LehrstoffList.setOnItemClickListener { parent, view, position, id ->
+            val data_pos = parent.getItemAtPosition(position).toString()
+            val id_split = data_pos.split("Lehrstoff-ID: ").toTypedArray()
+            val id_split1 = id_split[1].split(" ")
+            val id = id_split1[0].toInt()
+
+            val intent = Intent(root.context, LehrstoffKlassenHelper::class.java).apply {
+                putExtra("lehrstoff_id", id)
+                putExtra("title", db.getLehrstoffOnPos(id)[1])
+                putExtra("description", db.getLehrstoffOnPos(id)[2])
+                putExtra("date", db.getLehrstoffOnPos(id)[3])
+                putExtra("date_create", db.getLehrstoffOnPos(id)[4])
+                putExtra("date_edit", db.getLehrstoffOnPos(id)[5])
+                putExtra("check_edit", true)
+            }
+            startActivity(intent)
+        }
+
         return root
+    }
+
+    override fun onResume(){
+        super.onResume()
+        LehrstoffListAdapter = ArrayAdapter(rootContext, android.R.layout.simple_list_item_1, db.getLehrstoffe(rootContext))
+        LehrstoffList.adapter = LehrstoffListAdapter
+
     }
 }
