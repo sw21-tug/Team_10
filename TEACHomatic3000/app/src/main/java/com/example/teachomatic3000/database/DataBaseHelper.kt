@@ -649,8 +649,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
             do{
                 val pruefung_id = curser.getString(0)
                 val pruefungklasseid = curser.getInt(1)
-                val pruefung_datum = curser.getString(2)
-                val pruefung_langtext = curser.getString(3)
+                val pruefung_langtext = curser.getString(2)
+                val pruefung_datum = curser.getString(3)
                 val pruefung_art = curser.getString(4)
                 var klasse = ""
 
@@ -690,8 +690,8 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
             do{
                 val pruefung_id = curser.getString(0)
                 val pruefungklasseid = curser.getInt(1)
-                val pruefung_datum = curser.getString(2)
-                val pruefung_langtext = curser.getString(3)
+                val pruefung_langtext = curser.getString(2)
+                val pruefung_datum = curser.getString(3)
                 val pruefung_art = curser.getString(4)
 
                 retList.add(pruefung_id)
