@@ -617,6 +617,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         content.put(PRUEFUNG_ART, pruefung.pruefungArt)
 
         val sucess = db.insert(PRUEFUNG_TABLE, null, content)
+        pruefung.pruefungID = sucess.toInt()
 
         if(sucess.equals(-1)) {
             return false
@@ -678,4 +679,45 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return retList
     }
 
+    fun getPruefungOnPos(pos: Int) : ArrayList<String> {
+        val retList = ArrayList<String>()
+
+        val query = "SELECT * FROM $PRUEFUNG_TABLE WHERE $PRUEFUNG_ID = $pos"
+        val db = this.readableDatabase
+        val curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                val pruefung_id = curser.getString(0)
+                val pruefungklasseid = curser.getInt(1)
+                val pruefung_datum = curser.getString(2)
+                val pruefung_langtext = curser.getString(3)
+                val pruefung_art = curser.getString(4)
+
+                retList.add(pruefung_id)
+                retList.add(pruefungklasseid.toString())
+                retList.add(pruefung_datum)
+                retList.add(pruefung_langtext)
+                retList.add(pruefung_art)
+
+            }while (curser.moveToNext())
+        }
+        return retList
+    }
+
+    fun editPruefung(pruefung: PruefungModel): Boolean{
+        val db = this.writableDatabase
+
+        val success = db.execSQL("update $PRUEFUNG_TABLE SET " +
+                "$PRUEFUNGKLASSEID = '" + pruefung.pruefungKlasseID + "'"+
+                ", $PRUEFUNG_LANGTEXT = '" + pruefung.pruefungLangtext + "'"+
+                ", $PRUEFUNG_DATUM = '" + pruefung.pruefungDatum + "'"+
+                ", $PRUEFUNG_ART = '" + pruefung.pruefungArt + "'"+
+                " WHERE $PRUEFUNG_ID = " + pruefung.pruefungID)
+
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
 }
