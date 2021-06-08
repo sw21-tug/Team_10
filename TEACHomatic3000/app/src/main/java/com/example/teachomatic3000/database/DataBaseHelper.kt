@@ -328,7 +328,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return true
     }
 
-    fun getStudentsOfClass(classModel: ClassModel) : List<String> {
+    fun getStudentsOfClass(classModel: ClassModel, flag: Boolean = true) : List<String> {
         val retList = ArrayList<String>()
 
         val query = "SELECT * FROM $STUDENT_CLASS_TABLE WHERE $STUDENT_CLASS_F_CLASS_ID = "+classModel.classId.toString()
@@ -341,8 +341,11 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
             do{
                 val student_id = curser.getString(2)
                 var studentInfo = getStudent(student_id)
-                val studentMitarbeitsplus: String = " " + curser.getInt(3).toString() + " Plus"
-                studentInfo = studentInfo + studentMitarbeitsplus
+
+                if(flag) {
+                    val studentMitarbeitsplus: String = " " + curser.getInt(3).toString() + " Plus"
+                    studentInfo += studentMitarbeitsplus
+                }
 
                 retList.add(studentInfo)
             }while (curser.moveToNext())
