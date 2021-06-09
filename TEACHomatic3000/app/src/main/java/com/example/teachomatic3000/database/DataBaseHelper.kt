@@ -6,15 +6,13 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.teachomatic3000.MainActivity
-import com.example.teachomatic3000.models.DatumModel
-import com.example.teachomatic3000.models.StudentModel
+import com.example.teachomatic3000.R
+import com.example.teachomatic3000.models.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import com.example.teachomatic3000.models.ClassModel
-import com.example.teachomatic3000.models.LehrstoffModel
+import java.util.stream.IntStream.range
 
-class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 5) {
+class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic.db", null, 10) {
 
     val STUDENT_TABLE = "STUDENT_TABLE"
     val STUDENT_FIRSTNAME = "STUDENT_FIRSTNAME"
@@ -37,23 +35,41 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     val LEHRSTOFF_ERSTELLDATUM = "LEHRSTOFF_ERSTELLDATUM"
     val LEHRSTOFF_BEARBEITUNGSDATUM = "LEHRSTOFF_BEARBEITUNGSDATUM"
 
+    val LEHRSTOFF_F_KLASSE = "LEHRSTOFF_F_KLASSE"
+
     val LANGUAGE_TABLE = "LANGUAGE_TABLE"
     val LANGUAGE_ID = "LANGUAGE_ID"
     val LANGUAGE_CODE = "LANGUAGE_CODE"
 
+    val PRUEFUNG_TABLE = "PRUEFUNG_TABLE"
+    val PRUEFUNG_ID = "PRUEFUNG_ID"
+    val PRUEFUNGKLASSEID = "PRUEFUNGKLASSEID"
+    val PRUEFUNG_LANGTEXT = "PRUEFUNG_LANGTEXT"
+    val PRUEFUNG_DATUM = "PRUEFUNG_DATUM"
+    val PRUEFUNG_ART = "PRUEFUNG_ART"
+
+    val STUDENT_CLASS_TABLE = "STUDENT_CLASS_TABLE"
+    val STUDENT_CLASS_ID = "STUDENT_CLASS_ID"
+    val STUDENT_CLASS_F_CLASS_ID = "STUDENT_CLASS_F_CLASS_ID"
+    val STUDENT_CLASS_F_SUS_ID = "STUDENT_CLASS_F_SUS_ID"
+    val STUDENT_CLASS_MITARBEITSPLUS = "STUDENT_CLASS_MITARBEITSPLUS"
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableStatementStudent = "CREATE TABLE $STUDENT_TABLE($STUDENT_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_FIRSTNAME TEXT, $STUDENT_LASTNAME TEXT)"
         val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
         val createTableStatementLanguage = "CREATE TABLE $LANGUAGE_TABLE($LANGUAGE_ID INTEGER, $LANGUAGE_CODE TEXT)"
         val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
+        val alterTableLehrstoff = "ALTER TABLE  $LEHRSTOFF_TABLE ADD $LEHRSTOFF_F_KLASSE INTEGER"
+        val alterTableMitarbeitsplus = "ALTER TABLE  ${STUDENT_CLASS_TABLE} ADD $STUDENT_CLASS_MITARBEITSPLUS INTEGER"
+        val createTableStatementPruefung = "CREATE TABLE $PRUEFUNG_TABLE($PRUEFUNG_ID INTEGER PRIMARY KEY AUTOINCREMENT, $PRUEFUNGKLASSEID INTEGER, $PRUEFUNG_LANGTEXT TEXT, $PRUEFUNG_DATUM TEXT, $PRUEFUNG_ART TEXT)"
+        val createTableStatementSC = "CREATE TABLE $STUDENT_CLASS_TABLE($STUDENT_CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_CLASS_F_CLASS_ID INTEGER, $STUDENT_CLASS_F_SUS_ID INTEGER)"
 
         db!!.execSQL(createTableStatementDatum)
 
         val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
         val insertTableStatementLanguage = "insert into $LANGUAGE_TABLE ($LANGUAGE_ID, $LANGUAGE_CODE) values (1, 'en')"
 
-       val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
+        val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
                 "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
 
         db.execSQL(insertTableStatementDatum)
@@ -62,43 +78,62 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         db.execSQL(createTableStatementLehrstoff)
         db.execSQL(createTableStatementLanguage)
         db.execSQL(insertTableStatementLanguage)
+        db.execSQL(alterTableLehrstoff)
+        db.execSQL(createTableStatementPruefung)
+        db.execSQL(createTableStatementSC)
+        db.execSQL(alterTableMitarbeitsplus)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        when (oldVersion) {
-            1 -> {
-                val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
-                db!!.execSQL(createTableStatementClasses)
-            }
-            2 -> {
-                val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
-                db!!.execSQL(createTableStatementDatum)
-                val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
-                db.execSQL(insertTableStatementDatum)
-            }
-            3 -> {
+        for (x: Int in range(oldVersion, newVersion)) {
+             when (x) {
+                1 -> {
+                    val createTableStatementClasses = "CREATE TABLE $CLASS_TABLE($CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $CLASS_NAME TEXT)"
+                    db!!.execSQL(createTableStatementClasses)
+                }
+                2 -> {
+                    val createTableStatementDatum = "CREATE TABLE $DATUM_TABLE($DATUM_ID INTEGER, $DATUM_DATUM TEXT)"
+                    db!!.execSQL(createTableStatementDatum)
+                    val insertTableStatementDatum = "insert into $DATUM_TABLE ($DATUM_ID, $DATUM_DATUM) values (1, '-1')"
+                    db.execSQL(insertTableStatementDatum)
+                }
+                3 -> {
+                    val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
+                            "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
+                    db!!.execSQL(createTableStatementLehrstoff)
+                }
+                4 -> {
+                    val createTableStatementLanguage = "CREATE TABLE $LANGUAGE_TABLE($LANGUAGE_ID INTEGER, $LANGUAGE_CODE TEXT)"
+                    db!!.execSQL(createTableStatementLanguage)
 
-                val createTableStatementLehrstoff = "CREATE TABLE $LEHRSTOFF_TABLE($LEHRSTOFF_ID INTEGER PRIMARY KEY AUTOINCREMENT, $LEHRSTOFF_TITEL TEXT, $LEHRSTOFF_LANGTEXT TEXT," +
-                        "$LEHRSTOFF_DATUM TEXT, $LEHRSTOFF_ERSTELLDATUM TEXT, $LEHRSTOFF_BEARBEITUNGSDATUM TEXT)"
-
-                 db!!.execSQL(createTableStatementLehrstoff)
-            }
-            4 -> {
-
-                val createTableStatementLanguage = "CREATE TABLE $LANGUAGE_TABLE($LANGUAGE_ID INTEGER, $LANGUAGE_CODE TEXT)"
-
-                db!!.execSQL(createTableStatementLanguage)
-
-                val insertTableStatementLanguage = "insert into $LANGUAGE_TABLE ($LANGUAGE_ID, $LANGUAGE_CODE) values (1, 'en')"
-                db.execSQL(insertTableStatementLanguage)
+                    val insertTableStatementLanguage = "insert into $LANGUAGE_TABLE ($LANGUAGE_ID, $LANGUAGE_CODE) values (1, 'en')"
+                    db.execSQL(insertTableStatementLanguage)
+                }
+                5 -> {
+                    val createTableStatementSC = "CREATE TABLE $STUDENT_CLASS_TABLE($STUDENT_CLASS_ID INTEGER PRIMARY KEY AUTOINCREMENT, $STUDENT_CLASS_F_CLASS_ID INTEGER, $STUDENT_CLASS_F_SUS_ID INTEGER)"
+                    db!!.execSQL(createTableStatementSC)
+                }
+                 6 -> {
+                     val alterTableLehrstoff = "ALTER TABLE  $LEHRSTOFF_TABLE ADD $LEHRSTOFF_F_KLASSE INTEGER"
+                     db!!.execSQL(alterTableLehrstoff)
+                 }
+                7 -> {
+                    val createTableStatementPruefung = "CREATE TABLE $PRUEFUNG_TABLE($PRUEFUNG_ID INTEGER PRIMARY KEY AUTOINCREMENT, $PRUEFUNGKLASSEID INTEGER, $PRUEFUNG_LANGTEXT TEXT, $PRUEFUNG_DATUM TEXT, $PRUEFUNG_ART TEXT)"
+                    db!!.execSQL(createTableStatementPruefung)
+                }
+                 9 -> {
+                     val alterTableMitarbeitsplus = "ALTER TABLE  ${STUDENT_CLASS_TABLE} ADD $STUDENT_CLASS_MITARBEITSPLUS INTEGER"
+                     db!!.execSQL(alterTableMitarbeitsplus)
+                 }
             }
         }
     }
 
     fun addStudent(student: StudentModel): Boolean {
         val db = this.writableDatabase
-        var content = ContentValues()
 
+        val content = ContentValues()
         content.put(STUDENT_FIRSTNAME, student.firstName)
         content.put(STUDENT_LASTNAME, student.lastName)
 
@@ -107,23 +142,60 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         if(sucess.equals(-1)) {
             return false
         }
+
+        student.studentID = sucess.toInt()
         return true
     }
 
-    fun getStudents() : ArrayList<String> {
-        var retList = ArrayList<String>()
+    fun editStudent(id: String, firstname: String, lastname: String): Boolean {
 
-        var query = "SELECT * FROM $STUDENT_TABLE"
+        val db = this.writableDatabase
+
+        val success = db.execSQL("update $STUDENT_TABLE SET " + "$STUDENT_FIRSTNAME = '" + firstname + "', $STUDENT_LASTNAME = '" + lastname + "' WHERE $STUDENT_ID = " + id)
+
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
+
+    fun getStudent(id: String) : String {
+        var student = String()
+
+        val query = "SELECT * FROM $STUDENT_TABLE WHERE $STUDENT_ID = $id"
 
         val db = this.readableDatabase
 
-        var curser = db.rawQuery(query, null)
+        val curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            val student_id = curser.getString(0)
+            val first_name = curser.getString(1)
+            val last_name = curser.getString(2)
+
+            student = "$student_id $first_name $last_name"
+        }
+
+        curser.close()
+        db.close()
+
+        return student
+    }
+
+    fun getStudents() : ArrayList<String> {
+        val retList = ArrayList<String>()
+
+        val query = "SELECT * FROM $STUDENT_TABLE"
+
+        val db = this.readableDatabase
+
+        val curser = db.rawQuery(query, null)
 
         if(curser.moveToFirst()) {
             do{
-                var student_id = curser.getString(0)
-                var first_name = curser.getString(1)
-                var last_name = curser.getString(2)
+                val student_id = curser.getString(0)
+                val first_name = curser.getString(1)
+                val last_name = curser.getString(2)
 
                 val studentInfo = "$student_id $first_name $last_name"
                 retList.add(studentInfo)
@@ -137,95 +209,26 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return retList
     }
 
-    fun addDatum(datum: DatumModel): Boolean {
-        val db = this.writableDatabase
-        var content = ContentValues()
-
-        content.put(DATUM_DATUM, datum.Datum)
-
-
-        val sucess = db.insert(DATUM_TABLE, null, content)
-
-        if(sucess.equals(-1)) {
-            return false
-        }
-        return true
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getDatum() : String {
-        var retString = ""
-
-        var query = "SELECT $DATUM_DATUM FROM $DATUM_TABLE"
-
-        val db = this.readableDatabase
-
-        var curser = db.rawQuery(query, null)
-
-        if(curser.moveToFirst()) {
-            do{
-                retString = curser.getString(0)
-
-
-            }while (curser.moveToNext())
-        }
-
-        curser.close()
-        db.close()
-
-        return retString
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getDatumHuman() : String {
-        var retString = ""
-
-        var query = "SELECT $DATUM_DATUM FROM $DATUM_TABLE"
-
-        val db = this.readableDatabase
-
-        var curser = db.rawQuery(query, null)
-
-        if(curser.moveToFirst()) {
-            do{
-                retString = curser.getString(0)
-
-
-            }while (curser.moveToNext())
-        }
-        if(retString == "-1"){
-            val automaticDate = LocalDateTime.now()
-            retString = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
-        }
-        curser.close()
-        db.close()
-
-        return retString
-    }
-
-    fun deleteAllStudents(): Boolean{
-        var db = this.writableDatabase
-        val success = db.execSQL("delete from " + STUDENT_TABLE)
-        if (success.equals(-1)){
-            return false
-        }
-        return true
-    }
-
     fun anonymizeCurrentStudents(): Boolean{
-        var db = this.writableDatabase
+        val db = this.writableDatabase
+
         val success = db.execSQL("update $STUDENT_TABLE SET " +
                 "$STUDENT_FIRSTNAME = 'Anonymisiert', $STUDENT_LASTNAME = ''")
+
         if (success.equals(-1)){
             return false
         }
         return true
     }
 
+    fun anonymizeClass(classId: Int): Boolean
+    {
+        val db = this.writableDatabase
 
-    fun updateDatum(newDatum: String): Boolean{
-        var db = this.writableDatabase
-        val success = db.execSQL("update $DATUM_TABLE SET $DATUM_DATUM = '" + newDatum + "'")
+        val success = db.execSQL("update $STUDENT_TABLE SET " +
+                "$STUDENT_FIRSTNAME = 'Anonymisiert', $STUDENT_LASTNAME = ''" +
+        " WHERE $STUDENT_ID IN (SELECT $STUDENT_CLASS_F_SUS_ID FROM $STUDENT_CLASS_TABLE WHERE $STUDENT_CLASS_F_CLASS_ID  =" + classId.toString() +")" )
+
         if (success.equals(-1)){
             return false
         }
@@ -234,30 +237,32 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
 
     fun addClass(classModel: ClassModel): Boolean {
         val db = this.writableDatabase
-        var content = ContentValues()
 
-        content.put(CLASS_NAME, classModel.class_name)
+        val content = ContentValues()
+        content.put(CLASS_NAME, classModel.className)
 
         val success = db.insert(CLASS_TABLE, null, content)
 
         if(success.equals(-1)) {
             return false
         }
+
+        classModel.classId = success.toInt()
         return true
     }
 
     fun getClass(id: Int): ClassModel? {
         var classInfo: ClassModel? = null
-        var query = "SELECT * FROM $CLASS_TABLE WHERE $CLASS_ID = "+id.toString()
+        val query = "SELECT * FROM $CLASS_TABLE WHERE $CLASS_ID = $id"
 
         val db = this.readableDatabase
 
-        var curser = db.rawQuery(query, null)
+        val curser = db.rawQuery(query, null)
 
         if(curser.moveToFirst()) {
             do{
-                var class_id = curser.getString(0)
-                var class_name = curser.getString(1)
+                val class_id = curser.getString(0)
+                val class_name = curser.getString(1)
 
                 classInfo = ClassModel(class_id.toInt(), class_name)
 
@@ -271,18 +276,18 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
     }
 
     fun getClasses() : ArrayList<String> {
-        var retList = ArrayList<String>()
+        val retList = ArrayList<String>()
 
-        var query = "SELECT * FROM $CLASS_TABLE"
+        val query = "SELECT * FROM $CLASS_TABLE"
 
         val db = this.readableDatabase
 
-        var curser = db.rawQuery(query, null)
+        val curser = db.rawQuery(query, null)
 
         if(curser.moveToFirst()) {
             do{
-                var class_id = curser.getString(0)
-                var class_name = curser.getString(1)
+                val class_id = curser.getString(0)
+                val class_name = curser.getString(1)
 
                 val classInfo = ClassModel(class_id.toInt(), class_name)
                 retList.add(classInfo.toString())
@@ -296,17 +301,129 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return retList
     }
 
-    fun addLehrstoff(lehrstoff: LehrstoffModel) : Boolean {
-
+    fun changeClassName(classId: Int, newName: String): Boolean
+    {
         val db = this.writableDatabase
 
-        var content = ContentValues()
+        val success = db.execSQL("UPDATE $CLASS_TABLE SET $CLASS_NAME = '$newName' WHERE $CLASS_ID = '$classId'")
 
-        content.put(LEHRSTOFF_TITEL, lehrstoff.LehrstoffTitel)
-        content.put(LEHRSTOFF_LANGTEXT, lehrstoff.LehrstoffLangtext)
-        content.put(LEHRSTOFF_DATUM,lehrstoff.LehrstoffDatum)
-        content.put(LEHRSTOFF_ERSTELLDATUM, lehrstoff.ErstellDatum)
-        content.put(LEHRSTOFF_BEARBEITUNGSDATUM, lehrstoff.Bearbeitungsdatum)
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
+
+    fun addStudentToClass(student: StudentModel, classModel: ClassModel) : Boolean{
+        val db = this.writableDatabase
+
+        val content = ContentValues()
+        content.put(STUDENT_CLASS_F_CLASS_ID, classModel.classId)
+        content.put(STUDENT_CLASS_F_SUS_ID, student.studentID)
+
+        val success = db.insert(STUDENT_CLASS_TABLE, null, content)
+
+        if(success.equals(-1)) {
+            return false
+        }
+        return true
+    }
+
+    fun getStudentsOfClass(classModel: ClassModel, flag: Boolean = true) : List<String> {
+        val retList = ArrayList<String>()
+
+        val query = "SELECT * FROM $STUDENT_CLASS_TABLE WHERE $STUDENT_CLASS_F_CLASS_ID = "+classModel.classId.toString()
+
+        val db = this.readableDatabase
+
+        val curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                val student_id = curser.getString(2)
+                var studentInfo = getStudent(student_id)
+
+                if(flag) {
+                    val studentMitarbeitsplus: String = " " + curser.getInt(3).toString() + " +"
+                    studentInfo += studentMitarbeitsplus
+                }
+
+                retList.add(studentInfo)
+            }while (curser.moveToNext())
+        }
+
+        curser.close()
+        db.close()
+
+        return retList
+    }
+
+    fun getDatum() : String {
+        var retString = ""
+
+        val query = "SELECT $DATUM_DATUM FROM $DATUM_TABLE"
+
+        val db = this.readableDatabase
+
+        val curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                retString = curser.getString(0)
+            }while (curser.moveToNext())
+        }
+
+        curser.close()
+        db.close()
+
+        return retString
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getDatumHuman() : String {
+        var retString = ""
+
+        val query = "SELECT $DATUM_DATUM FROM $DATUM_TABLE"
+
+        val db = this.readableDatabase
+
+        val curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                retString = curser.getString(0)
+            }while (curser.moveToNext())
+        }
+        if(retString == "-1"){
+            val automaticDate = LocalDateTime.now()
+            retString = automaticDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")).toString()
+        }
+        curser.close()
+        db.close()
+
+        return retString
+    }
+
+    fun updateDatum(newDatum: String): Boolean{
+        val db = this.writableDatabase
+
+        val success = db.execSQL("update $DATUM_TABLE SET $DATUM_DATUM = '$newDatum'")
+
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
+
+    fun addLehrstoff(lehrstoff: LehrstoffModel) : Boolean {
+        val db = this.writableDatabase
+
+        val content = ContentValues()
+        content.put(LEHRSTOFF_TITEL, lehrstoff.lehrstoffTitel)
+        content.put(LEHRSTOFF_LANGTEXT, lehrstoff.lehrstoffLangtext)
+        content.put(LEHRSTOFF_DATUM,lehrstoff.lehrstoffDatum)
+        content.put(LEHRSTOFF_ERSTELLDATUM, lehrstoff.erstellDatum)
+        content.put(LEHRSTOFF_BEARBEITUNGSDATUM, lehrstoff.bearbeitungsDatum)
+        content.put(LEHRSTOFF_F_KLASSE, lehrstoff.lehrstoff_f_Klasse)
 
         val sucess = db.insert(LEHRSTOFF_TABLE, null, content)
 
@@ -316,68 +433,294 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
         return true;
     }
 
-    fun getLehrstoffe() : ArrayList<String> {
-        var retList = ArrayList<String>()
+    fun getLehrstoffe(context: Context) : ArrayList<String> {
+        val retList = ArrayList<String>()
 
-        var query = "SELECT * FROM $LEHRSTOFF_TABLE"
+        val query = "SELECT * FROM $LEHRSTOFF_TABLE"
 
         val db = this.readableDatabase
 
-        var curser = db.rawQuery(query, null)
+        val curser = db.rawQuery(query, null)
 
         if(curser.moveToFirst()) {
             do{
-                var lehrstoff_id = curser.getString(0)
-                var lehrstoff_title = curser.getString(1)
-                var lehrstoff_description = curser.getString(2)
-                var lehrstoff_datum = curser.getString(3)
-                var lehrstoff_date_create = curser.getString(4)
-                var lehrstoff_date_edit = curser.getString(5)
+                val lehrstoff_id = curser.getString(0)
+                val lehrstoff_title = curser.getString(1)
+                val lehrstoff_description = curser.getString(2)
+                val lehrstoff_datum = curser.getString(3)
+                val lehrstoff_date_create = curser.getString(4)
+                val lehrstoff_date_edit = curser.getString(5)
+                val lehrstoff_k_klasse = curser.getString(6)
+                var klasse = ""
 
-                val lehrstoffInfo = " Lehrstoff-ID: $lehrstoff_id \n Lehrstofftitel: $lehrstoff_title \n " +
-                        "Lehrstoffbeschreibung: $lehrstoff_description \n Lehrstoffdatum: $lehrstoff_datum \n " +
-                        "Erstelldatum: $lehrstoff_date_create \n Bearbeitungsdatum: $lehrstoff_date_edit"
+                if(lehrstoff_k_klasse.toInt() > 0) {
+                    val classModel = this.getClass(lehrstoff_k_klasse.toInt())
+                    klasse = context.getString(R.string.class_text) + classModel?.className
+                }
+
+                val id = context.getString(R.string.lehrstoff_id) + ":"
+                val titel = context.getString(R.string.lehrstoff_title) + ":"
+                val beschreibung = context.getString(R.string.lehrstoff_description) + ":"
+                val datum = context.getString(R.string.lehrstoff_date) + ":"
+                val createDatum = context.getString(R.string.erstelldatum)
+                val bearbeitungsDatum = context.getString(R.string.bearbeitungsdatum)
+
+                val lehrstoffInfo = "$id $lehrstoff_id \n$titel $lehrstoff_title \n" +
+                        "$beschreibung $lehrstoff_description \n$datum $lehrstoff_datum \n" +
+                        "$createDatum $lehrstoff_date_create \n$bearbeitungsDatum $lehrstoff_date_edit \n$klasse"
+
                 retList.add(lehrstoffInfo)
 
             }while (curser.moveToNext())
         }
-
 
         curser.close()
         db.close()
 
         return retList
     }
-        fun updateLanguage(newLanguage: String): Boolean{
-            var db = this.writableDatabase
-            val success = db.execSQL("update $LANGUAGE_TABLE SET $LANGUAGE_CODE = '" + newLanguage + "'")
-            if (success.equals(-1)){
-                return false
-            }
-            return true
+
+    fun getLehrstoffOnPos(pos: Int) : ArrayList<String> {
+        val retList = ArrayList<String>()
+
+        val query = "SELECT * FROM $LEHRSTOFF_TABLE WHERE $LEHRSTOFF_ID = $pos"
+        val db = this.readableDatabase
+        val curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                val lehrstoff_id = curser.getString(0)
+                val lehrstoff_title = curser.getString(1)
+                val lehrstoff_description = curser.getString(2)
+                val lehrstoff_datum = curser.getString(3)
+                val lehrstoff_date_create = curser.getString(4)
+                val lehrstoff_date_edit = curser.getString(5)
+                val lehrstoff_k_klasse = curser.getString(6)
+
+                retList.add(lehrstoff_id)
+                retList.add(lehrstoff_title)
+                retList.add(lehrstoff_description)
+                retList.add(lehrstoff_datum)
+                retList.add(lehrstoff_date_create)
+                retList.add(lehrstoff_date_edit)
+
+                if(lehrstoff_k_klasse.toInt() > 0) {
+                    retList.add(lehrstoff_k_klasse)
+                }
+            }while (curser.moveToNext())
         }
 
-        @RequiresApi(Build.VERSION_CODES.O)
-        fun getLanguage() : String {
-            var retString = ""
-
-            var query = "SELECT $LANGUAGE_CODE FROM $LANGUAGE_TABLE"
-
-            val db = this.readableDatabase
-
-            var curser = db.rawQuery(query, null)
-
-            if(curser.moveToFirst()) {
-                do{
-                    retString = curser.getString(0)
-
-
-                }while (curser.moveToNext())
-            }
-
-            curser.close()
-            db.close()
-
-            return retString
-        }
+        return retList
     }
+
+    fun getLehrstoffeForKlasse(Klasse_id: Int, context: Context) : ArrayList<String> {
+        val retList = ArrayList<String>()
+
+        val query = "SELECT * FROM $LEHRSTOFF_TABLE WHERE $LEHRSTOFF_F_KLASSE = $Klasse_id"
+
+        val db = this.readableDatabase
+
+        val curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                val lehrstoff_id = curser.getString(0)
+                val lehrstoff_title = curser.getString(1)
+                val lehrstoff_description = curser.getString(2)
+                val lehrstoff_datum = curser.getString(3)
+                val lehrstoff_date_create = curser.getString(4)
+                val lehrstoff_date_edit = curser.getString(5)
+                val lehrstoff_k_klasse = curser.getString(6)
+                var klasse = ""
+
+                if(lehrstoff_k_klasse.toInt() > 0) {
+                    val classModel = this.getClass(lehrstoff_k_klasse.toInt())
+                    klasse = context.getString(R.string.class_text) + classModel?.className
+                }
+
+                val id = context.getString(R.string.lehrstoff_id) + ":"
+                val titel = context.getString(R.string.lehrstoff_title) + ":"
+                val beschreibung = context.getString(R.string.lehrstoff_description) + ":"
+                val datum = context.getString(R.string.lehrstoff_date) + ":"
+                val createDatum = context.getString(R.string.erstelldatum)
+                val bearbeitungsDatum = context.getString(R.string.bearbeitungsdatum)
+
+                val lehrstoffInfo = "$id $lehrstoff_id \n$titel $lehrstoff_title \n" +
+                        "$beschreibung $lehrstoff_description \n$datum $lehrstoff_datum \n" +
+                        "$createDatum $lehrstoff_date_create \n$bearbeitungsDatum $lehrstoff_date_edit \n$klasse"
+
+                retList.add(lehrstoffInfo)
+            }while (curser.moveToNext())
+        }
+
+        curser.close()
+        db.close()
+
+        return retList
+    }
+
+    fun editLehrstoff(lehrstoff: LehrstoffModel): Boolean{
+        val db = this.writableDatabase
+
+        val success = db.execSQL("update $LEHRSTOFF_TABLE SET " +
+                "$LEHRSTOFF_TITEL = '" + lehrstoff.lehrstoffTitel + "'"+
+                ", $LEHRSTOFF_LANGTEXT = '" + lehrstoff.lehrstoffLangtext + "'"+
+                ", $LEHRSTOFF_DATUM = '" + lehrstoff.lehrstoffDatum + "'"+
+                ", $LEHRSTOFF_ERSTELLDATUM = '" + lehrstoff.erstellDatum + "'"+
+                ", $LEHRSTOFF_BEARBEITUNGSDATUM = '" + lehrstoff.bearbeitungsDatum + "'"+
+                ", $LEHRSTOFF_F_KLASSE = '" + lehrstoff.lehrstoff_f_Klasse + "'" +
+                " WHERE $LEHRSTOFF_ID = " + lehrstoff.lehrstoffID.toString())
+
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
+
+    fun updateLanguage(newLanguage: String): Boolean{
+        val db = this.writableDatabase
+
+        val success = db.execSQL("update $LANGUAGE_TABLE SET $LANGUAGE_CODE = '$newLanguage'")
+
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getLanguage() : String {
+        var retString = ""
+
+        val query = "SELECT $LANGUAGE_CODE FROM $LANGUAGE_TABLE"
+
+        val db = this.readableDatabase
+
+        val curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                retString = curser.getString(0)
+            }while (curser.moveToNext())
+        }
+
+        curser.close()
+        db.close()
+
+        return retString
+    }
+
+    fun addPruefung(pruefung: PruefungModel) : Boolean {
+        val db = this.writableDatabase
+
+        val content = ContentValues()
+        content.put(PRUEFUNGKLASSEID, pruefung.pruefungKlasseID)
+        content.put(PRUEFUNG_LANGTEXT, pruefung.pruefungLangtext)
+        content.put(PRUEFUNG_DATUM,pruefung.pruefungDatum)
+        content.put(PRUEFUNG_ART, pruefung.pruefungArt)
+
+        val sucess = db.insert(PRUEFUNG_TABLE, null, content)
+        pruefung.pruefungID = sucess.toInt()
+
+        if(sucess.equals(-1)) {
+            return false
+        }
+        return true;
+    }
+    fun updateMitarbeitsPlus(student: StudentModel, classModel: ClassModel): Boolean{
+        val db = this.writableDatabase
+
+        val success = db.execSQL("update ${STUDENT_CLASS_TABLE} SET $STUDENT_CLASS_MITARBEITSPLUS = COALESCE( $STUDENT_CLASS_MITARBEITSPLUS, 0) + 1 WHERE $STUDENT_CLASS_F_CLASS_ID = " +
+                classModel.classId.toString() + " AND $STUDENT_CLASS_F_SUS_ID = "+ student.studentID.toString())
+
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
+
+    fun getPruefung(class_id: Int, context: Context) : ArrayList<String> {
+        val retList = ArrayList<String>()
+
+        val query = "SELECT * FROM $PRUEFUNG_TABLE WHERE $PRUEFUNGKLASSEID = $class_id "
+
+        val db = this.readableDatabase
+
+        val curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                val pruefung_id = curser.getString(0)
+                val pruefungklasseid = curser.getInt(1)
+                val pruefung_langtext = curser.getString(2)
+                val pruefung_datum = curser.getString(3)
+                val pruefung_art = curser.getString(4)
+                var klasse = ""
+
+                if(pruefungklasseid > 0) {
+                    val classModel = this.getClass(pruefungklasseid)
+                    klasse = context.getString(R.string.class_text) + classModel?.className
+                }
+
+                val id = context.getString(R.string.prüfung_id) + ":"
+                val datum = context.getString(R.string.prüfung_date) + ":"
+                val art = context.getString(R.string.prüfung_art) + ":"
+                val stoff = context.getString(R.string.prüfung_description) + ":"
+
+                val pruefungInfo = "$id $pruefung_id \n" +
+                        "$datum $pruefung_datum \n" +
+                        "$art $pruefung_art \n" +
+                        "$stoff $pruefung_langtext \n" + klasse
+
+                retList.add(pruefungInfo)
+            }while (curser.moveToNext())
+        }
+
+        curser.close()
+        db.close()
+
+        return retList
+    }
+
+    fun getPruefungOnPos(pos: Int) : ArrayList<String> {
+        val retList = ArrayList<String>()
+
+        val query = "SELECT * FROM $PRUEFUNG_TABLE WHERE $PRUEFUNG_ID = $pos"
+        val db = this.readableDatabase
+        val curser = db.rawQuery(query, null)
+
+        if(curser.moveToFirst()) {
+            do{
+                val pruefung_id = curser.getString(0)
+                val pruefungklasseid = curser.getInt(1)
+                val pruefung_langtext = curser.getString(2)
+                val pruefung_datum = curser.getString(3)
+                val pruefung_art = curser.getString(4)
+
+                retList.add(pruefung_id)
+                retList.add(pruefungklasseid.toString())
+                retList.add(pruefung_datum)
+                retList.add(pruefung_langtext)
+                retList.add(pruefung_art)
+
+            }while (curser.moveToNext())
+        }
+        return retList
+    }
+
+    fun editPruefung(pruefung: PruefungModel): Boolean{
+        val db = this.writableDatabase
+
+        val success = db.execSQL("update $PRUEFUNG_TABLE SET " +
+                "$PRUEFUNGKLASSEID = '" + pruefung.pruefungKlasseID + "'"+
+                ", $PRUEFUNG_LANGTEXT = '" + pruefung.pruefungLangtext + "'"+
+                ", $PRUEFUNG_DATUM = '" + pruefung.pruefungDatum + "'"+
+                ", $PRUEFUNG_ART = '" + pruefung.pruefungArt + "'"+
+                " WHERE $PRUEFUNG_ID = " + pruefung.pruefungID)
+
+        if (success.equals(-1)){
+            return false
+        }
+        return true
+    }
+}

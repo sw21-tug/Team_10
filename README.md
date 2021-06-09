@@ -40,5 +40,17 @@ alle erfassten Inhalte einfach ausgewertet werden.
 | T-024  | Daten annonymisieren
 | T-029  | Ein Lehrstoff in DB [BE]
 | T-035  | Chinesisch auswählen
-| T-034  |  Chinesisch darstellen
-
+| T-034  | Chinesisch darstellen
+| T-019  | SuS für Klassen auswählen (FE Listen Ansicht und BE)
+| T-043  | Hotfix Datum Text fix
+| T-011  | Prüfungen mit Termin einer Klasse hinzufügen
+| T-010  | Lehrstoff einer Klasse hinzufügen
+| T-047  | Scroll view in Class Details
+| T-050  | refactoring after sprint 3 session 2
+| T-022  | SuS mit Klassen verlinken [FE]
+| T-016  | Klassen Daten annonymisieren
+| T-015  | Mitarbeit von SK beurteilen
+| T-055  | Schüler Namen bearbeiten
+| T-054  | Lehrstoff bearbeiten in der Übersicht
+| T-053  | Klassen Namen bearbeiten
+| T-052  | Prüfung bearbeiten

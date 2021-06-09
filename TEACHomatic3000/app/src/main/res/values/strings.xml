@@ -1,53 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--App information-->
     <string name="app_name">TEACHomatic 3000</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">TEACHomatic 3000</string>
     <string name="nav_header_subtitle">Die App für Lehrer</string>
     <string name="nav_header_desc">Navigation header</string>
+
+    <!--Navigation Drawer List-->
     <string name="menu_home">Home</string>
-
-    <string name="menu_datum">Einstellungen</string>
-    <string name="date_regulator_string">Datum manuell einstellen</string>
-    <string name="anonymize">Anonymisieren</string>
-
     <string name="menu_classes">Klassen</string>
-
+    <string name="menu_settings">Einstellungen</string>
     <string name="menu_students">Students</string>
-    <string name="save">Speichern</string>
-
-    <string name="add_class_text">Neue Klasse hinzufügen:</string>
-    <string name="add_class_hint">Name der Klasse</string>
-    <string name="add_class_button">Hinzufügen</string>
-    <string name="add_class_available">Verfügbare Klassen:</string>
-
     <string name="menu_lehrstoff">Lehrstoff erstellen</string>
-    <string name="lehrstoff_class">Neuen Lehrstoff hinzufügen:</string>
-    <string name="lehrstoff_class_date_button">Lehrstoffdatum</string>
-    <string name="lehrstoff_class_save_button">Speichern</string>
-    <string name="lehrstoff_feld_beschreibung">Beschreibung des Lehrstoffs:</string>
-    <string name="bearbeitungsdatum">Bearbeitungsdatum:</string>
-    <string name="Erstelldatum">Erstelldatum:</string>
+    <string name="menu_lehrstoffübersicht">Lehrstoffübersicht</string>
 
-    <string name="lehrstoff_list">Lehrstoffübersicht</string>
-    <string name="lehrstoff_uebersicht">Lehrstoffübersicht:</string>
-    <string name="text_length255">Name muss zwischen 1 und 255 Zeichen haben.</string>
-    <string name="error_add_class">Klasse konnte nicht hinzugefügt werden</string>
-    <string name="student_anonym">Schülernamen wurden anonymisiert!</string>
-    <string name="error_wrong_input">Eingabe unvollständig.\nBitte sowohl Titel als auch Beschreibung und Datum eingeben.</string>
-    <string name="error_add_lehrstoff">Lehrstoff kann nicht hinzugefügt werden.</string>
+    <!--General-->
+    <string name="save">Speichern</string>
+    <string name="add">Hinzufügen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="bearbeitungsdatum">Bearbeitungsdatum: </string>
+    <string name="erstelldatum">Erstelldatum: </string>
+
+    <!--Errors-->
     <string name="error_long_input">Eingabe zu lang.</string>
-    <string name="error_add_student">SuS konnte nicht hinzugefügt werden</string>
     <string name="error_input">Fehlerhafte Eingabe</string>
+    <string name="error_text_length_255">Name muss zwischen 1 und 255 Zeichen haben.</string>
+    <string name="error_wrong_input">Eingabe unvollständig.\nBitte sowohl Titel als auch Beschreibung und Datum eingeben.</string>
+    <string name="error_add_student">SuS konnte nicht hinzugefügt werden</string>
+    <string name="error_add_class">Klasse konnte nicht hinzugefügt werden</string>
+    <string name="error_add_lehrstoff">Lehrstoff konnte nicht hinzugefügt werden</string>
+    <string name="error_add_prüfung">Prüfung konnte nicht hinzugefügt werden</string>
+    <string name="error_edit_student">Schülername konnte nicht bearbeitet werden</string>
 
-    <string name="lehrstoff_title_hint">Lehrstofftitel</string>
-    <string name="lehrstoff_description_hint">Lehrstoffbeschreibung</string>
+    <!--Students-->
+    <string name="student_text">Schüler*innen:</string>
+    <string name="student_add">SuS hinzufügen</string>
     <string name="student_firstname_hint">Max</string>
     <string name="student_lastname_hint">Mustermann</string>
 
-    <string name="home_title">Die App für Lehrer</string>
+    <!--Classes-->
+    <string name="class_text">Klasse: </string>
+    <string name="class_hint">Name der Klasse</string>
+    <string name="class_add">Neue Klasse hinzufügen:</string>
+    <string name="class_available">Verfügbare Klassen:</string>
+    <string name="class_add_student_plus">Mitarbeitsplus hinzufügen</string>
+    <string name="class_edit_text">Klassenname bearbeiten:</string>
+    <string name="class_edit_hint">Neuen Klassennamen eingeben:</string>
+    <string name="class_edit_success">Klassenname wurde erfolgreich geändert.</string>
+    <string name="class_edit_cancel">Klassenname wurde nicht geändert.</string>
+    <string name="class_edit_popup">Klassenname ändern</string>
 
-    <string name="language_regulator_string">Deutsch {} 中国人</string>
+
+    <!--Settings-->
+    <string name="settings_date">Datum manuell einstellen</string>
+    <string name="settings_language">Deutsch {} 中国人</string>
+    <string name="settings_anonymize">Anonymisieren</string>
+    <string name="settings_anonymize_class">Klasse anonymisieren</string>
+    <string name="settings_anonymize_students">Schülernamen wurden anonymisiert!</string>
+    <string name="settings_anaonymize_students_of_class">Schülernamen in Klasse wurden anonymisiert!</string>
+
+    <!--Lehrstoff-->
+    <string name="lehrstoff_text">Lehrstoff:</string>
+    <string name="lehrstoff_uebersicht">Lehrstoffübersicht:</string>
+    <string name="lehrstoff_add_text">Neuen Lehrstoff hinzufügen:</string>
+    <string name="lehrstoff_description_text">Beschreibung des Lehrstoffs:</string>
+    <string name="lehrstoff_add">Lehrstoff erstellen</string>
+    <string name="lehrstoff_title">Lehrstofftitel</string>
+    <string name="lehrstoff_id">Lehrstoff-ID</string>
+    <string name="lehrstoff_description">Lehrstoffbeschreibung</string>
+    <string name="lehrstoff_date">Lehrstoffdatum</string>
+    <string name="lehrstoff_edit_title">Lehrstoff bearbeiten: </string>
+
+    <!--Prüfungen-->
+    <string name="prüfung_text">Prüfungen:</string>
+    <string name="pruefung_add">Prüfung erstellen</string>
+    <string name="prüfung_description">Prüfungsstoff</string>
+    <string name="prüfung_id">Prüfung-ID</string>
+    <string name="prüfung_date">Prüfungsdatum</string>
+    <string name="prüfung_art">Prüfungsart</string>
+    <string name="prüfung_art_test">Schriftlicher Test</string>
+    <string name="prüfung_art_schularbeit">Schularbeit</string>
+    <string name="prüfung_art_portfolio">Portfolioabgabe</string>
 
 </resources>

@@ -3,19 +3,17 @@ package com.example.teachomatic3000
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.scrollTo
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
-import com.example.teachomatic3000.database.DataBaseHelper
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.`is`
-import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.*
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
@@ -23,14 +21,14 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class DatumUIFunctionalityNew {
+class TestUIPruefung {
 
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
-    fun datumUIFunctionalityNew() {
+    fun testUIPruefung() {
         val appCompatImageButton = onView(
             allOf(
                 withContentDescription("Open navigation drawer"),
@@ -51,7 +49,7 @@ class DatumUIFunctionalityNew {
 
         val navigationMenuItemView = onView(
             allOf(
-                withId(R.id.nav_einstellungen),
+                withId(R.id.nav_classes),
                 childAtPosition(
                     allOf(
                         withId(R.id.design_navigation_view),
@@ -60,88 +58,68 @@ class DatumUIFunctionalityNew {
                             0
                         )
                     ),
-                    3
+                    2
                 ),
                 isDisplayed()
             )
         )
         navigationMenuItemView.perform(click())
 
-        val switch_ = onView(
+        val appCompatEditText = onView(
             allOf(
-                withId(R.id.date_regulator), withText("Datum manuell einstellen"),
+                withId(R.id.text_class_name),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.nav_host_fragment),
                         0
                     ),
-                    0
+                    1
                 ),
                 isDisplayed()
             )
         )
-        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
-        if(db.getDatum() == "-1") {
-            switch_.perform(click())
+        appCompatEditText.perform(replaceText("3A"), closeSoftKeyboard())
 
-
-            val materialButton = onView(
-                    allOf(
-                            withId(android.R.id.button1), withText("OK"),
-                            childAtPosition(
-                                    childAtPosition(
-                                            withClassName(`is`("android.widget.ScrollView")),
-                                            0
-                                    ),
-                                    3
-                            )
-                    )
-            )
-            materialButton.perform(scrollTo(), click())
-        }
-        val switch_2 = onView(
+        val materialButton = onView(
             allOf(
-                withId(R.id.date_regulator), withText("Datum manuell einstellen"),
+                withId(R.id.button_add_class), withText("Hinzufügen"),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.nav_host_fragment),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        switch_2.perform(click())
-
-        val switch_3 = onView(
-            allOf(
-                withId(R.id.date_regulator), withText("Datum manuell einstellen"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.nav_host_fragment),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        switch_3.perform(click())
-
-        val materialButton2 = onView(
-            allOf(
-                withId(android.R.id.button2), withText("Cancel"),
-                childAtPosition(
-                    childAtPosition(
-                        withClassName(`is`("android.widget.ScrollView")),
                         0
                     ),
                     2
-                )
+                ),
+                isDisplayed()
             )
         )
-        materialButton2.perform(scrollTo(), click())
+        materialButton.perform(click())
+
+        val materialTextView = onData(anything())
+            .inAdapterView(
+                allOf(
+                    withId(R.id.class_list),
+                    childAtPosition(
+                        withClassName(`is`("androidx.constraintlayout.widget.ConstraintLayout")),
+                        4
+                    )
+                )
+            )
+            .atPosition(0)
+        materialTextView.perform(click())
+
+        val viewGroup = onView(
+            allOf(
+                withParent(
+                    allOf(
+                        withId(android.R.id.content),
+                        withParent(withId(R.id.action_bar_root))
+                    )
+                ),
+                isDisplayed()
+            )
+        )
+        viewGroup.check(matches(isDisplayed()))
     }
 
     private fun childAtPosition(

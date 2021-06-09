@@ -25,7 +25,7 @@
 
         android:id="@+id/nav_einstellungen"
         android:name="com.example.teachomatic3000.ui.Einstellungen.EinstellungenFragment"
-        android:label="@string/menu_datum"
+        android:label="@string/menu_settings"
         tools:layout="@layout/fragment_einstellungen" />
     <fragment
         android:id="@+id/nav_students"
@@ -41,8 +41,8 @@
 
     <fragment
         android:id="@+id/nav_lehrstoff_list"
-        android:name="com.example.teachomatic3000.ui.lehrstoffuebersicht.LehrstoffUebersichtFragment"
-        android:label="@string/lehrstoff_list"
+        android:name="com.example.teachomatic3000.ui.lehrstoff.LehrstoffUebersichtFragment"
+        android:label="@string/menu_lehrstoffübersicht"
         tools:layout="@layout/fragment_lehrstoffuebersicht" />
 
 </navigation>

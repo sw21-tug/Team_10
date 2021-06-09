@@ -1,53 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--App information-->
     <string name="app_name">TEACHomatic 3000</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">TEACHomatic 3000</string>
     <string name="nav_header_subtitle">老师的应用程序</string>
     <string name="nav_header_desc">Navigation header</string>
+
+    <!--Navigation Drawer List-->
     <string name="menu_home">家</string>
-
-    <string name="menu_datum">设定值</string>
-    <string name="date_regulator_string">手动设置日期</string>
-    <string name="anonymize">匿名化</string>
-
     <string name="menu_classes">班级</string>
-
+    <string name="menu_settings">设定值</string>
     <string name="menu_students">学生们</string>
-    <string name="save">保存</string>
-
-    <string name="add_class_text">添加一个新类：</string>
-    <string name="add_class_hint">班级名称</string>
-    <string name="add_class_button">添加</string>
-    <string name="add_class_available">可用的课程：</string>
-
     <string name="menu_lehrstoff">创建课程</string>
-    <string name="lehrstoff_class">添加新主题：</string>
-    <string name="lehrstoff_class_date_button">主题日期</string>
-    <string name="lehrstoff_class_save_button">保存</string>
-    <string name="lehrstoff_feld_beschreibung">主题描述：</string>
+    <string name="menu_lehrstoffübersicht">课程大纲</string>
+
+    <!--General-->
+    <string name="save">保存</string>
+    <string name="add">添加</string>
+    <string name="cancel">中止</string>
     <string name="bearbeitungsdatum">处理日期：</string>
-    <string name="Erstelldatum">创建日期：</string>
+    <string name="erstelldatum">创建日期：</string>
 
-    <string name="lehrstoff_list">课程大纲</string>
-    <string name="lehrstoff_uebersicht">课程大纲：</string>
-    <string name="text_length255">名称必须介于1到255个字符之间</string>
-    <string name="error_add_class">无法添加课程</string>
-    <string name="student_anonym">学生姓名已被匿名！</string>
-    <string name="error_wrong_input">输入不完整。\n请同时输入标题，描述和日期。</string>
-    <string name="error_add_lehrstoff">课程无法添加。</string>
+    <!--Errors-->
     <string name="error_long_input">输入时间过长。</string>
-    <string name="error_add_student">无法添加学生</string>
     <string name="error_input">输入错误</string>
+    <string name="error_text_length_255">名称必须介于1到255个字符之间</string>
+    <string name="error_wrong_input">输入不完整。\n请同时输入标题，描述和日期。</string>
+    <string name="error_add_student">无法添加学生</string>
+    <string name="error_add_class">无法添加课程</string>
+    <string name="error_add_lehrstoff">课程无法添加。</string>
+    <string name="error_add_prüfung">无法添加支票</string>
+    <string name="error_edit_student">无法编辑学生姓名</string>
 
-    <string name="lehrstoff_title_hint">主题标题</string>
-    <string name="lehrstoff_description_hint">课程说明</string>
+
+    <!--Students-->
+    <string name="student_text">学生们:</string>
+    <string name="student_add">新增学生</string>
     <string name="student_firstname_hint">陈小名</string>
     <string name="student_lastname_hint">陈小名</string>
 
-    <string name="home_title">老师的应用程序</string>
+    <!--Classes-->
+    <string name="class_text">班级: </string>
+    <string name="class_hint">班级名称</string>
+    <string name="class_add">添加一个新类：</string>
+    <string name="class_available">可用的课程：</string>
+    <string name="class_add_student_plus">添加員工加</string>
+    <string name="class_edit_text">修改班级名称:</string>
+    <string name="class_edit_hint">输入新的类名:</string>
+    <string name="class_edit_success">类名更改成功</string>
+    <string name="class_edit_cancel">类名未更改</string>
+    <string name="class_edit_popup">更改班级名称</string>
 
-    <string name="language_regulator_string">Deutsch {} 中国人</string>
+    <!--Settings-->
+    <string name="settings_date">手动设置日期</string>
+    <string name="settings_language">Deutsch {} 中国人</string>
+    <string name="settings_anonymize">匿名化</string>
+    <string name="settings_anonymize_class">将课程设为匿名</string>
+    <string name="settings_anonymize_students">学生姓名已被匿名！</string>
+    <string name="settings_anaonymize_students_of_class">班上的学生姓名已被匿名！</string>
+
+    <!--Lehrstoff-->
+    <string name="lehrstoff_text">课程</string>
+    <string name="lehrstoff_uebersicht">课程大纲：</string>
+    <string name="lehrstoff_add_text">添加新主题：</string>
+    <string name="lehrstoff_description_text">主题描述：</string>
+    <string name="lehrstoff_add">创建课程</string>
+    <string name="lehrstoff_title">主题标题</string>
+    <string name="lehrstoff_id">主题编号: </string>
+    <string name="lehrstoff_description">课程说明: </string>
+    <string name="lehrstoff_date">主题日期</string>
+    <string name="lehrstoff_edit_title">编辑主题: </string>
+
+    <!--Prüfungen-->
+    <string name="prüfung_text">考试</string>
+    <string name="pruefung_add">创建考试</string>
+    <string name="prüfung_description">考试材料</string>
+    <string name="prüfung_id">考试编号: </string>
+    <string name="prüfung_date">考试日期</string>
+    <string name="prüfung_art">考试类型: </string>
+    <string name="prüfung_art_test">笔试</string>
+    <string name="prüfung_art_schularbeit">学校工作</string>
+    <string name="prüfung_art_portfolio">作品集提交</string>
 
 </resources>
