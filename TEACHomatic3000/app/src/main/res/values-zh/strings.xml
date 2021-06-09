@@ -70,6 +70,7 @@
     <string name="lehrstoff_id">主题编号: </string>
     <string name="lehrstoff_description">课程说明: </string>
     <string name="lehrstoff_date">主题日期</string>
+    <string name="lehrstoff_edit_title">编辑主题: </string>
 
     <!--Prüfungen-->
     <string name="prüfung_text">考试</string>
