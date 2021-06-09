@@ -51,7 +51,7 @@ class ClassDetailsAddSus : AppCompatActivity() {
             val count = sus_list_of_class.count
             var item = count - 1
 
-            val all_students = db.getStudentsOfClass(classModel)
+            val all_students = db.getStudentsOfClass(classModel, false)
 
             while (item >= 0) {
                 if (position.get(item)) {

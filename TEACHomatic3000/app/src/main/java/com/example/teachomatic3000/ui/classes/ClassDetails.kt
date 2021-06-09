@@ -83,7 +83,7 @@ class ClassDetails : AppCompatActivity() {
 
         button_anonymize_class.setOnClickListener () {
             db.anonymizeClass(class_id)
-            //Toast.makeText(root.context, R.string.class_anonym, Toast.LENGTH_LONG).show()
+            onResume()
         }
 
         lehrstoff_liste.setOnItemClickListener { parent, view, position, id ->
