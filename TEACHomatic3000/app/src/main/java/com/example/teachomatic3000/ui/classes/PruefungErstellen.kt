@@ -45,22 +45,13 @@ class PruefungErstellen : AppCompatActivity() {
                 pruefungsdate_choice.text = extras.getString("pruefung_datum")
 
                 when(extras.getString("pruefung_art")) {
-                    "Schriftlicher Test" -> {
+                    this.baseContext.getString(R.string.prüfung_art_test) -> {
                         radioGroup.check(2131231070)
                     }
-                    "Schularbeit" -> {
+                    this.baseContext.getString(R.string.prüfung_art_schularbeit) -> {
                         radioGroup.check(2131231071)
                     }
-                    "Portfolioabgabe" -> {
-                        radioGroup.check(2131231072)
-                    }
-                    "笔试" -> {
-                        radioGroup.check(2131231070)
-                    }
-                    "学校工作" -> {
-                        radioGroup.check(2131231071)
-                    }
-                    "作品集提交" -> {
+                    this.baseContext.getString(R.string.prüfung_art_portfolio) -> {
                         radioGroup.check(2131231072)
                     }
                 }

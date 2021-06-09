@@ -343,7 +343,7 @@ class DataBaseHelper(context: Context?) : SQLiteOpenHelper(context, "teachomatic
                 var studentInfo = getStudent(student_id)
 
                 if(flag) {
-                    val studentMitarbeitsplus: String = " " + curser.getInt(3).toString() + " Plus"
+                    val studentMitarbeitsplus: String = " " + curser.getInt(3).toString() + " +"
                     studentInfo += studentMitarbeitsplus
                 }
 
