@@ -105,6 +105,24 @@ class ClassDetails : AppCompatActivity() {
             startActivity(intent)
         }
 
+        pruefungList.setOnItemClickListener { parent, view, position, id ->
+            val item_pos = parent.getItemAtPosition(position).toString()
+            val id_split = item_pos.split(" ").toTypedArray()
+            val id_split1 = id_split[1].split(" ")
+            val id = id_split1[0].toInt()
+
+            val intent = Intent(this.baseContext, PruefungErstellen::class.java).apply {
+                putExtra("prüfungs_id", id)
+                putExtra("pruefungsklasseid", db.getPruefungOnPos(id)[1])
+                putExtra("pruefung_datum", db.getPruefungOnPos(id)[2])
+                putExtra("pruefung_langtext", db.getPruefungOnPos(id)[3])
+                putExtra("pruefung_art", db.getPruefungOnPos(id)[4])
+                putExtra("class_id", class_id)
+                putExtra("check_edit", true)
+            }
+            startActivity(intent)
+        }
+
         pruefung_erstellen.setOnClickListener {
             val intent = Intent (this.baseContext, PruefungErstellen::class.java).apply {
                 putExtra("class_id", class_id)

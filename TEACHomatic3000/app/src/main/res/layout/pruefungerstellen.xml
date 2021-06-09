@@ -82,7 +82,7 @@
             android:id="@+id/radioButton3"
             android:layout_width="354dp"
             android:layout_height="46dp"
-            android:text="@string/prüfug_art_portfolio"
+            android:text="@string/prüfung_art_portfolio"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

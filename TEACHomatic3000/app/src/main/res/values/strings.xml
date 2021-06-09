@@ -80,6 +80,6 @@
     <string name="prüfung_art">Prüfungsart</string>
     <string name="prüfung_art_test">Schriftlicher Test</string>
     <string name="prüfung_art_schularbeit">Schularbeit</string>
-    <string name="prüfug_art_portfolio">Portfolioabgabe</string>
+    <string name="prüfung_art_portfolio">Portfolioabgabe</string>
 
 </resources>

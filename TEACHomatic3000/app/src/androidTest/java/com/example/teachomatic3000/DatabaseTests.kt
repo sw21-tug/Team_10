@@ -5,6 +5,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.example.teachomatic3000.database.DataBaseHelper
 import com.example.teachomatic3000.models.ClassModel
 import com.example.teachomatic3000.models.LehrstoffModel
+import com.example.teachomatic3000.models.PruefungModel
 import com.example.teachomatic3000.models.StudentModel
 
 import org.junit.Test
@@ -358,5 +359,62 @@ class DatabaseTests {
 
         assertEquals(0, student1_plus)
         assertEquals(2, student2_plus)
+    }
+
+    @Test
+    fun testAddPruefung() {
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val classModel = ClassModel(0, "Klasse1")
+        db.addClass(classModel)
+
+        val pruefung = PruefungModel(0, classModel.classId, "2021-03-28", "Bio Schularbeit", "Schularbeit")
+        val sucess = db.addPruefung(pruefung)
+        assertEquals(true, sucess)
+    }
+
+    @Test
+    fun testAddPruefungen() {
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val classModel = ClassModel(0, "Klasse1")
+        db.addClass(classModel)
+
+        val pruefungen_current = db.getPruefung(classModel.classId, InstrumentationRegistry.getInstrumentation().targetContext)
+
+        val pruefung1 = PruefungModel(0, classModel.classId, "2021-03-28", "Bio Schularbeit", "Schularbeit")
+        val pruefung2 = PruefungModel(0, classModel.classId, "2021-03-20", "Deutsch Portfolio", "Portfolioabgabe")
+        val pruefung3 = PruefungModel(0, classModel.classId, "2021-06-28", "Religionstest", "Schriftlicher Test")
+
+        db.addPruefung(pruefung1)
+        db.addPruefung(pruefung2)
+        db.addPruefung(pruefung3)
+
+        val pruefungen_after = db.getPruefung(classModel.classId, InstrumentationRegistry.getInstrumentation().targetContext)
+
+        assertEquals(pruefungen_current.size + 3, pruefungen_after.size)
+    }
+
+    @Test
+    fun testEditPruefung() {
+        val db = DataBaseHelper(InstrumentationRegistry.getInstrumentation().targetContext)
+        val classModel = ClassModel(0, "Klasse1")
+        db.addClass(classModel)
+
+        val pruefung_current = db.getPruefung(classModel.classId, InstrumentationRegistry.getInstrumentation().targetContext)
+
+        val pruefung = PruefungModel(0, classModel.classId, "2021-03-28", "Bio Schularbeit", "Schularbeit")
+        db.addPruefung(pruefung)
+
+        val pruefung_after_add = db.getPruefung(classModel.classId, InstrumentationRegistry.getInstrumentation().targetContext)
+
+        val pruefung_edited = PruefungModel(pruefung.pruefungID, classModel.classId, "2021-03-29", "Bio Schularbeit mit mehr Stoff", "Schularbeit")
+
+        val sucess = db.editPruefung(pruefung_edited)
+
+        val pruefung_after_edit = db.getPruefung(classModel.classId, InstrumentationRegistry.getInstrumentation().targetContext)
+
+        assertEquals(true, sucess)
+        assertEquals(pruefung_current.size + 1, pruefung_after_add.size)
+        assertEquals(pruefung_current.size + 1, pruefung_after_edit.size)
+        assertEquals(true, pruefung_after_edit.get(pruefung_after_edit.size-1).contains("2021-03-29"))
     }
 }

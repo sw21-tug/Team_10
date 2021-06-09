@@ -80,6 +80,6 @@
     <string name="prüfung_art">考试类型: </string>
     <string name="prüfung_art_test">笔试</string>
     <string name="prüfung_art_schularbeit">学校工作</string>
-    <string name="prüfug_art_portfolio">作品集提交</string>
+    <string name="prüfung_art_portfolio">作品集提交</string>
 
 </resources>
