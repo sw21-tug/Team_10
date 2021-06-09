@@ -88,7 +88,7 @@ class ClassDetails : AppCompatActivity() {
 
         lehrstoff_liste.setOnItemClickListener { parent, view, position, id ->
             val data_pos = parent.getItemAtPosition(position).toString()
-            val id_split = data_pos.split("Lehrstoff-ID: ").toTypedArray()
+            val id_split = data_pos.split(" ").toTypedArray()
             val id_split1 = id_split[1].split(" ")
             val id = id_split1[0].toInt()
 

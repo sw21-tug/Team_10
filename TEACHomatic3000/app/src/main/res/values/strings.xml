@@ -70,6 +70,7 @@
     <string name="lehrstoff_id">Lehrstoff-ID</string>
     <string name="lehrstoff_description">Lehrstoffbeschreibung</string>
     <string name="lehrstoff_date">Lehrstoffdatum</string>
+    <string name="lehrstoff_edit_title">Lehrstoff bearbeiten: </string>
 
     <!--Prüfungen-->
     <string name="prüfung_text">Prüfungen:</string>

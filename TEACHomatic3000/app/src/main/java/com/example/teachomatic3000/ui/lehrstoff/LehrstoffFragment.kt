@@ -34,6 +34,7 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
         val lehrstoff_date_choice: TextView = root.findViewById(R.id.lehrstoff_date_choice)
         val lehrstoff_date_button: Button = root.findViewById(R.id.lehrstoff_date_button)
         val lehrstoff_save_button: Button = root.findViewById(R.id.lehrstoff_save_button)
+        val lehrstoff_edit_title: TextView = root.findViewById(R.id.view_lehrstoff_title)
         db = DataBaseHelper(root.context)
 
         lehrstoff_date_creation.text = db.getDatumHuman()
@@ -51,11 +52,11 @@ class LehrstoffFragment : androidx.fragment.app.Fragment() {
             if(check_edit == true)
             {
                 lehrstoff_title.setText(extras.getString("title"))
+                lehrstoff_edit_title.text = root.context.getString(R.string.lehrstoff_edit_title)
                 lehrstoff_description.setText(extras.getString("description"))
                 lehrstoff_date_choice.text = extras.getString("date")
                 lehrstoff_date_creation.text = extras.getString("date_create")
-                val currentDateTime = LocalDateTime.now()
-                lehrstoff_date_edit.text = currentDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                lehrstoff_date_edit.text = db.getDatumHuman()
                 val c_id = extras.getString("class")?.toInt()
                 if (c_id != null) {
                     klasse_id = c_id
