@@ -95,15 +95,20 @@ class ClassesFragment : Fragment() {
                         input.inputType = InputType.TYPE_CLASS_TEXT
                         builder.setView(input)
                         builder.setPositiveButton(R.string.save, DialogInterface.OnClickListener { dialog, which ->
-                            val new_class_name = input.text.toString()
-                            val class_info = parent.getItemAtPosition(position)
-                            val class_parts = class_info.toString().split(" ").toTypedArray()
-                            val class_id = class_parts[0].toInt()
+                            if(input.text.isNotEmpty() && input.text.length <= 255){
+                                val new_class_name = input.text.toString()
+                                val class_info = parent.getItemAtPosition(position)
+                                val class_parts = class_info.toString().split(" ").toTypedArray()
+                                val class_id = class_parts[0].toInt()
 
-                            classDatabase.changeClassName(class_id, new_class_name)
-                            updateClassList()
+                                classDatabase.changeClassName(class_id, new_class_name)
+                                updateClassList()
 
-                            Toast.makeText(root.context,R.string.class_edit_success,Toast.LENGTH_LONG).show()
+                                Toast.makeText(root.context,R.string.class_edit_success,Toast.LENGTH_LONG).show()
+                            }
+                            else{
+                                Toast.makeText(root.context,R.string.class_edit_cancel,Toast.LENGTH_LONG).show()
+                            }
                         })
                         builder.setNegativeButton(R.string.cancel, DialogInterface.OnClickListener { dialog, which -> dialog.cancel()
                             Toast.makeText(root.context,R.string.class_edit_cancel,Toast.LENGTH_LONG).show()
